@@ -1,0 +1,30 @@
+{
+  "name": "studious-hexa-memory",
+  "version": "1.0.0",
+  "description": "Application de révisions",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ythepaut/studious-hexa-memory.git"
+  },
+  "author": "Yohann THEPAUT <contact@ythepaut.com> (ythepaut)",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ythepaut/studious-hexa-memory/issues"
+  },
+  "homepage": "https://github.com/ythepaut/studious-hexa-memory#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bulma": "^0.9.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "mongodb": "^3.6.3",
+    "path": "^0.12.7"
+  }
+}
