@@ -1,0 +1,45 @@
+<%- include('../includes/header') %>
+
+<div class="box">
+    <h1 class="title has-text-centered">Commencer des exercices</h1>
+
+
+    <div class="columns is-centered">
+
+        <div class="columm is-one-half">
+
+            <form method="POST" class="mt-5">
+
+                <label class="label mt-3">Nombre d'exercices</label>
+                <input class="input mt-1" type="number" min="0" max="1000" name="exercise-count" placeholder="0 pour ne pas limiter" />
+
+                <label class="label mt-3">Tags</label>
+                <div class="select is-multiple">
+                    <select multiple size="4" style="width: 300px">
+                        <option value="Argentina">PTSI</option>
+                        <option value="Bolivia">Geometrie</option>
+                        <option value="Brazil">Analyse</option>
+                        <option value="Chile">Algebre</option>
+                        <option value="Colombia">Facile</option>
+                        <option value="Colombia">Moyen</option>
+                        <option value="Colombia">Difficile</option>
+                    </select>
+                </div>
+                <br />
+                <button type="submit" class="button is-primary mt-3">Commencer</button>
+            </form>
+
+        </div>
+
+        <div class="column is-one-third">
+
+            <img src="/assets/img/start.png" alt="" />
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<%- include('../includes/footer') %>

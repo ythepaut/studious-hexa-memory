@@ -1,0 +1,77 @@
+<%- include('../includes/header') %>
+
+<h1 class="title">
+    Modifier l'exerice {ID}
+</h1>
+
+<form method="POST" action="/manage/new">
+
+    <!-- Title -->
+    <div class="field">
+        <div class="is-normal">
+            <label class="label">Titre</label>
+        </div>
+        <div class="field-body mt-1">
+            <div class="field">
+                <p class="control">
+                    <input class="input" type="text" value="Résolution équation différentielle du deuxieme ordre" />
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statement -->
+    <div class="field">
+        <div class="is-normal">
+            <label class="label">Énoncé</label>
+        </div>
+        <div class="field-body mt-1">
+            <div class="field">
+                <p class="control">
+                    <textarea class="textarea" value="Résoudre sur \mathbb{R} l'équation différentielle suivante :\n$y^{\prime}+y = x-e^{x}+\cos{x}$."></textarea>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statement Preview -->
+    <label class="label">Prévisualisation</label>
+    <div class="box">
+        <p>
+            Résoudre sur <img src="https://latex.codecogs.com/png.latex?\mathbb{R}" alt="\mathbb{R}"> l'équation différentielle suivante :<br /><img src="https://latex.codecogs.com/png.latex?y^{\prime}+y%20=%20x-e^{x}+\cos{x}" alt="y^{\prime}+y = x-e^{x}+\cos{x}" />.
+        </p>
+    </div>
+
+    <!-- Timer -->
+    <div class="field">
+        <div class="is-normal">
+            <label class="label">Temps imparti (en secondes)</label>
+        </div>
+        <div class="field-body mt-1">
+            <div class="field">
+                <p class="control">
+                    <input class="input" type="number" min="0" max="14400" value="600" />
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="field">
+        <div class="is-normal">
+            <label class="label">Tags</label>
+        </div>
+        <div class="field-body mt-1">
+            <div class="field">
+                <p class="control">
+                    <input class="input" type="text" value="PTSI,Derivées Partielles,Facile" />
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="button is-primary mt-2">Modifier</button>
+
+</form>
+
+<%- include('../includes/footer') %>

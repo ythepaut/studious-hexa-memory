@@ -1,0 +1,71 @@
+<%- include('../includes/header') %>
+
+
+<nav class="level">
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Nombre d'exercices</p>
+            <p class="title">0</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Temps cumulé des exercices</p>
+            <p class="title">0s</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Exercices effectués</p>
+            <p class="title">0</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Pourcentage de réussite</p>
+            <p class="title">0%</p>
+        </div>
+    </div>
+</nav>
+
+<hr />
+
+<div class="columns">
+    <div class="column is-one-fifth is-fullwidth">
+        <a class="button is-primary" href="/manage/new">Ajouter un exercice</a>
+    </div>
+    <div class="column">
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input" type="text" placeholder="Rechercher parmis les exercices" />
+                <span class="icon is-small is-left">
+            <i class="fas fa-search"></i>
+        </span>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<table class="table is-striped is-hoverable is-fullwidth">
+    <thead>
+    <tr>
+        <th>Titre</th>
+        <th>Consigne</th>
+        <th>Tags</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th><a href="/manage/edit/123456">Résolution dérivée partielle</a></th>
+        <td>Dériver $\frac{\delta f}{\delta x}(x, y) = y^{2}\cos{xy^{2}}$.</td>
+        <td>
+            <span class="tag is-primary is-small">PTSI</span>
+            <span class="tag is-primary is-small">Dérivées</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<%- include('../includes/footer') %>
