@@ -16,13 +16,9 @@
                 <label class="label mt-3">Tags</label>
                 <div class="select is-multiple">
                     <select multiple size="4" style="width: 300px">
-                        <option value="Argentina">PTSI</option>
-                        <option value="Bolivia">Geometrie</option>
-                        <option value="Brazil">Analyse</option>
-                        <option value="Chile">Algebre</option>
-                        <option value="Colombia">Facile</option>
-                        <option value="Colombia">Moyen</option>
-                        <option value="Colombia">Difficile</option>
+                        <% for (const tag of tags) { %>
+                            <option value="<%= tag %>"><%= tag.charAt(0).toUpperCase() + tag.slice(1) %></option>
+                        <% } %>
                     </select>
                 </div>
                 <br />

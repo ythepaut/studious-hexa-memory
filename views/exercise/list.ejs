@@ -5,25 +5,25 @@
     <div class="level-item has-text-centered">
         <div>
             <p class="heading">Nombre d'exercices</p>
-            <p class="title">0</p>
+            <p class="title"><%= exerciseCount %></p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
             <p class="heading">Temps cumulé des exercices</p>
-            <p class="title">0s</p>
+            <p class="title"><%= exerciseTime %>s</p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
             <p class="heading">Exercices effectués</p>
-            <p class="title">0</p>
+            <p class="title"><%= exerciseDone %></p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
             <p class="heading">Pourcentage de réussite</p>
-            <p class="title">0%</p>
+            <p class="title"><%= successRate %>%</p>
         </div>
     </div>
 </nav>
@@ -56,6 +56,18 @@
     </tr>
     </thead>
     <tbody>
+        <% for (const exercise of exercises) { %>
+            <tr>
+
+                <th><a href="/manage/edit/<%= exercise.id %>"><%= exercise.title %></a></th>
+                <td><%= exercise.statement %></td>
+                <td>
+                    <% for (const tag of exercise.tags) { %>
+                        <span class="tag is-primary is-small"><%= tag %></span>
+                    <% } %>
+                </td>
+            </tr>
+        <% } %>
     <tr>
         <th><a href="/manage/edit/123456">Résolution dérivée partielle</a></th>
         <td>Dériver $\frac{\delta f}{\delta x}(x, y) = y^{2}\cos{xy^{2}}$.</td>

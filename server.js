@@ -2,7 +2,9 @@ require("dotenv").config();
 let http = require("http"),
     express = require("express"),
     path = require("path"),
-    bodyParser = require('body-parser');
+    bodyParser = require("body-parser"),
+    ejs = require("ejs"),
+    mongodb = require("mongodb");
 let app = express(),
     server = http.createServer(app);
 
@@ -14,7 +16,7 @@ app.set("view engine", "ejs");
 
 // setting routes
 require("./helper/db")((client) => {
-    new (require("./helper/service"))(app, express, path, client);
+    new (require("./helper/service"))(app, express, path, client, mongodb);
 });
 
 // starting server

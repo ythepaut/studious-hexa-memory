@@ -14,11 +14,13 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" value="Résolution équation différentielle du deuxieme ordre" />
+                    <input class="input" type="text" value="<%= exercise.title %>" />
                 </p>
             </div>
         </div>
     </div>
+
+    <hr />
 
     <!-- Statement -->
     <div class="field">
@@ -28,19 +30,49 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" value="Résoudre sur \mathbb{R} l'équation différentielle suivante :\n$y^{\prime}+y = x-e^{x}+\cos{x}$."></textarea>
+                    <textarea class="textarea"><%= exercise.statement %></textarea>
                 </p>
             </div>
         </div>
     </div>
 
     <!-- Statement Preview -->
-    <label class="label">Prévisualisation</label>
+    <label class="label">Prévisualisation de l'énoncé</label>
     <div class="box">
         <p>
+            <!--TODO latex formatting-->
+            TODO
             Résoudre sur <img src="https://latex.codecogs.com/png.latex?\mathbb{R}" alt="\mathbb{R}"> l'équation différentielle suivante :<br /><img src="https://latex.codecogs.com/png.latex?y^{\prime}+y%20=%20x-e^{x}+\cos{x}" alt="y^{\prime}+y = x-e^{x}+\cos{x}" />.
         </p>
     </div>
+
+    <hr />
+
+    <!-- Response -->
+    <div class="field">
+        <div class="is-normal">
+            <label class="label">Réponse</label>
+        </div>
+        <div class="field-body mt-1">
+            <div class="field">
+                <p class="control">
+                    <textarea class="textarea" required><%= exercise.response %></textarea>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Repsonse Preview -->
+    <label class="label">Prévisualisation de la réponse</label>
+    <div class="box">
+        <p>
+            <!--TODO latex formatting-->
+            TODO
+            <img src="https://latex.codecogs.com/png.latex?y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}" alt="y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}" />
+        </p>
+    </div>
+
+    <hr />
 
     <!-- Timer -->
     <div class="field">
@@ -50,11 +82,13 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="number" min="0" max="14400" value="600" />
+                    <input class="input" type="number" min="0" max="14400" value="<%= exercise.time %>" />
                 </p>
             </div>
         </div>
     </div>
+
+    <hr />
 
     <!-- Tags -->
     <div class="field">
@@ -64,7 +98,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" value="PTSI,Derivées Partielles,Facile" />
+                    <input class="input" type="text" value="<% for (const tag of exercise.tags) { %><%= tag %>,<% } %>" /> <!--TODO remove extra comma-->
                 </p>
             </div>
         </div>

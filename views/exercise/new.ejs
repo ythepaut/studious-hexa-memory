@@ -14,11 +14,13 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" placeholder="Résolution équation différentielle du deuxieme ordre" />
+                    <input class="input" type="text" name="title" placeholder="Résolution équation différentielle linéaire du deuxieme ordre" required />
                 </p>
             </div>
         </div>
     </div>
+
+    <hr />
 
     <!-- Statement -->
     <div class="field">
@@ -28,7 +30,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" placeholder="Résoudre sur \mathbb{R} l'équation différentielle suivante :\n$y^{\prime}+y = x-e^{x}+\cos{x}$."></textarea>
+                    <textarea class="textarea" name="statement" placeholder="Résoudre sur \mathbb{R} l'équation différentielle suivante :\n$y^{\prime}+y = x-e^{x}+\cos{x}$." required></textarea>
                 </p>
             </div>
         </div>
@@ -42,6 +44,32 @@
         </p>
     </div>
 
+    <hr />
+
+    <!-- Response -->
+    <div class="field">
+        <div class="is-normal">
+            <label class="label">Réponse</label>
+        </div>
+        <div class="field-body mt-1">
+            <div class="field">
+                <p class="control">
+                    <textarea class="textarea" name="response" placeholder="$y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}$" required></textarea>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Repsonse Preview -->
+    <label class="label">Prévisualisation de la réponse</label>
+    <div class="box">
+        <p>
+
+        </p>
+    </div>
+
+    <hr />
+
     <!-- Timer -->
     <div class="field">
         <div class="is-normal">
@@ -50,11 +78,13 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="number" min="0" max="14400" placeholder="600" />
+                    <input class="input" type="number" min="0" max="14400" name="time" placeholder="600" required />
                 </p>
             </div>
         </div>
     </div>
+
+    <hr />
 
     <!-- Tags -->
     <div class="field">
@@ -64,7 +94,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" placeholder="PTSI,Derivées Partielles,Facile" />
+                    <input class="input" type="text" name="tags" placeholder="PTSI,Derivées Partielles,Facile" required />
                 </p>
             </div>
         </div>

@@ -11,7 +11,7 @@ module.exports = (callback) => {
                 console.log(err);
                 callback(null);
             } else {
-                callback(client.db(process.env.STUDIOUSHEXAMEMORY_MONGODB_USER));
+                callback(client.db("studious_hexa_memory"));
             }
         }
     );
