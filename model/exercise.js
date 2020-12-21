@@ -31,9 +31,19 @@ module.exports = class Exercise {
      */
     static formatTags(tags) {
         let formatted = [];
-        for (const tag of tags)
-            if (tag !== "")
-                formatted.push(tag.toLowerCase().trim());
+        for (const tag of tags) {
+            if (tag !== "") {
+                formatted.push(
+                    tag
+                        .toLowerCase()
+                        .trim()
+                        .replaceAll(/[éèêëÉÈÊË]/, "e")
+                        .replaceAll(/àâäÀÂÄ/, "a")
+                        .replaceAll(/îïÎÏ/, "i")
+                        .replaceAll(/çÇ/, "c")
+                );
+            }
+        }
         return formatted;
     }
 
@@ -68,6 +78,28 @@ module.exports = class Exercise {
             } else {
                 callback(null);
             }
+        });
+    }
+
+    /**
+     * Gets a random exercise, in tags, and not already done
+     * @param {Object}              db              MongoClient
+     * @param {Object}              mongodb         MongoDB
+     * @param {Array.<string>}      tags            Array of tags for filtering
+     * @param {Array.<string>}      done            Array of exercise id
+     * @param {function}            callback        Callback fct : callback(exercise)
+     */
+    static getNextExercise(db, mongodb, tags, done, callback) {
+        Exercise.getExercises(db, tags, (exercises) => {
+            let pool = [];
+            for (const exercise of exercises) {
+                if (!done.includes(exercise.id.toString())) {
+                    pool.push(exercise.id);
+                }
+            }
+            Exercise.getExercise(db, mongodb, pool[Math.floor(Math.random() * pool.length)], (exercise) => {
+                callback(exercise);
+            });
         });
     }
 

@@ -1,0 +1,41 @@
+<%- include('../includes/header') %>
+
+<div class="box">
+    <h1 class="title has-text-centered">Commencer des exercices</h1>
+
+
+    <div class="columns is-centered">
+
+        <div class="columm is-one-half">
+
+            <form method="POST" class="mt-5 mr-3">
+
+                <label class="label mt-3">Nombre d'exercices&nbsp;<span class="has-text-info ml-1" title="0 ou laisser vide pour ne pas limiter le nombre d'exercices"><i class="fas fa-info-circle"></i></span></label>
+                <input class="input mt-1" type="number" min="0" max="1000" name="exerciseCount" value="0" />
+
+                <label class="label mt-3">Tags&nbsp;<span class="has-text-info ml-1" title="CTRL+Clic pour la sélection multiple"><i class="fas fa-info-circle"></i></span></label>
+                <div class="select is-multiple">
+                    <select multiple name="tags" size="4" style="width: 300px">
+                        <% for (const tag of tags) { %>
+                            <option value="<%= tag %>"><%= tag.toUpperCase() %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <br />
+                <button type="submit" class="button is-primary mt-3">Commencer</button>
+            </form>
+
+        </div>
+
+        <div class="column is-one-third ml-3">
+
+            <img src="/assets/img/start.png" alt="" />
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<%- include('../includes/footer') %>

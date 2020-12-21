@@ -4,20 +4,30 @@ let http = require("http"),
     path = require("path"),
     bodyParser = require("body-parser"),
     ejs = require("ejs"),
-    mongodb = require("mongodb");
+    mongodb = require("mongodb"),
+    session = require("express-session");
 let app = express(),
     server = http.createServer(app);
 
+
+// setting middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// setting view engine
+app.use(session({
+    secret : process.env.STUDIOUSHEXAMEMORY_SESSION_SECRET,
+    resave : false,
+    saveUninitialized : false
+}));
+
 app.set("view engine", "ejs");
+
 
 // setting routes
 require("./helper/db")((client) => {
     new (require("./helper/service"))(app, express, path, client, mongodb);
 });
+
 
 // starting server
 server.listen(process.env.STUDIOUSHEXAMEMORY_SERVER_PORT, () => {

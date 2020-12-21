@@ -1,10 +1,13 @@
 <%- include('../includes/header') %>
 
 <h1 class="title">
-    Modifier l'exerice {ID}
+    Modification d'exercice
 </h1>
+<h3 class="subtitle">
+    <%= exercise.id %>
+</h3>
 
-<form method="POST" action="/manage/new">
+<form method="POST" action="/manage/new" id="edit">
 
     <!-- Title -->
     <div class="field">
@@ -104,8 +107,16 @@
         </div>
     </div>
 
-    <button type="submit" class="button is-primary mt-2">Modifier</button>
+    <input type="hidden" name="id" value="<%= exercise.id %>">
 
 </form>
+
+<form method="POST" action="/manage/delete" id="delete">
+    <input type="hidden" name="id" value="<%= exercise.id %>">
+</form>
+
+<button type="submit" form="edit" class="button is-primary mt-2">Modifier</button>
+<button type="submit" form="delete" class="button is-danger mt-2 ml-2">Supprimer</button>
+
 
 <%- include('../includes/footer') %>

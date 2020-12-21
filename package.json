@@ -2,10 +2,10 @@
   "name": "studious-hexa-memory",
   "version": "1.0.0",
   "description": "Application de révisions",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "http": "0.0.1-security",
     "mongodb": "^3.6.3",
     "path": "^0.12.7"

@@ -1,0 +1,32 @@
+<%- include('../includes/header') %>
+
+<div class="box">
+    <h1 class="title has-text-centered">Exercice <%= practice.exercisesDone.length + 1 %></h1>
+    <h2 class="subtitle has-text-centered"><%= practice.currentExercise.title %></h2>
+
+
+    <p>
+        <%= practice.currentExercise.statement %>
+    </p>
+    <hr />
+    <p id="divResponse" class="is-hidden">
+        <%= practice.currentExercise.response %>
+    </p>
+
+    <div class="buttons level-right" id="divSkipButton">
+        <button class="button is-warning" id="btnSeeResponse">Voir la réponse</button>
+    </div>
+    <div class="buttons level-right is-hidden" id="divNextButtons">
+        <button class="button is-danger" id="btnExerciseFail">Je n'ai pas réussi l'exercice</button>
+        <button class="button is-success" id="btnExerciseSuccess">J'ai réussi l'exercice</button>
+    </div>
+
+    <div class="mt-6" id="divTimer" style="text-align: center;">
+        <progress class="progress is-primary" value="<%= practice.currentExercise.time*100 %>" max="<%= practice.currentExercise.time*100 %>" id="progressTimer"></progress>
+        <span class="tag is-large" id="labelTimer"><%= practice.currentExercise.time %></span>
+    </div>
+</div>
+
+<script defer src="/js/main.js"></script>
+
+<%- include('../includes/footer') %>
