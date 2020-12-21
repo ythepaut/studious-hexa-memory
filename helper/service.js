@@ -41,8 +41,10 @@ module.exports = class {
                     practice : req.session.practice
                 });
             } else {
-                res.render("exercise/start", {
-                    tags : this._exercise.getTags()
+                this._exercise.getTags(this._db, (tags) => {
+                    res.render("exercise/start", {
+                        tags : tags
+                    });
                 });
             }
 
@@ -81,9 +83,7 @@ module.exports = class {
                         exercise : this._exercise.toJSON(exercise)
                     });
                 } else {
-                    res.render("/error", {
-                        exercise : null //TODO make error page
-                    });
+                    res.render("error");
                 }
             });
 
@@ -106,52 +106,79 @@ module.exports = class {
         // start practice
         this._app.post("/", (req, res) => {
 
-            if (req.session.practice.inPractice) {
-                // exercise submission
+            if (req.session.practice !== undefined) {
 
-                // add current exercise to exercise done list
-                req.session.practice.exercisesDone.push(req.session.practice.currentExercise.id);
+                if (req.session.practice.inPractice) {
 
-                // update success count
-                if (req.body.success) {
-                    req.session.practice.exerciseSuccessCount += 1;
+                    if (req.body.success !== undefined) {
+                        // exercise submission
+
+                        // add current exercise to exercise done list
+                        req.session.practice.exercisesDone.push(req.session.practice.currentExercise.id);
+
+                        // update success count
+                        if (req.body.success) {
+                            req.session.practice.exerciseSuccessCount += 1;
+                        }
+
+                        // finds new exercise
+                        this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
+                            req.session.practice.currentExercise = this._exercise.toJSON(exercise);
+
+                            // terminates request
+                            res.send("OK");
+                        });
+
+                    } else if (req.body.end) {
+                        // end practice
+
+                        req.session.practice.inPractice = false; // FIXME
+                        res.render("exercise/end", {
+                            practice : req.session.practice
+                        });
+
+                    } else {
+                        res.send("KO");
+                    }
+
+                } else {
+                    // starting practice session
+
+                    // reset practice data
+                    req.session.practice = {
+                        inPractice : true,
+                        exercisesDone : [],
+                        exerciseSuccessCount : 0
+                    }
+                    if (!isNaN(req.body.exerciseCount) && !isNaN(parseInt(req.body.exerciseCount))) {
+                        req.session.practice.exerciseMax = Math.max(parseInt(req.body.exerciseCount), 0);
+                    } else {
+                        req.session.practice.exerciseMax = 0;
+                    }
+                    if (typeof req.body.tags === "string") {
+                        req.session.practice.exerciseTags = [req.body.tags];
+                    } else if (typeof req.body.tags === "object") {
+                        req.session.practice.exerciseTags = req.body.tags;
+                    } else {
+                        req.session.practice.exerciseTags = [];
+                    }
+                    this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
+
+                        req.session.practice.currentExercise = this._exercise.toJSON(exercise);
+
+                        // refreshing page
+                        res.redirect("/");
+                    });
                 }
-
-                // finds new exercise
-                this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
-                    req.session.practice.currentExercise = this._exercise.toJSON(exercise);
-
-                    // terminates request
-                    res.send("OK");
-                });
 
             } else {
-                // starting practice session
 
-                // reset practice data
-                req.session.practice = {
-                    inPractice : true,
-                    exercisesDone : [],
-                    exerciseSuccessCount : 0
-                }
-                if (!isNaN(req.body.exerciseCount) && !isNaN(parseInt(req.body.exerciseCount))) {
-                    req.session.practice.exerciseMax = Math.max(parseInt(req.body.exerciseCount), 0);
-                } else {
-                    req.session.practice.exerciseMax = 0;
-                }
-                if (typeof req.body.tags === "string") {
-                    req.session.practice.exerciseTags = [req.body.tags];
-                } else {
-                    req.session.practice.exerciseTags = req.body.tags;
-                }
-                this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
+                // session undefined
+                res.redirect("/");
 
-                    req.session.practice.currentExercise = this._exercise.toJSON(exercise);
-
-                    // refreshing page
-                    res.redirect("/");
-                });
             }
+
+
         });
 
         // new exercise
@@ -164,6 +191,17 @@ module.exports = class {
                 res.redirect("/error");
             }
         });
+
+        // TODO edit exercise
+        this._app.post("/manage/edit", (req, res) => {
+            res.send("TODO");
+        });
+
+        this._app.post("/manage/delete", (req, res) => {
+            this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
+            res.redirect("/manage");
+        });
+
 
     }
 }

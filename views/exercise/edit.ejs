@@ -7,7 +7,7 @@
     <%= exercise.id %>
 </h3>
 
-<form method="POST" action="/manage/new" id="edit">
+<form method="POST" action="/manage/edit" id="edit">
 
     <!-- Title -->
     <div class="field">
@@ -33,7 +33,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea"><%= exercise.statement %></textarea>
+                    <textarea class="textarea" id="txtStatement" required><%= exercise.statement %></textarea>
                 </p>
             </div>
         </div>
@@ -42,10 +42,8 @@
     <!-- Statement Preview -->
     <label class="label">Prévisualisation de l'énoncé</label>
     <div class="box">
-        <p>
-            <!--TODO latex formatting-->
-            TODO
-            Résoudre sur <img src="https://latex.codecogs.com/png.latex?\mathbb{R}" alt="\mathbb{R}"> l'équation différentielle suivante :<br /><img src="https://latex.codecogs.com/png.latex?y^{\prime}+y%20=%20x-e^{x}+\cos{x}" alt="y^{\prime}+y = x-e^{x}+\cos{x}" />.
+        <p id="pStatement">
+
         </p>
     </div>
 
@@ -59,7 +57,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" required><%= exercise.response %></textarea>
+                    <textarea class="textarea" id="txtResponse" required><%= exercise.response %></textarea>
                 </p>
             </div>
         </div>
@@ -68,10 +66,8 @@
     <!-- Repsonse Preview -->
     <label class="label">Prévisualisation de la réponse</label>
     <div class="box">
-        <p>
-            <!--TODO latex formatting-->
-            TODO
-            <img src="https://latex.codecogs.com/png.latex?y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}" alt="y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}" />
+        <p id="pResponse">
+
         </p>
     </div>
 
@@ -118,5 +114,10 @@
 <button type="submit" form="edit" class="button is-primary mt-2">Modifier</button>
 <button type="submit" form="delete" class="button is-danger mt-2 ml-2">Supprimer</button>
 
+
+<script>
+    addPreviewUpdate(document.querySelector("#txtStatement"), document.querySelector("#pStatement"));
+    addPreviewUpdate(document.querySelector("#txtResponse"), document.querySelector("#pResponse"));
+</script>
 
 <%- include('../includes/footer') %>

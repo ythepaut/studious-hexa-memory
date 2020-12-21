@@ -31,17 +31,15 @@ module.exports = class Exercise {
      */
     static formatTags(tags) {
         let formatted = [];
-        for (const tag of tags) {
+        for (let tag of tags) {
             if (tag !== "") {
-                formatted.push(
-                    tag
-                        .toLowerCase()
-                        .trim()
-                        .replaceAll(/[éèêëÉÈÊË]/, "e")
-                        .replaceAll(/àâäÀÂÄ/, "a")
-                        .replaceAll(/îïÎÏ/, "i")
-                        .replaceAll(/çÇ/, "c")
-                );
+                tag = tag.toLowerCase();
+                tag = tag.trim();
+                tag = tag.replace(/[éèêëÉÈÊË]/g, "e");
+                tag = tag.replace(/àâäÀÂÄ/g, "a");
+                tag = tag.replace(/îïÎÏ/g, "i");
+                tag = tag.replace(/çÇ/g, "c");
+                formatted.push(tag);
             }
         }
         return formatted;
@@ -59,7 +57,8 @@ module.exports = class Exercise {
         db.collection("exercises").find().toArray((err, res) => {
             let exercises = [];
             for (const json of res)
-                exercises.push(new Exercise(json._id, json.title, json.statement, json.response, json.time, json.tags));
+                if (tags.every(i => json.tags.includes(i)))
+                    exercises.push(new Exercise(json._id, json.title, json.statement, json.response, json.time, json.tags));
             callback(exercises);
         });
     }
@@ -68,7 +67,7 @@ module.exports = class Exercise {
      * Gets an exercise by its id
      * @param {Object}              db              MongoClient
      * @param {Object}              mongodb         MongoDB
-     * @param {number}              id              Exercise ID (_id from database)
+     * @param {string}              id              Exercise ID (_id from database)
      * @param {function}            callback        Callback fct : callback(exercise)
      */
     static getExercise(db, mongodb, id, callback) {
@@ -105,11 +104,13 @@ module.exports = class Exercise {
 
     /**
      * Gets all distinct tags from all exercises
-     * @return {Array.<string>}                     Tags
+     * @param {Object}              db              MongoClient
+     * @param {function}            callback        Callback fct : callback(tags)
      */
-    static getTags() {
-        //TODO getTags
-        return ["ptsi", "geometrie", "analyse", "algebre", "facile", "moyen", "difficile"];
+    static getTags(db, callback) {
+        db.collection("exercises").distinct("tags", (err, res) => {
+            callback(res);
+        });
     }
 
 
@@ -148,6 +149,17 @@ module.exports = class Exercise {
      */
     static toExercise(json) {
         return new this(json.id, json.title, json.statement, json.response, json.time, json.tags);
+    }
+
+
+    /**
+     * Deletes an exercise by id from database
+     * @param {Object}              db              MongoClient
+     * @param {Object}              mongodb         MongoDB
+     * @param {string}              id              Exercise ID (_id from database)
+     */
+    static deleteExercise(db, mongodb, id) {
+        db.collection("exercises").deleteOne({_id : mongodb.ObjectId(id)});
     }
 
 

@@ -30,7 +30,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" name="statement" placeholder="Résoudre sur \mathbb{R} l'équation différentielle suivante :\n$y^{\prime}+y = x-e^{x}+\cos{x}$." required></textarea>
+                    <textarea class="textarea" id="txtStatement" name="statement" placeholder="Résoudre sur $\mathbb{R}$ l'équation différentielle suivante : $y^{\prime}+y = x-e^{x}+\cos{x}$." required></textarea>
                 </p>
             </div>
         </div>
@@ -39,7 +39,7 @@
     <!-- Statement Preview -->
     <label class="label">Prévisualisation</label>
     <div class="box">
-        <p>
+        <p id="pStatement">
 
         </p>
     </div>
@@ -54,7 +54,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" name="response" placeholder="$y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}$" required></textarea>
+                    <textarea class="textarea" id="txtResponse" name="response" placeholder="$y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}$" required></textarea>
                 </p>
             </div>
         </div>
@@ -63,7 +63,7 @@
     <!-- Repsonse Preview -->
     <label class="label">Prévisualisation de la réponse</label>
     <div class="box">
-        <p>
+        <p id="pResponse">
 
         </p>
     </div>
@@ -103,5 +103,10 @@
     <button type="submit" class="button is-primary mt-2">Ajouter</button>
 
 </form>
+
+<script>
+    addPreviewUpdate(document.querySelector("#txtStatement"), document.querySelector("#pStatement"));
+    addPreviewUpdate(document.querySelector("#txtResponse"), document.querySelector("#pResponse"));
+</script>
 
 <%- include('../includes/footer') %>

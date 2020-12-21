@@ -37,7 +37,7 @@
     <div class="column">
         <div class="field">
             <p class="control has-icons-left">
-                <input class="input" type="text" placeholder="Rechercher parmis les exercices" />
+                <input class="input search-input" data-target="exerciseTable" type="text" placeholder="Rechercher parmis les exercices" />
                 <span class="icon is-small is-left">
             <i class="fas fa-search"></i>
         </span>
@@ -47,11 +47,11 @@
 </div>
 
 
-<table class="table is-striped is-hoverable is-fullwidth">
+<table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
     <thead>
     <tr>
-        <th>Titre</th>
-        <th>Consigne</th>
+        <th style="width: 30%;">Titre</th>
+        <th style="width: 50%;">Consigne</th>
         <th>Tags</th>
     </tr>
     </thead>
@@ -63,21 +63,16 @@
                 <td><%= exercise.statement %></td>
                 <td>
                     <% for (const tag of exercise.tags) { %>
-                        <span class="tag is-primary is-small"><%= tag %></span>
+                        <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
                     <% } %>
                 </td>
             </tr>
         <% } %>
-    <tr>
-        <th><a href="/manage/edit/123456">Résolution dérivée partielle</a></th>
-        <td>Dériver $\frac{\delta f}{\delta x}(x, y) = y^{2}\cos{xy^{2}}$.</td>
-        <td>
-            <span class="tag is-primary is-small">PTSI</span>
-            <span class="tag is-primary is-small">Dérivées</span>
-        </td>
-    </tr>
     </tbody>
 </table>
 
+<script>
+    searchEvent();
+</script>
 
 <%- include('../includes/footer') %>

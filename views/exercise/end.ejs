@@ -1,0 +1,25 @@
+<%- include('../includes/header') %>
+
+<div class="box">
+    <h1 class="title has-text-centered">Fin de l'entraînement !</h1>
+    <h2 class="subtitle has-text-centered">Vous avez arrêté les exercices</h2>
+
+    <div class="columns is-center mt-3">
+        <div class="columm is-parent is-vertical">
+            <article class="tile is-child notification is-light mt-3">
+                <h3>Nombre d'exercices effectués</h3>
+                <span class="is-size-3"><%= practice.exerciseSuccessCount %></span>
+            </article>
+            <br />
+            <article class="tile is-child notification is-light mt-3">
+                <h3>Pourcentage de réussite</h3>
+                <span class="is-size-3"><%= practice.exerciseSuccessCount / practice.exercisesDone.length %>%</span>
+            </article>
+        </div>
+        <div class="column is-one-quarter">
+            <img src="/assets/img/end.png" alt="" />
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

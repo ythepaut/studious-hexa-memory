@@ -5,7 +5,7 @@
     <h2 class="subtitle has-text-centered"><%= practice.currentExercise.title %></h2>
 
 
-    <p>
+    <p id="divStatement">
         <%= practice.currentExercise.statement %>
     </p>
     <hr />
@@ -13,17 +13,36 @@
         <%= practice.currentExercise.response %>
     </p>
 
-    <div class="buttons level-right" id="divSkipButton">
-        <button class="button is-warning" id="btnSeeResponse">Voir la réponse</button>
-    </div>
-    <div class="buttons level-right is-hidden" id="divNextButtons">
+
+
+    <div class="buttons level-right is-hidden mt-6" id="divNextButtons">
         <button class="button is-danger" id="btnExerciseFail">Je n'ai pas réussi l'exercice</button>
         <button class="button is-success" id="btnExerciseSuccess">J'ai réussi l'exercice</button>
     </div>
 
-    <div class="mt-6" id="divTimer" style="text-align: center;">
+    <div class="mt-6 has-text-centered" id="divTimer">
         <progress class="progress is-primary" value="<%= practice.currentExercise.time*100 %>" max="<%= practice.currentExercise.time*100 %>" id="progressTimer"></progress>
         <span class="tag is-large" id="labelTimer"><%= practice.currentExercise.time %></span>
+        <button class="button is-warning" id="btnSeeResponse">Voir la réponse</button>
+    </div>
+
+    <hr />
+
+    <div class="mt-3 has-text-centered">
+        <span>
+            Exercice n°<%= practice.exercisesDone.length + 1 %>/<% if (practice.exerciseMax === 0) {%><i class="fas fa-infinity"></i><%} else {%><%= practice.exerciseMax %><%} %><br />
+            ID <span class="is-family-code"><%= practice.currentExercise.id %></span><br />
+            <% if (practice.exerciseTags.length > 0) { %>
+            Tag<% if (practice.exerciseTags.length > 1) { %>s<% } %> de l'entraînement :
+            <% for (const tag of practice.exerciseTags) { %>
+                <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
+            <% }} %>
+        </span>
+        <br />
+
+        <form method="POST" action="/">
+            <input class="button is-danger is-small mt-3" type="submit" name="end" value="Arrêter mon entraînement" />
+        </form>
     </div>
 </div>
 
