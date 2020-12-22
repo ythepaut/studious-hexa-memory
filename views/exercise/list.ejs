@@ -11,7 +11,19 @@
     <div class="level-item has-text-centered">
         <div>
             <p class="heading">Temps cumulé des exercices</p>
-            <p class="title"><%= exercises.reduce((acc, e) => {acc + (e.time || 0)}) %>s</p>
+            <p class="title">
+                <%
+                    var s = 0;
+                    for (const exercise of exercises) {
+                        s += exercise.time;
+                    }
+                    var h = Math.floor(s / 3600);
+                    s -= h * 3600;
+                    var m = Math.floor(s / 60);
+                    s -= m * 60;
+                %>
+                <%= h %>h <%= m %>m <%= s %>s
+            </p>
         </div>
     </div>
     <div class="level-item has-text-centered">

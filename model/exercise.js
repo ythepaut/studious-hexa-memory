@@ -178,10 +178,9 @@ module.exports = class Exercise {
             //update
             let json = Exercise.toJSON(this);
             delete json.id;
-            console.log(json);
-            db.collection("exercises").updateOne({_id : mongodb.ObjectId(this._id)}, [
+            db.collection("exercises").updateOne({_id : mongodb.ObjectId(this._id)},
                 {$set : json}
-            ]);
+            );
         }
         return true; //TODO validate exercise before insert
     }
