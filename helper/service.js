@@ -96,6 +96,19 @@ module.exports = class {
 
         });
 
+        // export exercises
+        this._app.get("/manage/export", (req, res) => {
+            this._exercise.getExercises(this._db, [], (exercises) => {
+                res.set({"Content-Disposition":"attachment; filename=\"shm-export.json\""});
+                res.send(exercises);
+            });
+        });
+
+        // import exercises page
+        this._app.get("/manage/import", (req, res) => {
+            res.render("exercise/import");
+        });
+
         // about page
         this._app.get("/about", (req, res) => {
             res.render("about/about");
@@ -239,7 +252,6 @@ module.exports = class {
             this._updateInsertExercise(req, res);
         });
 
-        // TODO edit exercise
         this._app.post("/manage/edit", (req, res) => {
             this._updateInsertExercise(req, res);
         });
@@ -248,7 +260,6 @@ module.exports = class {
             this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
             res.redirect("/manage");
         });
-
 
     }
 
