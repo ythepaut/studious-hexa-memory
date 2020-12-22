@@ -42,7 +42,7 @@ module.exports = class Exercise {
                 formatted.push(tag);
             }
         }
-        return formatted;
+        return formatted.sort();
     }
 
 
@@ -165,12 +165,24 @@ module.exports = class Exercise {
     /**
      * Saves the exercise to the database
      * @param {Object}              db              MongoClient
+     * @param {Object}              mongodb         MongoDB
      * @return {boolean}                            true if success
      */
-    saveExercise(db) {
-        let json = Exercise.toJSON(this);
-        delete json.id;
-        db.collection("exercises").insertOne(json);
+    saveExercise(db, mongodb) {
+        if (this._id === -1) {
+            // insert
+            let json = Exercise.toJSON(this);
+            delete json.id;
+            db.collection("exercises").insertOne(json);
+        } else {
+            //update
+            let json = Exercise.toJSON(this);
+            delete json.id;
+            console.log(json);
+            db.collection("exercises").updateOne({_id : mongodb.ObjectId(this._id)}, [
+                {$set : json}
+            ]);
+        }
         return true; //TODO validate exercise before insert
     }
 

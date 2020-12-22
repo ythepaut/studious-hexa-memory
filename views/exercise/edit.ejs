@@ -17,7 +17,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" value="<%= exercise.title %>" />
+                    <input class="input" type="text" name="title" value="<%= exercise.title %>" />
                 </p>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" id="txtStatement" required><%= exercise.statement %></textarea>
+                    <textarea class="textarea" id="txtStatement" name="statement" required><%= exercise.statement %></textarea>
                 </p>
             </div>
         </div>
@@ -42,7 +42,7 @@
     <!-- Statement Preview -->
     <label class="label">Prévisualisation de l'énoncé</label>
     <div class="box">
-        <p id="pStatement">
+        <p style="white-space: pre;" id="pStatement">
 
         </p>
     </div>
@@ -57,7 +57,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" id="txtResponse" required><%= exercise.response %></textarea>
+                    <textarea class="textarea" id="txtResponse" name="response" required><%= exercise.response %></textarea>
                 </p>
             </div>
         </div>
@@ -66,7 +66,7 @@
     <!-- Repsonse Preview -->
     <label class="label">Prévisualisation de la réponse</label>
     <div class="box">
-        <p id="pResponse">
+        <p style="white-space: pre;" id="pResponse">
 
         </p>
     </div>
@@ -81,7 +81,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="number" min="0" max="14400" value="<%= exercise.time %>" />
+                    <input class="input" type="number" min="0" max="14400" name="time" value="<%= exercise.time %>" />
                 </p>
             </div>
         </div>
@@ -97,7 +97,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" value="<% for (const tag of exercise.tags) { %><%= tag %>,<% } %>" /> <!--TODO remove extra comma-->
+                    <input class="input" type="text" name="tags" value="<% for (const tag of exercise.tags) { %><%= tag %>,<% } %>" /> <!--TODO remove extra comma-->
                 </p>
             </div>
         </div>
@@ -111,7 +111,7 @@
     <input type="hidden" name="id" value="<%= exercise.id %>">
 </form>
 
-<button type="submit" form="edit" class="button is-primary mt-2" disabled>Modifier</button>
+<button type="submit" form="edit" class="button is-primary mt-2">Modifier</button>
 <button type="submit" form="delete" class="button is-danger mt-2 ml-2">Supprimer</button>
 
 

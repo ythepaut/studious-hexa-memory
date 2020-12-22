@@ -4,8 +4,8 @@
  * @return {string}                             HTML elements
  */
 function formatLatexImage(str) {
-    str = str.replaceAll(/\$(.*)\$/g, "<img src=\"https://latex.codecogs.com/png.latex?$1\" alt=\"$1\" />");
-    str = str.replaceAll(/\[(.*)\]/g, "<img src=\"$1\" alt=\"$1\" />");
+    str = str.replaceAll(/\$(.*?)\$/g, "<img src=\"https://latex.codecogs.com/png.latex?$1\" alt=\"$1\" />");
+    str = str.replaceAll(/\[(.*?)\]/g, "<img src=\"$1\" alt=\"$1\" />");
     str = str.replaceAll(/\n/g, "<br />");
     return str;
 }

@@ -64,8 +64,6 @@ module.exports = class {
 
                 res.render("exercise/list",
                     {
-                        exerciseCount : 0,
-                        exerciseTime : 0,
                         exerciseDone : 0,
                         successRate : 0,
                         exercises : exercises
@@ -82,15 +80,19 @@ module.exports = class {
         // edit exercise page
         this._app.get("/manage/edit/:id", (req, res) => {
 
-            const exercise = this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
-                if (exercise !== null) {
-                    res.render("exercise/edit", {
-                        exercise : this._exercise.toJSON(exercise)
-                    });
-                } else {
-                    res.render("error");
-                }
-            });
+            if (req.params.id.match(/[0-9a-f]{24}/)) {
+                const exercise = this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
+                    if (exercise !== null) {
+                        res.render("exercise/edit", {
+                            exercise : this._exercise.toJSON(exercise)
+                        });
+                    } else {
+                        res.render("error");
+                    }
+                });
+            } else {
+                res.render("error");
+            }
 
         });
 
@@ -234,18 +236,12 @@ module.exports = class {
 
         // new exercise
         this._app.post("/manage/new", (req, res) => {
-            const exercise = new this._exercise(-1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
-
-            if (exercise.saveExercise(this._db)) {
-                res.redirect("/manage");
-            } else {
-                res.redirect("/error");
-            }
+            this._updateInsertExercise(req, res);
         });
 
         // TODO edit exercise
         this._app.post("/manage/edit", (req, res) => {
-            res.send("TODO");
+            this._updateInsertExercise(req, res);
         });
 
         this._app.post("/manage/delete", (req, res) => {
@@ -254,5 +250,15 @@ module.exports = class {
         });
 
 
+    }
+
+    _updateInsertExercise(req, res) {
+        const exercise = new this._exercise(req.body.id !== undefined ? req.body.id : -1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
+
+        if (exercise.saveExercise(this._db, this._mongodb)) {
+            res.redirect("/manage");
+        } else {
+            res.redirect("/error");
+        }
     }
 }

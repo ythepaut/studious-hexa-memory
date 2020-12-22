@@ -60,7 +60,7 @@ qui permet de s'entraîner sur un banque d'exercices.
      `> exit`
     
 
-5. Ajouter les variables d'environnement avec la commande `$setenv CLÉ=VALEUR`
+5. Ajouter les variables d'environnement avec la commande `$ setenv CLÉ=VALEUR`
    ou en créant un fichier `.env` à la racine du projet.
    
    Liste des variables :
