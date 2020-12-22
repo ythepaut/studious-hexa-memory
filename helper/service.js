@@ -120,7 +120,14 @@ module.exports = class {
                         // exercise submission
 
                         // add current exercise to exercise done list
-                        req.session.practice.exercisesDone.push(req.session.practice.currentExercise.id);
+                        req.session.practice.exercisesDone.push(
+                            {
+                                id : req.session.practice.currentExercise.id,
+                                title : req.session.practice.currentExercise.title,
+                                tags : req.session.practice.currentExercise.tags,
+                                success : req.body.success === "true"
+                            }
+                        );
 
                         // update success count
                         if (req.body.success === "true") {
@@ -130,7 +137,7 @@ module.exports = class {
                         if (req.session.practice.exercisesDone.length < req.session.practice.exerciseMax || req.session.practice.exerciseMax === 0) {
 
                             // finds new exercise
-                            this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
+                            this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone.map(e => e.id), (exercise) => {
 
                                 if (exercise !== null) {
                                     req.session.practice.currentExercise = this._exercise.toJSON(exercise);
@@ -190,7 +197,7 @@ module.exports = class {
                     } else {
                         req.session.practice.exerciseTags = [];
                     }
-                    this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
+                    this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone.map(e => e.id), (exercise) => {
 
                         if (exercise !== null) {
                             req.session.practice.currentExercise = this._exercise.toJSON(exercise);

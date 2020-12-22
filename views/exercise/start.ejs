@@ -8,7 +8,7 @@
 
         <div class="columm is-one-half">
 
-            <form method="POST" class="mt-5 mr-3">
+            <form method="POST" class="mt-5 mr-3" id="formStart">
 
                 <label class="label mt-3">Nombre d'exercices&nbsp;<span class="has-text-info ml-1" title="0 ou laisser vide pour ne pas limiter le nombre d'exercices"><i class="fas fa-info-circle"></i></span></label>
                 <input class="input mt-1" type="number" min="0" max="1000" name="exerciseCount" value="0" />
@@ -21,8 +21,6 @@
                         <% } %>
                     </select>
                 </div>
-                <br />
-                <button type="submit" class="button is-primary mt-3">Commencer</button>
             </form>
 
         </div>
@@ -33,6 +31,10 @@
 
         </div>
 
+    </div>
+
+    <div class="mt-3 has-text-centered">
+        <button type="submit" form="formStart" class="button is-primary is-small mt-3">Commencer</button>
     </div>
 
 

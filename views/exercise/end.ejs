@@ -12,7 +12,14 @@
         <% } %>
     </h2>
 
+    <hr />
+
+    <div class="mt-3 has-text-centered">
+        <span class="is-size-4">Statistiques</span>
+    </div>
+
     <div class="columns is-align-items-center is-justify-content-center mt-3">
+
 
         <div class="columm is-parent is-vertical md-6">
 
@@ -25,7 +32,7 @@
                 <h3>Pourcentage de réussite</h3>
                 <span class="is-size-3">
                     <% if (practice.exercisesDone.length) { %>
-                        <%= practice.exerciseSuccessCount / practice.exercisesDone.length * 100 %>%
+                        <%= Math.trunc(practice.exerciseSuccessCount / practice.exercisesDone.length * 100) %>%
                     <% } else { %>
                         0%
                     <% } %>
@@ -40,6 +47,49 @@
         </div>
 
     </div>
+
+    <hr />
+
+    <div class="mt-3 has-text-centered">
+        <span class="is-size-4">Résumé</span>
+
+        <table class="table is-striped is-fullwidth has-text-left mt-4">
+            <thead>
+            <tr>
+                <th style="width:5%;"><abbr title="Passer la souris sur les numéros pour voir les ID n'exercice">N°</abbr></th>
+                <th style="width:50%;">Titre</th>
+                <th style="width:30%;">Tags</th>
+                <th>Réussi</th>
+            </tr>
+            </thead>
+            <tbody>
+                <%
+                var i = 0;
+                for (const exercise of practice.exercisesDone) {
+                i += 1;
+                %>
+                <tr>
+                    <th><span title="<%= exercise.id %>"><%= i %></span></th>
+                    <td><%= exercise.title %></td>
+                    <td>
+                        <% for (const tag of exercise.tags) { %>
+                            <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
+                        <% } %>
+                    </td>
+                    <td>
+                        <% if (exercise.success) { %>
+                            <span class="tag is-success">Oui</span>
+                        <% } else { %>
+                            <span class="tag is-danger">Non</span>
+                        <% } %>
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <hr />
 
     <div class="mt-3 has-text-centered">
         <form method="POST" action="/">
