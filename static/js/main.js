@@ -33,7 +33,7 @@ btnExerciseFail.addEventListener("click", (event) => {
     nextExercise(false);
 });
 btnExerciseSuccess.addEventListener("click", (event) => {
-    nextExercise(false);
+    nextExercise(true);
 });
 
 // handle timer and progress bar when document loaded

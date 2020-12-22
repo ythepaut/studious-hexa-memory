@@ -36,9 +36,9 @@ module.exports = class Exercise {
                 tag = tag.toLowerCase();
                 tag = tag.trim();
                 tag = tag.replace(/[éèêëÉÈÊË]/g, "e");
-                tag = tag.replace(/àâäÀÂÄ/g, "a");
-                tag = tag.replace(/îïÎÏ/g, "i");
-                tag = tag.replace(/çÇ/g, "c");
+                tag = tag.replace(/[àâäÀÂÄ]/g, "a");
+                tag = tag.replace(/[îïÎÏ]/g, "i");
+                tag = tag.replace(/[çÇ]/g, "c");
                 formatted.push(tag);
             }
         }
@@ -53,7 +53,6 @@ module.exports = class Exercise {
      * @param {function}            callback        Callback fct : callback(exercises)
      */
     static getExercises(db, tags, callback) {
-        //TODO add filter by tags
         db.collection("exercises").find().toArray((err, res) => {
             let exercises = [];
             for (const json of res)

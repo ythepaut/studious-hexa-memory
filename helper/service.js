@@ -26,25 +26,30 @@ module.exports = class {
             // set session if not set
             if (req.session.practice === undefined) {
                 req.session.practice = {
-                    inPractice : false,         // true if practicing
+                    practiceStatus : "IDLE",    // IDLE / PRACTICING / END
                     exercisesDone : [],         // list of exercise done
                     exerciseSuccessCount : 0,   // number of success
                     exerciseMax : 0,            // number of exercise to do, 0 for infinite
                     exerciseTags : [],          // exercise tags filter
-                    currentExercise : null      // current exercise
+                    currentExercise : null,     // current exercise
+                    endReason : null            // MANUAL / MAX_REACHED / DEPLETED
                 }
             }
 
             // if in practice, show exercise, else start page
-            if (req.session.practice.inPractice) {
+            if (req.session.practice.practiceStatus === "PRACTICING") {
                 res.render("exercise/exercise", {
                     practice : req.session.practice
                 });
-            } else {
+            } else if (req.session.practice.practiceStatus === "IDLE") {
                 this._exercise.getTags(this._db, (tags) => {
                     res.render("exercise/start", {
                         tags : tags
                     });
+                });
+            } else if (req.session.practice.practiceStatus === "END") {
+                res.render("exercise/end", {
+                    practice : req.session.practice
                 });
             }
 
@@ -100,15 +105,16 @@ module.exports = class {
         });
 
 
+
         /////////////////////////////////////////
         // Form POSTs
 
         // start practice
         this._app.post("/", (req, res) => {
 
-            if (req.session.practice !== undefined) {
+            if (req.session.practice !== undefined && !req.body.finish) {
 
-                if (req.session.practice.inPractice) {
+                if (req.session.practice.practiceStatus === "PRACTICING") {
 
                     if (req.body.success !== undefined) {
                         // exercise submission
@@ -117,22 +123,43 @@ module.exports = class {
                         req.session.practice.exercisesDone.push(req.session.practice.currentExercise.id);
 
                         // update success count
-                        if (req.body.success) {
+                        if (req.body.success === "true") {
                             req.session.practice.exerciseSuccessCount += 1;
                         }
 
-                        // finds new exercise
-                        this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
-                            req.session.practice.currentExercise = this._exercise.toJSON(exercise);
+                        if (req.session.practice.exercisesDone.length < req.session.practice.exerciseMax || req.session.practice.exerciseMax === 0) {
 
-                            // terminates request
+                            // finds new exercise
+                            this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
+
+                                if (exercise !== null) {
+                                    req.session.practice.currentExercise = this._exercise.toJSON(exercise);
+                                } else {
+                                    // end practice (DEPLETED)
+                                    req.session.practice.practiceStatus = "END";
+                                    req.session.practice.endReason = "DEPLETED";
+                                }
+
+
+                                // terminates request
+                                res.send("OK");
+                            });
+
+                        } else {
+                            // end practice (MAX_REACHED)
+
+                            req.session.practice.practiceStatus = "END";
+                            req.session.practice.endReason = "MAX_REACHED";
+
                             res.send("OK");
-                        });
+                        }
 
                     } else if (req.body.end) {
-                        // end practice
+                        // end practice (MANUAL)
 
-                        req.session.practice.inPractice = false; // FIXME
+                        req.session.practice.practiceStatus = "END";
+                        req.session.practice.endReason = "MANUAL";
+
                         res.render("exercise/end", {
                             practice : req.session.practice
                         });
@@ -141,14 +168,15 @@ module.exports = class {
                         res.send("KO");
                     }
 
-                } else {
+                } else if (req.session.practice.practiceStatus === "IDLE") {
                     // starting practice session
 
                     // reset practice data
                     req.session.practice = {
-                        inPractice : true,
+                        practiceStatus : "PRACTICING",
                         exercisesDone : [],
-                        exerciseSuccessCount : 0
+                        exerciseSuccessCount : 0,
+                        endReason : null
                     }
                     if (!isNaN(req.body.exerciseCount) && !isNaN(parseInt(req.body.exerciseCount))) {
                         req.session.practice.exerciseMax = Math.max(parseInt(req.body.exerciseCount), 0);
@@ -164,14 +192,30 @@ module.exports = class {
                     }
                     this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone, (exercise) => {
 
-                        req.session.practice.currentExercise = this._exercise.toJSON(exercise);
+                        if (exercise !== null) {
+                            req.session.practice.currentExercise = this._exercise.toJSON(exercise);
+                        } else {
+                            // end practice (DEPLETED)
+                            req.session.practice.practiceStatus = "END";
+                            req.session.practice.endReason = "DEPLETED";
+                        }
 
                         // refreshing page
                         res.redirect("/");
                     });
+
+                } else {
+
+                    res.render("exercise/end", {
+                        practice : req.session.practice
+                    });
                 }
 
             } else {
+
+                if (req.body.finish) {
+                    req.session.practice.practiceStatus = "IDLE";
+                }
 
                 // session undefined
                 res.redirect("/");
