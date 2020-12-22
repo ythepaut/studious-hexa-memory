@@ -31,10 +31,14 @@
 <hr />
 
 <div class="columns">
-    <div class="column is-one-fifth is-fullwidth">
-        <a class="button is-primary" href="/manage/new">Ajouter un exercice</a>
-    </div>
     <div class="column">
+        <div class="buttons">
+            <a class="button is-primary" href="/manage/new">Ajouter un exercice</a>
+            <a class="button is-light" disabled>Importer</a>
+            <a class="button is-light" disabled>Exporter</a>
+        </div>
+    </div>
+    <div class="column is-two-thirds">
         <div class="field">
             <p class="control has-icons-left">
                 <input class="input search-input" data-target="exerciseTable" type="text" placeholder="Rechercher parmis les exercices" />

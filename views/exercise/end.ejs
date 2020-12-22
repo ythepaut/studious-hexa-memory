@@ -12,8 +12,10 @@
         <% } %>
     </h2>
 
-    <div class="columns is-center mt-3">
-        <div class="columm is-parent is-vertical">
+    <div class="columns is-align-items-center is-justify-content-center mt-3">
+
+        <div class="columm is-parent is-vertical md-6">
+
             <article class="tile is-child notification is-light mt-3">
                 <h3>Nombre d'exercices effectués</h3>
                 <span class="is-size-3"><%= practice.exercisesDone.length %></span>
@@ -29,10 +31,14 @@
                     <% } %>
                 </span>
             </article>
+
         </div>
-        <div class="column is-one-quarter">
+
+
+        <div class="column is-one-quarter ml-6">
             <img src="/assets/img/end.png" alt="" />
         </div>
+
     </div>
 
     <div class="mt-3 has-text-centered">
