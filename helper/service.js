@@ -81,7 +81,7 @@ module.exports = class {
         this._app.get("/manage/edit/:id", (req, res) => {
 
             if (req.params.id.match(/[0-9a-f]{24}/)) {
-                const exercise = this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
+                this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
                     if (exercise !== null) {
                         res.render("exercise/edit", {
                             exercise : this._exercise.toJSON(exercise)

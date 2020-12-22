@@ -27,7 +27,7 @@ btnSeeResponse.addEventListener("click", (event) => {
 
 // handle next exercise button
 const nextExercise = (success) => {
-    postRequest("/", "success=" + success);
+    postRequest("/", "end=false&success=" + success);
 }
 btnExerciseFail.addEventListener("click", (event) => {
     nextExercise(false);
@@ -56,9 +56,4 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // formats latex
     divStatement.innerHTML = formatLatexImage(divStatement.innerHTML);
     divResponse.innerHTML = formatLatexImage(divResponse.innerHTML);
-});
-
-// handles stop practice button
-btnExerciseSuccess.addEventListener("click", (event) => {
-    postRequest("/", "end=true");
 });
