@@ -4,6 +4,10 @@
     <div class="column mt-6">
         <p class="is-size-5" style="top:40%;position:absolute;">
             <b>Oups</b> une erreur est survenue.
+            <% if (typeof verbose !== "undefined") { %>
+                <br />
+                <%= verbose %>
+            <% } %>
         </p>
     </div>
 

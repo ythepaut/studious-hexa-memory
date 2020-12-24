@@ -88,11 +88,15 @@ module.exports = class {
                             exercise : this._exercise.toJSON(exercise)
                         });
                     } else {
-                        res.render("error");
+                        res.render("error", {
+                            verbose : "Exercice innexistant."
+                        });
                     }
                 });
             } else {
-                res.render("error");
+                res.render("error", {
+                    verbose : "Exercice innexistant."
+                });
             }
 
         });
@@ -273,7 +277,9 @@ module.exports = class {
                     if (err) {
                         throw err;
                     } else if (!req.files[0]) {
-                        res.render("error");
+                        res.render("error", {
+                            verbose : "Aucun fichier sélectionné."
+                        });
                     } else {
                         let path = req.files[0].path;
 
@@ -290,12 +296,16 @@ module.exports = class {
                                 res.redirect("/manage");
                             } catch (ex) {
                                 this._fs.unlinkSync(path);
-                                res.render("error");
+                                res.render("error", {
+                                    verbose : "Le fichier envoyé n'est pas un fichier JSON."
+                                });
                             }
 
                         } else {
                             this._fs.unlinkSync(path);
-                            res.render("error");
+                            res.render("error", {
+                                verbose : "Le fichier envoyé n'est pas un fichier JSON."
+                            });
                         }
                     }
 
@@ -313,7 +323,9 @@ module.exports = class {
         if (exercise.saveExercise(this._db, this._mongodb)) {
             res.redirect("/manage");
         } else {
-            res.redirect("/error");
+            res.render("error", {
+                verbose : "Exercice non valide."
+            });
         }
     }
 }
