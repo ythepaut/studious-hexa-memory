@@ -1,12 +1,17 @@
 <%- include('../includes/header') %>
 
-<div class="box">
-    <h1 class="title has-text-centered">Importer des exercices (en développement)</h1>
+<div class="box is-align-items-center is-justify-content-center">
+    <h1 class="title has-text-centered">Importer des exercices</h1>
 
-    <form method="POST" action="/manage/import" class="is-align-items-center is-justify-content-center">
-        <div class="file has-name">
+    <form method="POST" action="/manage/import" enctype="multipart/form-data" class="has-text-centered">
+
+        <p>
+            Seuls les fichiers au format <code>.json</code> exportés depuis le site sont supportés.
+        </p>
+
+        <div class="file has-name is-justify-content-center mt-3">
             <label class="file-label">
-                <input class="file-input" type="file" name="resume" />
+                <input class="file-input" type="file" name="file" />
                 <span class="file-cta">
                     <span class="file-icon">
                         <i class="fas fa-upload"></i>
@@ -20,7 +25,20 @@
                 </span>
             </label>
         </div>
+
+        <input class="button is-primary mt-3" type="submit" value="Importer" />
     </form>
 </div>
+
+<script>
+    // updates file name in file input
+    const fileInput = document.querySelector(".file input[type=file]");
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector(".file .file-name");
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+</script>
 
 <%- include('../includes/footer') %>

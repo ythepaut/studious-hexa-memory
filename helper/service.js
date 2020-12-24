@@ -1,6 +1,6 @@
 module.exports = class {
 
-    constructor(app, express, path, db, mongodb) {
+    constructor(app, express, path, db, mongodb, expressUpload) {
         this._app = app;
         this._express = express;
         this._path = path;
@@ -8,6 +8,7 @@ module.exports = class {
         this._mongodb = mongodb;
         this._initializeRoutes();
         this._exercise = require("../model/exercise");
+        this._fs = require("fs");
     }
 
 
@@ -259,6 +260,49 @@ module.exports = class {
         this._app.post("/manage/delete", (req, res) => {
             this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
             res.redirect("/manage");
+        });
+
+        this._app.post("/manage/import", (req, res) => {
+
+            let multer = require("multer");
+            require("../config/storage")(multer, this._path, (storage) => {
+                let upload = multer({storage : storage}).any("import");
+
+                upload(req, res, (err) => {
+
+                    if (err) {
+                        throw err;
+                    } else if (!req.files[0]) {
+                        res.render("error");
+                    } else {
+                        let path = req.files[0].path;
+
+                        // checking if file has json extension
+                        if (path.match(/.*\.json/)) {
+
+                            let importJSON = {};
+
+                            // getting content as json
+                            try {
+                                importJSON = JSON.parse(this._fs.readFileSync(path, "utf8").toString());
+                                this._exercise.importExercises(this._db, this._mongodb, importJSON);
+                                this._fs.unlinkSync(path);
+                                res.redirect("/manage");
+                            } catch (ex) {
+                                this._fs.unlinkSync(path);
+                                res.render("error");
+                            }
+
+                        } else {
+                            this._fs.unlinkSync(path);
+                            res.render("error");
+                        }
+                    }
+
+                });
+
+            });
+
         });
 
     }

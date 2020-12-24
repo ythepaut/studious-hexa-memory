@@ -163,13 +163,29 @@ module.exports = class Exercise {
 
 
     /**
+     * Saves exercises (import) if not in database
+     * @param {Object}              db              MongoClient
+     * @param {Object}              mongodb         MongoDB
+     * @param {Object}              exercises       Exercises as JSON
+     */
+    static importExercises(db, mongodb, exercises) {
+        for (const exerciseJSON of exercises) {
+            let exercise = new Exercise(exerciseJSON._id, exerciseJSON._title, exerciseJSON._statement, exerciseJSON._response, exerciseJSON._time, exerciseJSON._tags);
+            exercise.saveExercise(db, mongodb, true);
+        }
+    }
+
+
+    /**
      * Saves the exercise to the database
      * @param {Object}              db              MongoClient
      * @param {Object}              mongodb         MongoDB
-     * @return {boolean}                            true if success
+     * @param {boolean}             forceInsert     True if force insert instead of update
+     * @return {boolean}                            True if success
+     * TODO Update exercises instead of inserting them if already in database
      */
-    saveExercise(db, mongodb) {
-        if (this._id === -1) {
+    saveExercise(db, mongodb, forceInsert = false) {
+        if (this._id === -1 || forceInsert) {
             // insert
             let json = Exercise.toJSON(this);
             delete json.id;

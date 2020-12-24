@@ -22,7 +22,6 @@ app.use(session({
 
 app.set("view engine", "ejs");
 
-
 // setting routes
 require("./helper/db")((client) => {
     new (require("./helper/service"))(app, express, path, client, mongodb);

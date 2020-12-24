@@ -37,6 +37,7 @@ btnExerciseSuccess.addEventListener("click", (event) => {
 });
 
 // handle timer and progress bar when document loaded
+// FIXME timer restart on page reload
 let time = -1;
 document.addEventListener("DOMContentLoaded", (event) => {
     time = progressTimer.value;
