@@ -87,6 +87,10 @@ qui permet de s'entraîner sur un banque d'exercices.
 
    ```$ git pull origin master```
 
-2. Redémarrer l'instance
+2. Installer les éventuelles nouvelles dépendances
+
+   ```$ npm install```
+
+3. Redémarrer l'instance
 
    ```$ pm2 restart studious_hexa_memory```
