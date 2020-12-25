@@ -315,6 +315,17 @@ module.exports = class {
 
         });
 
+
+
+        /////////////////////////////////////////
+        // 404 error page
+
+        this._app.use((req, res, next) => {
+            res.status(404).render("error", {
+                verbose : "Cette page n'éxiste pas."
+            });
+        });
+
     }
 
     _updateInsertExercise(req, res) {
