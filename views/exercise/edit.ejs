@@ -111,8 +111,20 @@
     <input type="hidden" name="id" value="<%= exercise.id %>">
 </form>
 
+<div class="modal" id="modalDelete">
+    <div class="modal-background" data-target="modalDelete"></div>
+    <div class="modal-content">
+        <div class="box has-text-centered">
+            <h1 class="title">Supprimer l'exercice</h1>
+            <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer l'exercice<br />"<%= exercise.title %>" ?</p>
+            <button type="submit" form="delete" class="button is-danger mt-2">Supprimer</button>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" data-target="modalDelete"></button>
+</div>
+
 <button type="submit" form="edit" class="button is-primary mt-2">Modifier</button>
-<button type="submit" form="delete" class="button is-danger mt-2 ml-2">Supprimer</button>
+<button type="button" class="button is-danger mt-2 ml-2" data-toggle="modal" data-target="modalDelete">Supprimer</button>
 
 
 <script>
