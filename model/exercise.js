@@ -185,6 +185,16 @@ module.exports = class Exercise {
      * TODO Update exercises instead of inserting them if already in database
      */
     saveExercise(db, mongodb, forceInsert = false) {
+
+        // validates exercise
+        if (this._statement === undefined || this._statement.length === 0 ||
+            this._response === undefined || this._response.length === 0 ||
+            this._title === undefined || this._title.length === 0 ||
+            this._tags === undefined || this._tags.length === 0 ||
+            this._time === undefined || this._time === 0) {
+            return false;
+        }
+
         if (this._id === -1 || forceInsert) {
             // insert
             let json = Exercise.toJSON(this);
@@ -198,7 +208,7 @@ module.exports = class Exercise {
                 {$set : json}
             );
         }
-        return true; //TODO validate exercise before insert
+        return true;
     }
 
 
