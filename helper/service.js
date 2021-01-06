@@ -1,6 +1,6 @@
 module.exports = class {
 
-    constructor(app, express, path, db, mongodb, expressUpload) {
+    constructor(app, express, path, db, mongodb) {
         this._app = app;
         this._express = express;
         this._path = path;
@@ -330,7 +330,7 @@ module.exports = class {
         /////////////////////////////////////////
         // 404 error page
 
-        this._app.use((req, res, next) => {
+        this._app.use((req, res) => {
             res.status(404).render("error", {
                 verbose : "Cette page n'éxiste pas."
             });

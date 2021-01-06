@@ -21,7 +21,7 @@ const revealResponse = () => {
         timer = null;
     }
 }
-btnSeeResponse.addEventListener("click", (event) => {
+btnSeeResponse.addEventListener("click", () => {
     revealResponse();
 });
 
@@ -29,17 +29,17 @@ btnSeeResponse.addEventListener("click", (event) => {
 const nextExercise = (success) => {
     postRequest("/", "success=" + success);
 }
-btnExerciseFail.addEventListener("click", (event) => {
+btnExerciseFail.addEventListener("click", () => {
     nextExercise(false);
 });
-btnExerciseSuccess.addEventListener("click", (event) => {
+btnExerciseSuccess.addEventListener("click", () => {
     nextExercise(true);
 });
 
 // handle timer and progress bar when document loaded
 // FIXME timer restart on page reload
 let time = -1;
-window.addEventListener("load", (event) => {
+window.addEventListener("load", () => {
     time = progressTimer.value;
     timer = setInterval(() => {
 

@@ -1,5 +1,8 @@
 # Studious Hexa Memory
 
+[![CodeFactor](https://www.codefactor.io/repository/github/ythepaut/studious-hexa-memory/badge/master)](https://www.codefactor.io/repository/github/ythepaut/studious-hexa-memory/overview/master)
+[![Known Vulnerabilities](https://snyk.io/test/github/ythepaut/studious-hexa-memory/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ythepaut/studious-hexa-memory?targetFile=package.json)
+
 ## A propos
 
 Studious Hexa Memomry est une application web, utilisant les technologies NodeJS et MongoDB,
