@@ -12,7 +12,7 @@ function formatLatexImage(str) {
             throwOnError: false
         });
     });
-    str = str.replaceAll(/\[(.*?)\]/g, "<img src=\"$1\" alt=\"$1\" />");
+    str = str.replaceAll(/\[\[(.*?)\]\]/g, "<img src=\"$1\" alt=\"$1\" />");
     str = str.replaceAll(/\n/g, "<br />");
     return str;
 }
