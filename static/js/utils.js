@@ -24,7 +24,7 @@ function formatLatexImage(str) {
  */
 function addPreviewUpdate(input, preview) {
     preview.innerHTML = formatLatexImage(input.value);
-    input.addEventListener("keyup", (event) => {
+    input.addEventListener("keyup", () => {
         preview.innerHTML = formatLatexImage(input.value);
     });
 }
