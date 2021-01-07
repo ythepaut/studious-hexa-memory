@@ -4,9 +4,22 @@
  * @return {string}                             HTML elements
  */
 function formatLatexImage(str) {
-    str = str.replaceAll(/\$(.*?)\$/g, "<img src=\"https://latex.codecogs.com/png.latex?$1\" alt=\"$1\" />");
-    str = str.replaceAll(/\[(.*?)\]/g, "<img src=\"$1\" alt=\"$1\" />");
+    // LateX
+    str = str.replace(/\$(.*?)\$/g, (a, b) => {
+        b = b.replaceAll(/&lt;/g, "<");
+        b = b.replaceAll(/&gt;/g, ">");
+        return katex.renderToString(b, {
+            throwOnError: false
+        });
+    });
+    // Image
+    str = str.replace(/\[\[(.*?)\]\]/g, (a, b) => {
+        b.replaceAll("\"", "\\\"");
+        return "<img src=\"" + b + "\" alt=\"" + b + "\" />";
+    });
+    // New line
     str = str.replaceAll(/\n/g, "<br />");
+
     return str;
 }
 
@@ -17,7 +30,7 @@ function formatLatexImage(str) {
  */
 function addPreviewUpdate(input, preview) {
     preview.innerHTML = formatLatexImage(input.value);
-    input.addEventListener("keyup", (event) => {
+    input.addEventListener("keyup", () => {
         preview.innerHTML = formatLatexImage(input.value);
     });
 }

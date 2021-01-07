@@ -69,6 +69,7 @@
         <th style="width: 30%;">Titre</th>
         <th style="width: 50%;">Consigne</th>
         <th>Tags</th>
+        <th style="width: 5%; text-align: right;">Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -88,13 +89,55 @@
                         <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
                     <% } %>
                 </td>
+                <td style="text-align: right;">
+                    <div class="field has-addons">
+                        <a class="button is-small is-primary is-light" title="Modifier" href="/manage/edit/<%= exercise.id %>">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <form method="POST" action="/manage/clone" id="clone<%= exercise.id %>">
+                            <input type="hidden" name="id" value="<%= exercise.id %>" />
+                        </form>
+                        <button type="submit" form="clone<%= exercise.id %>" class="button is-small is-link is-light" title="Dupliquer">
+                            <i class="fas fa-clone"></i>
+                        </button>
+                        <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= exercise.id %>" title="Supprimer">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </td>
             </tr>
         <% } %>
     </tbody>
 </table>
 
+
+<!-- Delete modal & form -->
+<% for (const exercise of exercises) { %>
+    <div class="modal" id="modalDelete<%= exercise.id %>">
+        <div class="modal-background" data-target="modalDelete<%= exercise.id %>"></div>
+        <div class="modal-content">
+            <div class="box has-text-centered">
+                <h1 class="title">Supprimer l'exercice</h1>
+                <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer l'exercice<br />"<%= exercise.title %>" ?</p>
+                <form method="POST" action="/manage/delete">
+                    <input type="hidden" name="id" value="<%= exercise.id %>" />
+                    <input type="submit" class="button is-danger mt-2" value="Supprimer" />
+                </form>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close" data-target="modalDelete"></button>
+    </div>
+<% } %>
+
+
 <script>
+    // Search exercise input
     searchEvent();
+
+    // Render LateX from table
+    document.querySelectorAll("th:nth-child(1) > a,td:nth-child(2)").forEach((element) => {
+        element.innerHTML = formatLatexImage(element.innerHTML.replaceAll("\n", " "));
+    });
 </script>
 
 <%- include('../includes/footer') %>

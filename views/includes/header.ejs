@@ -12,32 +12,38 @@
     <meta name="description" content="Application de révisions" />
     <meta name="author" content="Yohann THEPAUT <contact@ythepaut.com> (ythepaut)" />
 
+    <!-- Style -->
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+
+    <!-- KateX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css" integrity="sha384-qCEsSYDSH0x5I45nNW4oXemORUZnYFtPy/FqB/OjqxabTMW5HVaaH9USK4fN3goV" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.js" integrity="sha384-YFVvRUwgqxkAVN9bmAVLsKilmOKfQLyUx0ZlmDNs0aBUTsvMLnRxE3Km0NrZa0i9" crossorigin="anonymous"></script>
+
     <script src="/js/utils.js"></script>
     <script defer src="/js/modal.js"></script>
     <script defer src="/js/tab.js"></script>
+    <script defer src="/js/navbar.js"></script>
 </head>
 
 <body>
 
     <nav class="navbar" aria-label="main navigation">
+
         <div class="navbar-brand">
             <a class="navbar-item" href="/">
                 <img src="/assets/img/logo.png" width="330" height="28" alt=" ">
             </a>
 
-            <!--TODO Mobile navigation-->
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
             </a>
         </div>
 
-        <div class="navbar-menu">
+        <div class="navbar-menu" id="navMenu">
             <div class="navbar-start">
                 <a class="navbar-item" href="/">
                     S'entraîner
@@ -86,6 +92,7 @@
                 </div>
             </div>
         </div>
+
     </nav>
 
     <main>

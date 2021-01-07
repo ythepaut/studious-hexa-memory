@@ -1,6 +1,6 @@
 module.exports = class {
 
-    constructor(app, express, path, db, mongodb, expressUpload) {
+    constructor(app, express, path, db, mongodb) {
         this._app = app;
         this._express = express;
         this._path = path;
@@ -377,6 +377,16 @@ module.exports = class {
             res.redirect("/manage");
         });
 
+        this._app.post("/manage/clone", (req, res) => {
+            this._exercise.getExercise(this._db, this._mongodb, req.body.id, (exercise) => {
+                let clone = Object.assign({}, this._exercise.toJSON(exercise));
+                clone.id = -1;
+                this._exercise.toExercise(clone).saveExercise(this._db, this._mongodb, false, (id) => {
+                    res.redirect("/manage/edit/" + id);
+                });
+            });
+        });
+
         this._app.post("/manage/import", (req, res) => {
 
             let multer = require("multer");
@@ -451,7 +461,7 @@ module.exports = class {
         /////////////////////////////////////////
         // 404 error page
 
-        this._app.use((req, res, next) => {
+        this._app.use((req, res) => {
             res.status(404).render("error", {
                 verbose : "Cette page n'éxiste pas.",
                 user : req.session.user
@@ -463,13 +473,15 @@ module.exports = class {
     _updateInsertExercise(req, res) {
         const exercise = new this._exercise(req.body.id !== undefined ? req.body.id : -1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
 
-        if (exercise.save(this._db, this._mongodb)) {
-            res.redirect("/manage");
-        } else {
-            res.render("error", {
-                verbose : "Exercice non valide.",
-                user : req.session.user
-            });
-        }
+        exercise.save(this._db, this._mongodb, false, (id) => {
+            if (id !== null) {
+                res.redirect("/manage");
+            } else {
+                res.render("error", {
+                    verbose : "Exercice non valide.",
+                    user : req.session.user
+                });
+            }
+        });
     }
 }

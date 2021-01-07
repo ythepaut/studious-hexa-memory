@@ -3,7 +3,6 @@ let http = require("http"),
     express = require("express"),
     path = require("path"),
     bodyParser = require("body-parser"),
-    ejs = require("ejs"),
     mongodb = require("mongodb"),
     session = require("express-session");
 let app = express(),

@@ -1,9 +1,14 @@
 # Studious Hexa Memory
 
+[![CodeFactor](https://www.codefactor.io/repository/github/ythepaut/studious-hexa-memory/badge/master)](https://www.codefactor.io/repository/github/ythepaut/studious-hexa-memory/overview/master)
+[![Known Vulnerabilities](https://snyk.io/test/github/ythepaut/studious-hexa-memory/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ythepaut/studious-hexa-memory?targetFile=package.json)
+
 ## A propos
 
 Studious Hexa Memomry est une application web, utilisant les technologies NodeJS et MongoDB,
 qui permet de s'entraîner sur un banque d'exercices.
+
+Serveur de démonstration : https://demo.studious-hexa-memory.ythepaut.com/
 
 ***
 
@@ -40,8 +45,6 @@ qui permet de s'entraîner sur un banque d'exercices.
      `> show dbs`
 
      `> show collections`
-     
-     `> exit`
 
    * Créer un utilisateur avec les droits sur la base `studious_hexa_memory`
 

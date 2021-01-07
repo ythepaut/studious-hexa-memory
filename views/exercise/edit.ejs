@@ -7,7 +7,7 @@
     <%= exercise.id %>
 </h3>
 
-<form method="POST" action="/manage/edit" id="edit">
+<form method="POST" action="/manage/edit">
 
     <!-- Title -->
     <div class="field">
@@ -17,10 +17,18 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" name="title" value="<%= exercise.title %>" />
+                    <input class="input" type="text" id="txtTitle" name="title" value="<%= exercise.title %>" />
                 </p>
             </div>
         </div>
+    </div>
+
+    <!-- Title Preview -->
+    <label class="label">Prévisualisation du titre</label>
+    <div class="box">
+        <p style="white-space: pre;" id="pTitle">
+
+        </p>
     </div>
 
     <hr />
@@ -97,7 +105,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" name="tags" value="<% for (const tag of exercise.tags) { %><%= tag %>,<% } %>" /> <!--TODO remove extra comma-->
+                    <input class="input" type="text" name="tags" value="<% for (const tag of exercise.tags) { %><%= tag %>,<% } %>" required /> <!--TODO remove extra comma-->
                 </p>
             </div>
         </div>
@@ -105,29 +113,12 @@
 
     <input type="hidden" name="id" value="<%= exercise.id %>">
 
+    <input type="submit" value="Modifier" class="button is-primary mt-2" />
 </form>
-
-<form method="POST" action="/manage/delete" id="delete">
-    <input type="hidden" name="id" value="<%= exercise.id %>">
-</form>
-
-<div class="modal" id="modalDelete">
-    <div class="modal-background" data-target="modalDelete"></div>
-    <div class="modal-content">
-        <div class="box has-text-centered">
-            <h1 class="title">Supprimer l'exercice</h1>
-            <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer l'exercice<br />"<%= exercise.title %>" ?</p>
-            <button type="submit" form="delete" class="button is-danger mt-2">Supprimer</button>
-        </div>
-    </div>
-    <button class="modal-close is-large" aria-label="close" data-target="modalDelete"></button>
-</div>
-
-<button type="submit" form="edit" class="button is-primary mt-2">Modifier</button>
-<button type="button" class="button is-danger mt-2 ml-2" data-toggle="modal" data-target="modalDelete">Supprimer</button>
 
 
 <script>
+    addPreviewUpdate(document.querySelector("#txtTitle"), document.querySelector("#pTitle"));
     addPreviewUpdate(document.querySelector("#txtStatement"), document.querySelector("#pStatement"));
     addPreviewUpdate(document.querySelector("#txtResponse"), document.querySelector("#pResponse"));
 </script>

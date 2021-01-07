@@ -1,5 +1,4 @@
 document.querySelectorAll("[data-toggle=modal]").forEach((toggleElement) => {
-    console.log(toggleElement)
     toggleElement.addEventListener("click", (event) => {
         event.preventDefault();
         let modal = document.querySelector("#" + toggleElement.getAttribute("data-target"));

@@ -171,7 +171,7 @@ module.exports = class Exercise {
     static importExercises(db, mongodb, exercises) {
         for (const exerciseJSON of exercises) {
             let exercise = new Exercise(exerciseJSON._id, exerciseJSON._title, exerciseJSON._statement, exerciseJSON._response, exerciseJSON._time, exerciseJSON._tags);
-            exercise.save(db, mongodb, true);
+            exercise.save(db, mongodb, true, () => {});
         }
     }
 
@@ -181,24 +181,37 @@ module.exports = class Exercise {
      * @param {Object}              db              MongoClient
      * @param {Object}              mongodb         MongoDB
      * @param {boolean}             forceInsert     True if force insert instead of update
-     * @return {boolean}                            True if success
+     * @param {function}            callback        Callback fct : callback(id|null)
      * TODO Update exercises instead of inserting them if already in database
      */
-    save(db, mongodb, forceInsert = false) {
+    save(db, mongodb, forceInsert = false, callback) {
+
+        // validates exercise
+        if (this._statement === undefined || this._statement.length === 0 ||
+            this._response === undefined || this._response.length === 0 ||
+            this._title === undefined || this._title.length === 0 ||
+            this._tags === undefined || this._tags.length === 0 ||
+            this._time === undefined || this._time === 0) {
+            callback(null);
+        }
+
         if (this._id === -1 || forceInsert) {
             // insert
             let json = Exercise.toJSON(this);
             delete json.id;
-            db.collection("exercises").insertOne(json);
+            db.collection("exercises").insertOne(json, (err, res) => {
+                callback(res.insertedId);
+            });
         } else {
             //update
             let json = Exercise.toJSON(this);
             delete json.id;
-            db.collection("exercises").updateOne({_id : mongodb.ObjectId(this._id)},
+            db.collection("exercises").updateOne(
+                {_id : mongodb.ObjectId(this._id)},
                 {$set : json}
             );
+            callback(this._id);
         }
-        return true; //TODO validate exercise before insert
     }
 
 
