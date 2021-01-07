@@ -80,7 +80,6 @@ module.exports = class User {
      * @return {string}             key             Registration key
      */
     static create(db, role) {
-        // TODO User Schema Validation
         let key = Math.random().toString(36).substring(2, 15); // TODO replace key generation method
         db.collection("accounts").insertOne({
             role : role,
@@ -146,4 +145,4 @@ module.exports = class User {
         return this._key;
     }
 
-}
+};

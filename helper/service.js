@@ -6,11 +6,16 @@ module.exports = class {
         this._path = path;
         this._db = db;
         this._mongodb = mongodb;
-        this._initializeRoutes();
         this._exercise = require("../model/exercise");
         this._user = require("../model/user");
         this._fs = require("fs");
         this._bcrypt = require("bcrypt");
+        this._validation = require("./validation");
+        this._validator = require("express-joi-validation").createValidator({
+            passError: true
+        });
+
+        this._initializeRoutes();
     }
 
 
@@ -24,8 +29,8 @@ module.exports = class {
         // Unset session / user not logged in
 
         // logging in
-        this._app.post("/account/login", (req, res) => {
-            //TODO validation
+        this._app.post("/account/login", this._validator.body(this._validation.formLoginSchema), (req, res) => {
+
             this._user.getUser(this._db, req.body.username, (user) => {
                 if (user !== null && this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
                     req.session.user = this._user.toJSON(user);
@@ -39,9 +44,8 @@ module.exports = class {
             });
         });
 
-        // logging in
-        this._app.post("/account/register", (req, res) => {
-            //TODO validation
+        // registering
+        this._app.post("/account/register", this._validator.body(this._validation.formRegisterSchema), (req, res) => {
             this._user.getUserByKey(this._db, req.body.key, (user) => {
                 if (user !== null && user.status === "PENDING_REGISTRATION") {
                     this._user.getUser(this._db, req.body.username, (u) => {
@@ -138,11 +142,8 @@ module.exports = class {
 
         // list of exercises
         this._app.get("/manage", (req, res) => {
-
             this._exercise.getExercises(this._db, [], (rawExercises) => {
-
                 const exercises = this._exercise.toJSONs(rawExercises);
-
                 res.render("exercise/list",
                     {
                         exerciseDone : 0,
@@ -162,29 +163,20 @@ module.exports = class {
         });
 
         // edit exercise page
-        this._app.get("/manage/edit/:id", (req, res) => {
-
-            if (req.params.id.match(/[0-9a-f]{24}/)) {
-                this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
-                    if (exercise !== null) {
-                        res.render("exercise/edit", {
-                            exercise : this._exercise.toJSON(exercise),
-                            user : req.session.user
-                        });
-                    } else {
-                        res.render("error", {
-                            verbose : "Exercice innexistant.",
-                            user : req.session.user
-                        });
-                    }
-                });
-            } else {
-                res.render("error", {
-                    verbose : "Exercice innexistant.",
-                    user : req.session.user
-                });
-            }
-
+        this._app.get("/manage/edit/:id", this._validator.params(this._validation.dbIdSchema), (req, res) => {
+            this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
+                if (exercise !== null) {
+                    res.render("exercise/edit", {
+                        exercise : this._exercise.toJSON(exercise),
+                        user : req.session.user
+                    });
+                } else {
+                    res.render("error", {
+                        verbose : "Exercice innexistant.",
+                        user : req.session.user
+                    });
+                }
+            });
         });
 
         // export exercises
@@ -211,12 +203,19 @@ module.exports = class {
 
         // account list
         this._app.get("/account/accounts", (req, res) => {
-            this._user.getUsers(this._db, (users) => {
-                res.render("account/list", {
-                    users : users,
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                this._user.getUsers(this._db, (users) => {
+                    res.render("account/list", {
+                        users : users,
+                        user : req.session.user
+                    });
+                });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
                     user : req.session.user
                 });
-            });
+            }
         });
 
         // about page
@@ -364,20 +363,24 @@ module.exports = class {
         });
 
         // new exercise
-        this._app.post("/manage/new", (req, res) => {
-            this._updateInsertExercise(req, res);
+        this._app.post("/manage/new", this._validator.body(this._validation.formNewExerciseSchema), (req, res) => {
+            const exercise = new this._exercise(-1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
+            exercise.save(this._db, this._mongodb, false, () => {});
+            res.redirect("/manage");
         });
 
-        this._app.post("/manage/edit", (req, res) => {
-            this._updateInsertExercise(req, res);
+        this._app.post("/manage/edit", this._validator.body(this._validation.formEditExerciseSchema), (req, res) => {
+            const exercise = new this._exercise(req.body.id, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
+            exercise.save(this._db, this._mongodb, false, () => {});
+            res.redirect("/manage");
         });
 
-        this._app.post("/manage/delete", (req, res) => {
+        this._app.post("/manage/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
             res.redirect("/manage");
         });
 
-        this._app.post("/manage/clone", (req, res) => {
+        this._app.post("/manage/clone", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             this._exercise.getExercise(this._db, this._mongodb, req.body.id, (exercise) => {
                 let clone = Object.assign({}, this._exercise.toJSON(exercise));
                 clone.id = -1;
@@ -431,27 +434,25 @@ module.exports = class {
                     }
 
                 });
-
             });
-
         });
 
 
-        // create account
-        this._app.post("/account/new", (req, res) => {
-            // TODO validation
+        // create account key
+        this._app.post("/account/new", this._validator.body(this._validation.formNewKey), (req, res) => {
             this._user.create(this._db, req.body.role);
             res.redirect("/account/accounts");
         });
 
         // delete account
-        this._app.post("/account/delete", (req, res) => {
+        this._app.post("/account/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             // TODO account delete
             res.redirect("/account/accounts");
         });
 
         // edit account
         this._app.post("/account/edit", (req, res) => {
+            // TODO validation
             // TODO edit account
             res.redirect("/account/accounts");
         });
@@ -459,8 +460,21 @@ module.exports = class {
 
 
         /////////////////////////////////////////
-        // 404 error page
+        // error pages
 
+        // 400 - Form validation error
+        this._app.use((err, req, res, next) => {
+            if (err && err.error && err.error.isJoi) {
+                res.status(400).render("error", {
+                    verbose : "Requête ou formulaire invalide. Veuillez vérifier les champs de votre et réessayez." + err.error.toString(),
+                    user : req.session.user
+                });
+            } else {
+                next(err);
+            }
+        });
+
+        // 404 - No route
         this._app.use((req, res) => {
             res.status(404).render("error", {
                 verbose : "Cette page n'éxiste pas.",
@@ -469,19 +483,4 @@ module.exports = class {
         });
 
     }
-
-    _updateInsertExercise(req, res) {
-        const exercise = new this._exercise(req.body.id !== undefined ? req.body.id : -1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
-
-        exercise.save(this._db, this._mongodb, false, (id) => {
-            if (id !== null) {
-                res.redirect("/manage");
-            } else {
-                res.render("error", {
-                    verbose : "Exercice non valide.",
-                    user : req.session.user
-                });
-            }
-        });
-    }
-}
+};

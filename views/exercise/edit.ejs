@@ -17,7 +17,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" id="txtTitle" name="title" value="<%= exercise.title %>" />
+                    <input class="input" type="text" id="txtTitle" name="title" value="<%= exercise.title %>" maxlength="256" required />
                 </p>
             </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" id="txtStatement" name="statement" required><%= exercise.statement %></textarea>
+                    <textarea class="textarea" id="txtStatement" name="statement" maxlength="16384" required><%= exercise.statement %></textarea>
                 </p>
             </div>
         </div>
@@ -65,7 +65,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" id="txtResponse" name="response" required><%= exercise.response %></textarea>
+                    <textarea class="textarea" id="txtResponse" name="response" maxlength="16384" required><%= exercise.response %></textarea>
                 </p>
             </div>
         </div>
@@ -89,7 +89,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="number" min="0" max="14400" name="time" value="<%= exercise.time %>" />
+                    <input class="input" type="number" min="1" max="14400" name="time" value="<%= exercise.time %>" />
                 </p>
             </div>
         </div>
@@ -105,7 +105,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" name="tags" value="<% for (const tag of exercise.tags) { %><%= tag %>,<% } %>" required /> <!--TODO remove extra comma-->
+                    <input class="input" type="text" name="tags" value="<% for (const tag of exercise.tags) { %><%= tag %>,<% } %>" /> <!--TODO remove extra comma-->
                 </p>
             </div>
         </div>

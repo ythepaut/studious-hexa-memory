@@ -32,7 +32,7 @@ module.exports = class Exercise {
     static formatTags(tags) {
         let formatted = [];
         for (let tag of tags) {
-            if (tag !== "") {
+            if (tag !== "" && !formatted.includes(tag)) {
                 tag = tag.toLowerCase();
                 tag = tag.trim();
                 tag = tag.replace(/[éèêëÉÈÊË]/g, "e");
@@ -186,15 +186,6 @@ module.exports = class Exercise {
      */
     save(db, mongodb, forceInsert = false, callback) {
 
-        // validates exercise
-        if (this._statement === undefined || this._statement.length === 0 ||
-            this._response === undefined || this._response.length === 0 ||
-            this._title === undefined || this._title.length === 0 ||
-            this._tags === undefined || this._tags.length === 0 ||
-            this._time === undefined || this._time === 0) {
-            callback(null);
-        }
-
         if (this._id === -1 || forceInsert) {
             // insert
             let json = Exercise.toJSON(this);
@@ -239,4 +230,4 @@ module.exports = class Exercise {
         return this._tags;
     }
 
-}
+};

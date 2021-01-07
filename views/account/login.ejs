@@ -30,7 +30,7 @@
                     <form method="POST" action="/account/login" class="tab-pane is-active" id="loginForm">
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" name="username" placeholder="Nom d'utilisateur" />
+                                <input class="input" type="text" name="username" placeholder="Nom d'utilisateur" minlength="3" maxlength="16" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" name="passwd" placeholder="Mot de passe" />
+                                <input class="input" type="password" name="passwd" placeholder="Mot de passe" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -52,7 +52,7 @@
                     <form method="POST" action="/account/register" class="tab-pane" id="registerForm">
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" name="key" placeholder="Clé d'enregistrement" value="<%= key !== null ? key : "" %>" />
+                                <input class="input" type="text" name="key" placeholder="Clé d'enregistrement" value="<%= key !== null ? key : "" %>" minlength="11" maxlength="11" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-key"></i>
                             </span>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" name="username" placeholder="Nom d'utilisateur" />
+                                <input class="input" type="text" name="username" placeholder="Nom d'utilisateur" minlength="3" maxlength="16" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" name="passwd" placeholder="Mot de passe" />
+                                <input class="input" type="password" name="passwd" placeholder="Mot de passe" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" name="passwd2" placeholder="Mot de passe (confirmation)" />
+                                <input class="input" type="password" name="passwd2" placeholder="Mot de passe (confirmation)" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
