@@ -14,10 +14,18 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" name="title" placeholder="Résolution équation différentielle linéaire du deuxieme ordre" required />
+                    <input class="input" type="text" id="txtTitle" name="title" placeholder="Résolution équation différentielle linéaire du deuxieme ordre" required />
                 </p>
             </div>
         </div>
+    </div>
+
+    <!-- Title Preview -->
+    <label class="label">Prévisualisation du titre</label>
+    <div class="box">
+        <p style="white-space: pre;" id="pTitle">
+
+        </p>
     </div>
 
     <hr />
@@ -105,6 +113,7 @@
 </form>
 
 <script>
+    addPreviewUpdate(document.querySelector("#txtTitle"), document.querySelector("#pTitle"));
     addPreviewUpdate(document.querySelector("#txtStatement"), document.querySelector("#pStatement"));
     addPreviewUpdate(document.querySelector("#txtResponse"), document.querySelector("#pResponse"));
 </script>
