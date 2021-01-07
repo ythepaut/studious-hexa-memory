@@ -18,6 +18,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
     <script src="/js/utils.js"></script>
     <script defer src="/js/modal.js"></script>
+    <script defer src="/js/tab.js"></script>
 </head>
 
 <body>
@@ -28,6 +29,7 @@
                 <img src="/assets/img/logo.png" width="330" height="28" alt=" ">
             </a>
 
+            <!--TODO Mobile navigation-->
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -44,6 +46,12 @@
                 <a class="navbar-item" href="/manage">
                     Gérer les exercices
                 </a>
+
+                <% if (typeof user !== "undefined" && (user.role === "ADMIN" || user.role === "OWNER")) { %>
+                <a class="navbar-item" href="/account/accounts">
+                    Gérer les comptes
+                </a>
+                <% } %>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
@@ -64,6 +72,13 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
+                        <a class="button is-primary is-light" href="/account/profile">
+                            <% if (typeof user !== "undefined") { %>
+                                Bonjour <%= user.username %> !
+                            <% } else { %>
+                                Non connecté
+                            <% } %>
+                        </a>
                         <a class="button is-light" href="https://github.com/ythepaut/studious-hexa-memory" target="_blank">
                             <i class="fab fa-github"></i>
                         </a>

@@ -8,7 +8,9 @@ module.exports = class {
         this._mongodb = mongodb;
         this._initializeRoutes();
         this._exercise = require("../model/exercise");
+        this._user = require("../model/user");
         this._fs = require("fs");
+        this._bcrypt = require("bcrypt");
     }
 
 
@@ -16,6 +18,81 @@ module.exports = class {
 
         // setting static folder
         this._app.use(this._express.static(this._path.join(__dirname, "../static")));
+
+
+        /////////////////////////////////////////
+        // Unset session / user not logged in
+
+        // logging in
+        this._app.post("/account/login", (req, res) => {
+            //TODO validation
+            this._user.getUser(this._db, req.body.username, (user) => {
+                if (user !== null && this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
+                    req.session.user = this._user.toJSON(user);
+                    res.redirect("/");
+                } else {
+                    res.render("error", {
+                        verbose : "Identifiants de connexion incorrects.",
+                        user : req.session.user
+                    });
+                }
+            });
+        });
+
+        // logging in
+        this._app.post("/account/register", (req, res) => {
+            //TODO validation
+            this._user.getUserByKey(this._db, req.body.key, (user) => {
+                if (user !== null && user.status === "PENDING_REGISTRATION") {
+                    this._user.getUser(this._db, req.body.username, (u) => {
+                        if (u === null) {
+                            user.username = req.body.username;
+                            user.passwd = this._bcrypt.hashSync(req.body.passwd,12);
+                            user.status = "ALIVE";
+                            user.update(this._db, this._mongodb);
+                            res.redirect("/account/login");
+                        } else {
+                            res.render("error", {
+                                verbose : "Nom d'utilisateur déjà utilisé.",
+                                user : req.session.user
+                            });
+                        }
+                    });
+                } else {
+                    res.render("error", {
+                        verbose : "Clé d'enregistrement incorrecte ou déjà utilisée.",
+                        user : req.session.user
+                    });
+                }
+            })
+        });
+
+        // not logged in
+        this._app.use((req, res, next) => {
+            if (req.session.user === undefined) {
+                this._user.getUsers(this._db, (users) => {
+                    // giving owner key for first registration if needed
+                    let key = null;
+                    if (users.filter(user => user.role === "OWNER" && user.status === "ALIVE").length === 0) {
+                        if (users.filter(user => user.role === "OWNER" && user.status === "PENDING_REGISTRATION").length === 0) {
+                            key = this._user.create(this._db, "OWNER");
+                        } else {
+                            for (const user of users) {
+                                if (user.role === "OWNER") {
+                                    key = user.key;
+                                }
+                            }
+                        }
+                    }
+                    // rendering login page
+                    res.render("account/login", {
+                        key : key
+                    });
+                });
+            } else {
+                next();
+            }
+        });
 
 
         /////////////////////////////////////////
@@ -40,17 +117,20 @@ module.exports = class {
             // if in practice, show exercise, else start page
             if (req.session.practice.practiceStatus === "PRACTICING") {
                 res.render("exercise/exercise", {
-                    practice : req.session.practice
+                    practice : req.session.practice,
+                    user : req.session.user
                 });
             } else if (req.session.practice.practiceStatus === "IDLE") {
                 this._exercise.getTags(this._db, (tags) => {
                     res.render("exercise/start", {
-                        tags : tags
+                        tags : tags,
+                        user : req.session.user
                     });
                 });
             } else if (req.session.practice.practiceStatus === "END") {
                 res.render("exercise/end", {
-                    practice : req.session.practice
+                    practice : req.session.practice,
+                    user : req.session.user
                 });
             }
 
@@ -67,7 +147,8 @@ module.exports = class {
                     {
                         exerciseDone : 0,
                         successRate : 0,
-                        exercises : exercises
+                        exercises : exercises,
+                        user : req.session.user
                     }
                 );
             });
@@ -75,7 +156,9 @@ module.exports = class {
 
         // new exercise page
         this._app.get("/manage/new", (req, res) => {
-            res.render("exercise/new");
+            res.render("exercise/new", {
+                user : req.session.user
+            });
         });
 
         // edit exercise page
@@ -85,17 +168,20 @@ module.exports = class {
                 this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
                     if (exercise !== null) {
                         res.render("exercise/edit", {
-                            exercise : this._exercise.toJSON(exercise)
+                            exercise : this._exercise.toJSON(exercise),
+                            user : req.session.user
                         });
                     } else {
                         res.render("error", {
-                            verbose : "Exercice innexistant."
+                            verbose : "Exercice innexistant.",
+                            user : req.session.user
                         });
                     }
                 });
             } else {
                 res.render("error", {
-                    verbose : "Exercice innexistant."
+                    verbose : "Exercice innexistant.",
+                    user : req.session.user
                 });
             }
 
@@ -111,17 +197,40 @@ module.exports = class {
 
         // import exercises page
         this._app.get("/manage/import", (req, res) => {
-            res.render("exercise/import");
+            res.render("exercise/import", {
+                user : req.session.user
+            });
+        });
+
+        // profile page
+        this._app.get("/account/profile", (req, res) => {
+            res.render("account/profile", {
+                user : req.session.user
+            });
+        });
+
+        // account list
+        this._app.get("/account/accounts", (req, res) => {
+            this._user.getUsers(this._db, (users) => {
+                res.render("account/list", {
+                    users : users,
+                    user : req.session.user
+                });
+            });
         });
 
         // about page
         this._app.get("/about", (req, res) => {
-            res.render("about/about");
+            res.render("about/about", {
+                user : req.session.user
+            });
         });
 
         // legal page
         this._app.get("/legal", (req, res) => {
-            res.render("about/legal");
+            res.render("about/legal", {
+                user : req.session.user
+            });
         });
 
 
@@ -188,7 +297,8 @@ module.exports = class {
                         req.session.practice.endReason = "MANUAL";
 
                         res.render("exercise/end", {
-                            practice : req.session.practice
+                            practice : req.session.practice,
+                            user : req.session.user
                         });
 
                     } else {
@@ -234,7 +344,8 @@ module.exports = class {
                 } else {
 
                     res.render("exercise/end", {
-                        practice : req.session.practice
+                        practice : req.session.practice,
+                        user : req.session.user
                     });
                 }
 
@@ -316,13 +427,34 @@ module.exports = class {
         });
 
 
+        // create account
+        this._app.post("/account/new", (req, res) => {
+            // TODO validation
+            this._user.create(this._db, req.body.role);
+            res.redirect("/account/accounts");
+        });
+
+        // delete account
+        this._app.post("/account/delete", (req, res) => {
+            // TODO account delete
+            res.redirect("/account/accounts");
+        });
+
+        // edit account
+        this._app.post("/account/edit", (req, res) => {
+            // TODO edit account
+            res.redirect("/account/accounts");
+        });
+
+
 
         /////////////////////////////////////////
         // 404 error page
 
         this._app.use((req, res, next) => {
             res.status(404).render("error", {
-                verbose : "Cette page n'éxiste pas."
+                verbose : "Cette page n'éxiste pas.",
+                user : req.session.user
             });
         });
 
@@ -331,11 +463,12 @@ module.exports = class {
     _updateInsertExercise(req, res) {
         const exercise = new this._exercise(req.body.id !== undefined ? req.body.id : -1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
 
-        if (exercise.saveExercise(this._db, this._mongodb)) {
+        if (exercise.save(this._db, this._mongodb)) {
             res.redirect("/manage");
         } else {
             res.render("error", {
-                verbose : "Exercice non valide."
+                verbose : "Exercice non valide.",
+                user : req.session.user
             });
         }
     }
