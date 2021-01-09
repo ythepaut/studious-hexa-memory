@@ -50,13 +50,13 @@
                 </a>
 
                 <% if (typeof user !== "undefined" && (user.role === "MEMBER" || user.role === "ADMIN" || user.role === "OWNER")) { %>
-                    <a class="navbar-item" href="/manage">
+                    <a class="navbar-item" href="/exercise/list">
                     Gérer les exercices
                     </a>
                 <% } %>
 
                 <% if (typeof user !== "undefined" && (user.role === "ADMIN" || user.role === "OWNER")) { %>
-                    <a class="navbar-item" href="/account/accounts">
+                    <a class="navbar-item" href="/account/list">
                         Gérer les comptes
                     </a>
                 <% } %>
@@ -80,7 +80,7 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary is-light" href="/account/profile">
+                        <a class="button is-primary is-light" href="/account/me">
                             <% if (typeof user !== "undefined") { %>
                                 Bonjour <%= user.username %> !
                             <% } else { %>

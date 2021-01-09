@@ -1,9 +1,184 @@
 <%- include('../includes/header') %>
 
-<div>
+<div class="container">
 
-    <h1 class="title">Mon profile</h1>
+    <h1 class="title">Mon compte</h1>
 
+    <table class="table is-fullwidth">
+        <thead>
+        <tr>
+            <th style="width: 40%;">Mes informations</th>
+            <th style="width: auto;"></th>
+            <th style="width: 10%;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Nom d'utilisateur</td>
+            <td><%= user.username %></td>
+            <td>
+                <button type="button" class="button is-small is-link is-light" data-toggle="modal" data-target="modalChangeUsername" title="Modifier">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>Mot de passe</td>
+            <td>**************</td>
+            <td>
+                <button type="button" class="button is-small is-link is-light" data-toggle="modal" data-target="modalChangePassword" title="Modifier">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>Clé</td>
+            <td><code><%= user.key %></code></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>
+                <% if (user.role === "MEMBER") { %>
+                    <span class="tag is-info">Membre</span>
+                <% } else if (user.role === "ADMIN") { %>
+                    <span class="tag is-warning">Administrateur</span>
+                <% } else if (user.role === "OWNER") { %>
+                    <span class="tag is-danger">Propriétaire</span>
+                <% } %>
+            </td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table is-fullwidth">
+        <thead>
+        <tr>
+            <th style="width: 40%;">Actions</th>
+            <th style="width: auto;"></th>
+            <th style="width: 10%;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Me deconnecter</td>
+            <td></td>
+            <td>
+                <a href="/account/logout" class="button is-small is-danger is-light" title="Me deconnecter">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Supprimer mon compte</td>
+            <td></td>
+            <td>
+                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDeleteAccount" title="Supprimer mon compte">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div class="modal" id="modalChangeUsername">
+    <div class="modal-background" data-target="modalChangeUsername"></div>
+    <div class="modal-content">
+        <div class="box has-text-centered">
+            <h1 class="title">Changer de nom d'utilisateur</h1>
+            <form method="POST" action="/account/edit">
+                <input type="hidden" name="action" value="changeusername" />
+                <input type="hidden" name="id" value="<%= user.id %>" />
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="text" name="username" minlength="3" maxlength="16" placeholder="Nouveau nom d'utilisateur" required />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" name="passwd" minlength="8" placeholder="Mot de passe requis pour confirmer votre action" required />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <input type="submit" class="button is-primary mt-2" value="Modifier" />
+            </form>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" data-target="modalChangeUsername"></button>
+</div>
+
+<div class="modal" id="modalChangePassword">
+    <div class="modal-background" data-target="modalChangePassword"></div>
+    <div class="modal-content">
+        <div class="box has-text-centered">
+            <h1 class="title">Changer de mot de passe</h1>
+            <form method="POST" action="/account/edit">
+                <input type="hidden" name="action" value="changepassword" />
+                <input type="hidden" name="id" value="<%= user.id %>" />
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" name="oldpasswd" minlength="8" placeholder="Ancien mot de passe" required />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" name="newpasswd" minlength="8" placeholder="Nouveau mot de passe" required />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" name="newpasswd2" minlength="8" placeholder="Nouveau mot de passe (confirmation)" required />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <input type="submit" class="button is-primary mt-2" value="Modifier" />
+            </form>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" data-target="modalChangePassword"></button>
+</div>
+
+<div class="modal" id="modalDeleteAccount">
+    <div class="modal-background" data-target="modalDeleteAccount"></div>
+    <div class="modal-content">
+        <div class="box has-text-centered">
+            <h1 class="title">Supprimer mon compte</h1>
+            <form method="POST" action="/account/edit">
+                <input type="hidden" name="action" value="delete" />
+                <input type="hidden" name="id" value="<%= user.id %>" />
+                <p class="has-text-left">
+                    En cliquant sur "Valider", votre compte sera supprimé immédiatement.<br />
+                    Vos données, votre rôle ainsi que la clé d'enregistrement associée a ce compte seront perdus.
+                </p>
+                <br />
+                <div class="field">
+                    <p class="control has-icons-left">
+                        <input class="input" type="password" name="passwd" minlength="8" placeholder="Mot de passe requis pour confirmer votre action" required />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                </div>
+                <input type="submit" class="button is-primary mt-2" value="Valider" />
+            </form>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" data-target="modalDeleteAccount"></button>
 </div>
 
 <%- include('../includes/footer') %>

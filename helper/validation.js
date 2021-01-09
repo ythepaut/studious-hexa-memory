@@ -4,11 +4,12 @@ module.exports = {
     // Form login
     formLoginSchema : Joi.object({
         username : Joi.string().alphanum().min(3).max(16).required(),
-        passwd : Joi.string().min(8).required()
+        passwd : Joi.string().min(8).required(),
+        next : Joi.string().optional()
     }),
     // Form register
     formRegisterSchema : Joi.object({
-        key : Joi.string().alphanum().length(11).required(),
+        key : Joi.string().alphanum().min(8).required(),
         username : Joi.string().alphanum().min(3).max(16).required(),
         passwd : Joi.string().min(8).required(),
         passwd2 : Joi.ref('passwd')
@@ -31,7 +32,7 @@ module.exports = {
         tags : Joi.string().pattern(new RegExp("^[0-9a-zA-Z-_,]{0,128}$")).allow('')
     }),
     formNewKey : Joi.object({
-        role : Joi.string().allow("MEMBER", "ADMIN")
+        role : Joi.string().valid("MEMBER", "ADMIN").required()
     }),
     // MongoDB id format
     dbIdSchema : Joi.object({

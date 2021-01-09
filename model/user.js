@@ -17,7 +17,7 @@ module.exports = class User {
      */
     static toJSON(user) {
         return {
-            id : user.id,
+            _id : user.id,
             username : user.username,
             passwd : user.passwd,
             role : user.role,
@@ -54,7 +54,7 @@ module.exports = class User {
             if (res !== null) {
                 callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key));
             } else {
-                callback(false);
+                callback(null);
             }
         });
     }
@@ -80,12 +80,28 @@ module.exports = class User {
      * @return {string}             key             Registration key
      */
     static create(db, role) {
-        let key = Math.random().toString(36).substring(2, 15); // TODO replace key generation method
+        let key = this._generateKey(db);
         db.collection("accounts").insertOne({
             role : role,
             status : "PENDING_REGISTRATION",
             key : key
         });
+        return key;
+    }
+
+    /**
+     * Creates a key
+     * @param {Object}              db              MongoClient
+     * @return {string}                             New register key
+     * @private
+     */
+    static _generateKey(db) {
+        let pool = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda",
+            "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega"];
+        let key = "";
+        for (let i = 0 ; i < 4 ; i++) {
+            key += pool[Math.floor(Math.random()*pool.length)];
+        }
         return key;
     }
 

@@ -212,7 +212,7 @@ module.exports = class {
             this._user.getUser(this._db, req.body.username, (user) => {
                 if (user !== null && this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
                     req.session.user = this._user.toJSON(user);
-                    res.redirect("/");
+                    res.redirect(req.body.next !== undefined ? req.body.next : "/");
                 } else {
                     res.render("error", {
                         verbose : "Identifiants de connexion incorrects.",
@@ -286,7 +286,7 @@ module.exports = class {
         // Exercise management
 
         // list of exercises
-        this._app.get("/manage", (req, res) => {
+        this._app.get("/exercise/list", (req, res) => {
             this._exercise.getExercises(this._db, [], (rawExercises) => {
                 const exercises = this._exercise.toJSONs(rawExercises);
                 res.render("exercise/list",
@@ -301,19 +301,19 @@ module.exports = class {
         });
 
         // new exercise
-        this._app.get("/manage/new", (req, res) => {
+        this._app.get("/exercise/new", (req, res) => {
             res.render("exercise/new", {
                 user : req.session.user
             });
         });
-        this._app.post("/manage/new", this._validator.body(this._validation.formNewExerciseSchema), (req, res) => {
+        this._app.post("/exercise/new", this._validator.body(this._validation.formNewExerciseSchema), (req, res) => {
             const exercise = new this._exercise(-1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
             exercise.save(this._db, this._mongodb, false, () => {});
-            res.redirect("/manage");
+            res.redirect("/exercise/list");
         });
 
         // edit exercise
-        this._app.get("/manage/edit/:id", this._validator.params(this._validation.dbIdSchema), (req, res) => {
+        this._app.get("/exercise/edit/:id", this._validator.params(this._validation.dbIdSchema), (req, res) => {
             this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
                 if (exercise !== null) {
                     res.render("exercise/edit", {
@@ -328,31 +328,31 @@ module.exports = class {
                 }
             });
         });
-        this._app.post("/manage/edit", this._validator.body(this._validation.formEditExerciseSchema), (req, res) => {
+        this._app.post("/exercise/edit", this._validator.body(this._validation.formEditExerciseSchema), (req, res) => {
             const exercise = new this._exercise(req.body.id, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
             exercise.save(this._db, this._mongodb, false, () => {});
-            res.redirect("/manage");
+            res.redirect("/exercise/list");
         });
 
         // delete exercise
-        this._app.post("/manage/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
+        this._app.post("/exercise/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
-            res.redirect("/manage");
+            res.redirect("/exercise/list");
         });
 
         // clone exercise
-        this._app.post("/manage/clone", this._validator.body(this._validation.dbIdSchema), (req, res) => {
+        this._app.post("/exercise/clone", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             this._exercise.getExercise(this._db, this._mongodb, req.body.id, (exercise) => {
                 let clone = Object.assign({}, this._exercise.toJSON(exercise));
                 clone.id = -1;
                 this._exercise.toExercise(clone).saveExercise(this._db, this._mongodb, false, (id) => {
-                    res.redirect("/manage/edit/" + id);
+                    res.redirect("/exercise/edit/" + id);
                 });
             });
         });
 
         // export exercises
-        this._app.get("/manage/export", (req, res) => {
+        this._app.get("/exercise/export", (req, res) => {
             this._exercise.getExercises(this._db, [], (exercises) => {
                 res.set({"Content-Disposition":"attachment; filename=\"shm-export.json\""});
                 res.send(exercises);
@@ -360,12 +360,12 @@ module.exports = class {
         });
 
         // import exercises
-        this._app.get("/manage/import", (req, res) => {
+        this._app.get("/exercise/import", (req, res) => {
             res.render("exercise/import", {
                 user : req.session.user
             });
         });
-        this._app.post("/manage/import", (req, res) => {
+        this._app.post("/exercise/import", (req, res) => {
 
             let multer = require("multer");
             require("../config/storage")(multer, this._path, (storage) => {
@@ -392,7 +392,7 @@ module.exports = class {
                                 importJSON = JSON.parse(this._fs.readFileSync(path, "utf8").toString());
                                 this._exercise.importExercises(this._db, this._mongodb, importJSON);
                                 this._fs.unlinkSync(path);
-                                res.redirect("/manage");
+                                res.redirect("/exercise/list");
                             } catch (ex) {
                                 this._fs.unlinkSync(path);
                                 res.render("error", {
@@ -417,14 +417,14 @@ module.exports = class {
         // Account management
 
         // profile page
-        this._app.get("/account/profile", (req, res) => {
+        this._app.get("/account/me", (req, res) => {
             res.render("account/profile", {
                 user : req.session.user
             });
         });
 
         // account list
-        this._app.get("/account/accounts", (req, res) => {
+        this._app.get("/account/list", (req, res) => {
             if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
                 this._user.getUsers(this._db, (users) => {
                     res.render("account/list", {
@@ -443,20 +443,26 @@ module.exports = class {
         // create account key
         this._app.post("/account/new", this._validator.body(this._validation.formNewKey), (req, res) => {
             this._user.create(this._db, req.body.role);
-            res.redirect("/account/accounts");
+            res.redirect("/account/list");
         });
 
         // delete account
         this._app.post("/account/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             // TODO account delete
-            res.redirect("/account/accounts");
+            res.redirect("/account/list");
         });
 
         // edit account
         this._app.post("/account/edit", (req, res) => {
             // TODO validation
             // TODO edit account
-            res.redirect("/account/accounts");
+            res.redirect("/account/list");
+        });
+
+        // log out
+        this._app.get("/account/logout", (req, res) => {
+            req.session.destroy();
+            res.redirect("/");
         });
 
 
