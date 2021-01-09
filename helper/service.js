@@ -21,88 +21,15 @@ module.exports = class {
 
     _initializeRoutes() {
 
+        /////////////////////////////////////////
         // setting static folder
         this._app.use(this._express.static(this._path.join(__dirname, "../static")));
 
 
         /////////////////////////////////////////
-        // Unset session / user not logged in
+        // Start / Practice / End pages
 
-        // logging in
-        this._app.post("/account/login", this._validator.body(this._validation.formLoginSchema), (req, res) => {
-
-            this._user.getUser(this._db, req.body.username, (user) => {
-                if (user !== null && this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
-                    req.session.user = this._user.toJSON(user);
-                    res.redirect("/");
-                } else {
-                    res.render("error", {
-                        verbose : "Identifiants de connexion incorrects.",
-                        user : req.session.user
-                    });
-                }
-            });
-        });
-
-        // registering
-        this._app.post("/account/register", this._validator.body(this._validation.formRegisterSchema), (req, res) => {
-            this._user.getUserByKey(this._db, req.body.key, (user) => {
-                if (user !== null && user.status === "PENDING_REGISTRATION") {
-                    this._user.getUser(this._db, req.body.username, (u) => {
-                        if (u === null) {
-                            user.username = req.body.username;
-                            user.passwd = this._bcrypt.hashSync(req.body.passwd,12);
-                            user.status = "ALIVE";
-                            user.update(this._db, this._mongodb);
-                            res.redirect("/account/login");
-                        } else {
-                            res.render("error", {
-                                verbose : "Nom d'utilisateur déjà utilisé.",
-                                user : req.session.user
-                            });
-                        }
-                    });
-                } else {
-                    res.render("error", {
-                        verbose : "Clé d'enregistrement incorrecte ou déjà utilisée.",
-                        user : req.session.user
-                    });
-                }
-            })
-        });
-
-        // not logged in
-        this._app.use((req, res, next) => {
-            if (req.session.user === undefined) {
-                this._user.getUsers(this._db, (users) => {
-                    // giving owner key for first registration if needed
-                    let key = null;
-                    if (users.filter(user => user.role === "OWNER" && user.status === "ALIVE").length === 0) {
-                        if (users.filter(user => user.role === "OWNER" && user.status === "PENDING_REGISTRATION").length === 0) {
-                            key = this._user.create(this._db, "OWNER");
-                        } else {
-                            for (const user of users) {
-                                if (user.role === "OWNER") {
-                                    key = user.key;
-                                }
-                            }
-                        }
-                    }
-                    // rendering login page
-                    res.render("account/login", {
-                        key : key
-                    });
-                });
-            } else {
-                next();
-            }
-        });
-
-
-        /////////////////////////////////////////
-        // "GET" pages
-
-        // home (practice)
+        // page
         this._app.get("/", (req, res) => {
 
             // set session if not set
@@ -140,104 +67,7 @@ module.exports = class {
 
         });
 
-        // list of exercises
-        this._app.get("/manage", (req, res) => {
-            this._exercise.getExercises(this._db, [], (rawExercises) => {
-                const exercises = this._exercise.toJSONs(rawExercises);
-                res.render("exercise/list",
-                    {
-                        exerciseDone : 0,
-                        successRate : 0,
-                        exercises : exercises,
-                        user : req.session.user
-                    }
-                );
-            });
-        });
-
-        // new exercise page
-        this._app.get("/manage/new", (req, res) => {
-            res.render("exercise/new", {
-                user : req.session.user
-            });
-        });
-
-        // edit exercise page
-        this._app.get("/manage/edit/:id", this._validator.params(this._validation.dbIdSchema), (req, res) => {
-            this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
-                if (exercise !== null) {
-                    res.render("exercise/edit", {
-                        exercise : this._exercise.toJSON(exercise),
-                        user : req.session.user
-                    });
-                } else {
-                    res.render("error", {
-                        verbose : "Exercice innexistant.",
-                        user : req.session.user
-                    });
-                }
-            });
-        });
-
-        // export exercises
-        this._app.get("/manage/export", (req, res) => {
-            this._exercise.getExercises(this._db, [], (exercises) => {
-                res.set({"Content-Disposition":"attachment; filename=\"shm-export.json\""});
-                res.send(exercises);
-            });
-        });
-
-        // import exercises page
-        this._app.get("/manage/import", (req, res) => {
-            res.render("exercise/import", {
-                user : req.session.user
-            });
-        });
-
-        // profile page
-        this._app.get("/account/profile", (req, res) => {
-            res.render("account/profile", {
-                user : req.session.user
-            });
-        });
-
-        // account list
-        this._app.get("/account/accounts", (req, res) => {
-            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
-                this._user.getUsers(this._db, (users) => {
-                    res.render("account/list", {
-                        users : users,
-                        user : req.session.user
-                    });
-                });
-            } else {
-                res.render("error", {
-                    verbose : "Permission insuffisante",
-                    user : req.session.user
-                });
-            }
-        });
-
-        // about page
-        this._app.get("/about", (req, res) => {
-            res.render("about/about", {
-                user : req.session.user
-            });
-        });
-
-        // legal page
-        this._app.get("/legal", (req, res) => {
-            res.render("about/legal", {
-                user : req.session.user
-            });
-        });
-
-
-
-        /////////////////////////////////////////
-        // Form POSTs
-
-        // start practice
+        // start/end practice + next exercise
         this._app.post("/", (req, res) => {
 
             if (req.session.practice !== undefined && !req.body.finish) {
@@ -274,7 +104,6 @@ module.exports = class {
                                     req.session.practice.practiceStatus = "END";
                                     req.session.practice.endReason = "DEPLETED";
                                 }
-
 
                                 // terminates request
                                 res.send("OK");
@@ -341,45 +170,177 @@ module.exports = class {
                     });
 
                 } else {
-
                     res.render("exercise/end", {
                         practice : req.session.practice,
                         user : req.session.user
                     });
                 }
-
             } else {
-
                 if (req.body.finish) {
                     req.session.practice.practiceStatus = "IDLE";
                 }
-
                 // session undefined
                 res.redirect("/");
-
             }
+        });
 
 
+        /////////////////////////////////////////
+        // About pages
+
+        // about page
+        this._app.get("/about", (req, res) => {
+            res.render("about/about", {
+                user : req.session.user
+            });
+        });
+
+        // legal page
+        this._app.get("/legal", (req, res) => {
+            res.render("about/legal", {
+                user : req.session.user
+            });
+        });
+
+
+        /////////////////////////////////////////
+        // Login/register page
+
+        // logging in
+        this._app.post("/account/login", this._validator.body(this._validation.formLoginSchema), (req, res) => {
+
+            this._user.getUser(this._db, req.body.username, (user) => {
+                if (user !== null && this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
+                    req.session.user = this._user.toJSON(user);
+                    res.redirect("/");
+                } else {
+                    res.render("error", {
+                        verbose : "Identifiants de connexion incorrects.",
+                        user : req.session.user
+                    });
+                }
+            });
+        });
+
+        // registering
+        this._app.post("/account/register", this._validator.body(this._validation.formRegisterSchema), (req, res) => {
+            this._user.getUserByKey(this._db, req.body.key, (user) => {
+                if (user !== null && user.status === "PENDING_REGISTRATION") {
+                    this._user.getUser(this._db, req.body.username, (u) => {
+                        if (u === null) {
+                            user.username = req.body.username;
+                            user.passwd = this._bcrypt.hashSync(req.body.passwd,12);
+                            user.status = "ALIVE";
+                            user.update(this._db, this._mongodb);
+                            res.redirect("/account/login");
+                        } else {
+                            res.render("error", {
+                                verbose : "Nom d'utilisateur déjà utilisé.",
+                                user : req.session.user
+                            });
+                        }
+                    });
+                } else {
+                    res.render("error", {
+                        verbose : "Clé d'enregistrement incorrecte ou déjà utilisée.",
+                        user : req.session.user
+                    });
+                }
+            })
+        });
+
+        // login page
+        this._app.use((req, res, next) => {
+            if (req.session.user === undefined) {
+                this._user.getUsers(this._db, (users) => {
+                    // giving owner key for first registration if needed
+                    let key = null;
+                    if (users.filter(user => user.role === "OWNER" && user.status === "ALIVE").length === 0) {
+                        if (users.filter(user => user.role === "OWNER" && user.status === "PENDING_REGISTRATION").length === 0) {
+                            key = this._user.create(this._db, "OWNER");
+                        } else {
+                            for (const user of users) {
+                                if (user.role === "OWNER") {
+                                    key = user.key;
+                                }
+                            }
+                        }
+                    }
+                    // rendering login page
+                    res.render("account/login", {
+                        key : key
+                    });
+                });
+            } else {
+                next();
+            }
+        });
+
+
+        //-------------------------------------------------------------
+        // LOGIN REQUIRED BEYOND THIS MARK
+        //-------------------------------------------------------------
+
+
+        /////////////////////////////////////////
+        // Exercise management
+
+        // list of exercises
+        this._app.get("/manage", (req, res) => {
+            this._exercise.getExercises(this._db, [], (rawExercises) => {
+                const exercises = this._exercise.toJSONs(rawExercises);
+                res.render("exercise/list",
+                    {
+                        exerciseDone : 0,
+                        successRate : 0,
+                        exercises : exercises,
+                        user : req.session.user
+                    }
+                );
+            });
         });
 
         // new exercise
+        this._app.get("/manage/new", (req, res) => {
+            res.render("exercise/new", {
+                user : req.session.user
+            });
+        });
         this._app.post("/manage/new", this._validator.body(this._validation.formNewExerciseSchema), (req, res) => {
             const exercise = new this._exercise(-1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
             exercise.save(this._db, this._mongodb, false, () => {});
             res.redirect("/manage");
         });
 
+        // edit exercise
+        this._app.get("/manage/edit/:id", this._validator.params(this._validation.dbIdSchema), (req, res) => {
+            this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
+                if (exercise !== null) {
+                    res.render("exercise/edit", {
+                        exercise : this._exercise.toJSON(exercise),
+                        user : req.session.user
+                    });
+                } else {
+                    res.render("error", {
+                        verbose : "Exercice innexistant.",
+                        user : req.session.user
+                    });
+                }
+            });
+        });
         this._app.post("/manage/edit", this._validator.body(this._validation.formEditExerciseSchema), (req, res) => {
             const exercise = new this._exercise(req.body.id, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
             exercise.save(this._db, this._mongodb, false, () => {});
             res.redirect("/manage");
         });
 
+        // delete exercise
         this._app.post("/manage/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
             res.redirect("/manage");
         });
 
+        // clone exercise
         this._app.post("/manage/clone", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             this._exercise.getExercise(this._db, this._mongodb, req.body.id, (exercise) => {
                 let clone = Object.assign({}, this._exercise.toJSON(exercise));
@@ -390,6 +351,20 @@ module.exports = class {
             });
         });
 
+        // export exercises
+        this._app.get("/manage/export", (req, res) => {
+            this._exercise.getExercises(this._db, [], (exercises) => {
+                res.set({"Content-Disposition":"attachment; filename=\"shm-export.json\""});
+                res.send(exercises);
+            });
+        });
+
+        // import exercises
+        this._app.get("/manage/import", (req, res) => {
+            res.render("exercise/import", {
+                user : req.session.user
+            });
+        });
         this._app.post("/manage/import", (req, res) => {
 
             let multer = require("multer");
@@ -438,6 +413,33 @@ module.exports = class {
         });
 
 
+        /////////////////////////////////////////
+        // Account management
+
+        // profile page
+        this._app.get("/account/profile", (req, res) => {
+            res.render("account/profile", {
+                user : req.session.user
+            });
+        });
+
+        // account list
+        this._app.get("/account/accounts", (req, res) => {
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                this._user.getUsers(this._db, (users) => {
+                    res.render("account/list", {
+                        users : users,
+                        user : req.session.user
+                    });
+                });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
+        });
+
         // create account key
         this._app.post("/account/new", this._validator.body(this._validation.formNewKey), (req, res) => {
             this._user.create(this._db, req.body.role);
@@ -456,7 +458,6 @@ module.exports = class {
             // TODO edit account
             res.redirect("/account/accounts");
         });
-
 
 
         /////////////////////////////////////////

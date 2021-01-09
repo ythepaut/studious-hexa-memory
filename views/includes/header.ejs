@@ -49,14 +49,16 @@
                     S'entraîner
                 </a>
 
-                <a class="navbar-item" href="/manage">
+                <% if (typeof user !== "undefined" && (user.role === "MEMBER" || user.role === "ADMIN" || user.role === "OWNER")) { %>
+                    <a class="navbar-item" href="/manage">
                     Gérer les exercices
-                </a>
+                    </a>
+                <% } %>
 
                 <% if (typeof user !== "undefined" && (user.role === "ADMIN" || user.role === "OWNER")) { %>
-                <a class="navbar-item" href="/account/accounts">
-                    Gérer les comptes
-                </a>
+                    <a class="navbar-item" href="/account/accounts">
+                        Gérer les comptes
+                    </a>
                 <% } %>
 
                 <div class="navbar-item has-dropdown is-hoverable">
@@ -82,7 +84,7 @@
                             <% if (typeof user !== "undefined") { %>
                                 Bonjour <%= user.username %> !
                             <% } else { %>
-                                Non connecté
+                                Se connecter
                             <% } %>
                         </a>
                         <a class="button is-light" href="https://github.com/ythepaut/studious-hexa-memory" target="_blank">
