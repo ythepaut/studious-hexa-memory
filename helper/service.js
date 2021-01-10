@@ -209,7 +209,7 @@ module.exports = class {
         // logging in
         this._app.post("/account/login", this._validator.body(this._validation.formLoginSchema), (req, res) => {
 
-            this._user.getUser(this._db, req.body.username, (user) => {
+            this._user.getUserByName(this._db, req.body.username, (user) => {
                 if (user !== null && this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
                     req.session.user = this._user.toJSON(user);
                     res.redirect(req.body.next !== undefined ? req.body.next : "/");
@@ -226,9 +226,8 @@ module.exports = class {
         this._app.post("/account/register", this._validator.body(this._validation.formRegisterSchema), (req, res) => {
             this._user.getUserByKey(this._db, req.body.key, (user) => {
                 if (user !== null && user.status === "PENDING_REGISTRATION") {
-                    this._user.getUser(this._db, req.body.username, (u) => {
+                    this._user.getUserByName(this._db, req.body.username, (u) => {
                         if (u === null) {
-                            // TODO check username not used
                             user.username = req.body.username;
                             user.passwd = this._bcrypt.hashSync(req.body.passwd,12);
                             user.status = "ALIVE";
@@ -275,6 +274,22 @@ module.exports = class {
             } else {
                 next();
             }
+        });
+
+        // account status verification
+        this._app.use((req, res, next) => {
+            this._user.getUser(this._db, this._mongodb, req.session.user._id, (user) => {
+                req.session.user = this._user.toJSON(user);
+
+                if (req.session.user.status !== "SUSPENDED") {
+                    next();
+                } else {
+                    req.session.destroy();
+                    res.render("error", {
+                        verbose : "Votre compte est suspendu."
+                    });
+                }
+            });
         });
 
 
@@ -495,14 +510,22 @@ module.exports = class {
             });
         });
         this._app.post("/account/edit", this._validator.body(this._validation.formEditProfile), (req, res) => {
-            this._user.getUser(this._db, req.session.user.username, (user) => {
+            this._user.getUserByName(this._db, req.session.user.username, (user) => {
                 if (this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
                     if (req.body.action === "changeusername") {
-                        // TODO check username not used
-                        user.username = req.body.username;
-                        user.update(this._db, this._mongodb);
-                        req.session.destroy();
-                        res.redirect("/account/me");
+                        this._user.getUserByName(this._db, req.body.username, (u) => {
+                            if (u === null) {
+                                user.username = req.body.username;
+                                user.update(this._db, this._mongodb);
+                                req.session.destroy();
+                                res.redirect("/account/me");
+                            } else {
+                                res.render("error", {
+                                    verbose : "Nom d'utilisateur déjà utilisé.",
+                                    user : req.session.user
+                                });
+                            }
+                        });
                     } else if (req.body.action === "changepassword") {
                         user.passwd = this._bcrypt.hashSync(req.body.newpasswd,12);
                         user.update(this._db, this._mongodb);
@@ -555,8 +578,12 @@ module.exports = class {
         // delete account
         this._app.post("/account/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             if (req.session.user.role === "OWNER") {
-                // TODO account delete
-                res.redirect("/account/list");
+                this._user.getUser(this._db, this._mongodb, req.body.id, (user) => {
+                    if (user !== null) {
+                        user.delete(this._db, this._mongodb);
+                    }
+                    res.redirect("/account/list");
+                });
             } else {
                 res.render("error", {
                     verbose : "Permission insuffisante",
@@ -566,11 +593,27 @@ module.exports = class {
         });
 
         // edit account
-        this._app.post("/account/edit", (req, res) => {
+        this._app.post("/account/adminedit", this._validator.body(this._validation.formEditUser), (req, res) => {
             if (req.session.user.role === "OWNER") {
-                // TODO validation
-                // TODO edit account
-                res.redirect("/account/list");
+                this._user.getUser(this._db, this._mongodb, req.body.id, (user) => {
+                    if (user !== null && user.role !== "OWNER") {
+                        if (req.body.role !== undefined) {
+                            user.role = req.body.role;
+                        }
+                        if (req.body.status !== undefined) {
+                            if (user.status !== "PENDING_REGISTRATION") {
+                                user.status = req.body.status;
+                            }
+                        }
+                        user.update(this._db, this._mongodb);
+                        res.redirect("/account/list");
+                    } else {
+                        res.render("error", {
+                            verbose : "Impossible de modifier cet utilisateur",
+                            user : req.session.user
+                        });
+                    }
+                });
             } else {
                 res.render("error", {
                     verbose : "Permission insuffisante",
@@ -596,6 +639,7 @@ module.exports = class {
                     verbose : "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez.",
                     user : req.session.user
                 });
+                console.log(err.error.toString());
             } else {
                 next(err);
             }

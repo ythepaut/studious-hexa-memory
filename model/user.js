@@ -28,12 +28,29 @@ module.exports = class User {
 
 
     /**
+     * Gets a user by its ID
+     * @param {Object}              db              MongoClient
+     * @param {Object}              mongodb         MongoDB
+     * @param {string}              id              User ID
+     * @param {function}            callback        Callback fct : callback(user)
+     */
+    static getUser(db, mongodb, id, callback) {
+        db.collection("accounts").findOne({_id : mongodb.ObjectId(id)}, (err, res) => {
+            if (res !== null) {
+                callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key));
+            } else {
+                callback(null);
+            }
+        });
+    }
+
+    /**
      * Gets a user by its username
      * @param {Object}              db              MongoClient
      * @param {string}              username        Username
      * @param {function}            callback        Callback fct : callback(user)
      */
-    static getUser(db, username, callback) {
+    static getUserByName(db, username, callback) {
         db.collection("accounts").findOne({username: username}, (err, res) => {
             if (res !== null) {
                 callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key));

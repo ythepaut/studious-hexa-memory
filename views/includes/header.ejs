@@ -85,7 +85,10 @@
                             <% if (typeof user !== "undefined") { %>
                                 Bonjour <%= user.username %> !
                             <% } else { %>
-                                Se connecter
+                                    <span class="icon is-small">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </span>
+                                    <span>Se connecter</span>
                             <% } %>
                         </a>
                         <a class="button is-light" href="https://github.com/ythepaut/studious-hexa-memory" target="_blank">

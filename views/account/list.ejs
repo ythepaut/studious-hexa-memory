@@ -34,7 +34,7 @@
                 <h2 class="subtitle">Permissions des roles</h2>
             </div>
             <p>
-                <b>Non connecté</b> : Permet de s'entraîner uniquement.<br /><br />
+                <b>Sans compte</b> : Permet de s'entraîner uniquement.<br /><br />
                 <b>Membre</b> : Permet de s'entraîner, avec sauvegarde des resultats et des exercices pertinants pour de futures sessions.<br /><br />
                 <b>Administrateur</b> : Permet de gérer les exercices (création, edition, suppression, import, export).<br /><br />
                 <b>Propriétaire</b> : Permet de gérer les utilisateurs (création, edition du role/statut, supression).<br /><br />
@@ -156,7 +156,7 @@
         <div class="modal-content">
             <div class="box has-text-centered">
                 <h1 class="title">Modifier le compte</h1>
-                <form method="POST" action="/account/edit">
+                <form method="POST" action="/account/adminedit">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
                     <div class="select">
                         <select name="role">
@@ -167,10 +167,10 @@
                     </div>
                     <br />
                     <div class="select">
-                        <select name="role">
+                        <select name="status">
                             <option selected disabled>-- Nouveau statut --</option>
-                            <option value="SUSPENDED">Actif</option>
-                            <option value="ALIVE">Suspendu</option>
+                            <option value="ALIVE">Actif</option>
+                            <option value="SUSPENDED">Suspendu</option>
                         </select>
                     </div>
                     <br />

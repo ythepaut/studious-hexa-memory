@@ -43,6 +43,12 @@ module.exports = {
         newpasswd : Joi.string().when('action', {'is' : 'changepassword', then : Joi.string().min(8).required()}),
         newpasswd2 : Joi.string().when('action', {'is' : 'changepassword', then : Joi.ref('newpasswd')})
     }),
+    // Form edit user role/status from list
+    formEditUser : Joi.object({
+        id : Joi.string().pattern(new RegExp("^[0-9a-f]{24}$")),
+        role : Joi.string().valid("MEMBER", "ADMIN"),
+        status : Joi.string().valid("SUSPENDED", "ALIVE")
+    }).or("role", "status"),
     // MongoDB id format
     dbIdSchema : Joi.object({
         id : Joi.string().pattern(new RegExp("^[0-9a-f]{24}$"))
