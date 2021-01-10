@@ -228,6 +228,7 @@ module.exports = class {
                 if (user !== null && user.status === "PENDING_REGISTRATION") {
                     this._user.getUser(this._db, req.body.username, (u) => {
                         if (u === null) {
+                            // TODO check username not used
                             user.username = req.body.username;
                             user.passwd = this._bcrypt.hashSync(req.body.passwd,12);
                             user.status = "ALIVE";
@@ -287,129 +288,200 @@ module.exports = class {
 
         // list of exercises
         this._app.get("/exercise/list", (req, res) => {
-            this._exercise.getExercises(this._db, [], (rawExercises) => {
-                const exercises = this._exercise.toJSONs(rawExercises);
-                res.render("exercise/list",
-                    {
-                        exerciseDone : 0,
-                        successRate : 0,
-                        exercises : exercises,
-                        user : req.session.user
-                    }
-                );
-            });
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                this._exercise.getExercises(this._db, [], (rawExercises) => {
+                    const exercises = this._exercise.toJSONs(rawExercises);
+                    res.render("exercise/list",
+                        {
+                            exerciseDone : 0,
+                            successRate : 0,
+                            exercises : exercises,
+                            user : req.session.user
+                        }
+                    );
+                });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // new exercise
         this._app.get("/exercise/new", (req, res) => {
-            res.render("exercise/new", {
-                user : req.session.user
-            });
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                res.render("exercise/new", {
+                    user : req.session.user
+                });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
         this._app.post("/exercise/new", this._validator.body(this._validation.formNewExerciseSchema), (req, res) => {
-            const exercise = new this._exercise(-1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
-            exercise.save(this._db, this._mongodb, false, () => {});
-            res.redirect("/exercise/list");
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                const exercise = new this._exercise(-1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
+                exercise.save(this._db, this._mongodb, false, () => {});
+                res.redirect("/exercise/list");
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // edit exercise
         this._app.get("/exercise/edit/:id", this._validator.params(this._validation.dbIdSchema), (req, res) => {
-            this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
-                if (exercise !== null) {
-                    res.render("exercise/edit", {
-                        exercise : this._exercise.toJSON(exercise),
-                        user : req.session.user
-                    });
-                } else {
-                    res.render("error", {
-                        verbose : "Exercice innexistant.",
-                        user : req.session.user
-                    });
-                }
-            });
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                this._exercise.getExercise(this._db, this._mongodb, req.params.id, (exercise) => {
+                    if (exercise !== null) {
+                        res.render("exercise/edit", {
+                            exercise : this._exercise.toJSON(exercise),
+                            user : req.session.user
+                        });
+                    } else {
+                        res.render("error", {
+                            verbose : "Exercice innexistant.",
+                            user : req.session.user
+                        });
+                    }
+                });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
         this._app.post("/exercise/edit", this._validator.body(this._validation.formEditExerciseSchema), (req, res) => {
-            const exercise = new this._exercise(req.body.id, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
-            exercise.save(this._db, this._mongodb, false, () => {});
-            res.redirect("/exercise/list");
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                const exercise = new this._exercise(req.body.id, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
+                exercise.save(this._db, this._mongodb, false, () => {});
+                res.redirect("/exercise/list");
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // delete exercise
         this._app.post("/exercise/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
-            this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
-            res.redirect("/exercise/list");
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
+                res.redirect("/exercise/list");
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // clone exercise
         this._app.post("/exercise/clone", this._validator.body(this._validation.dbIdSchema), (req, res) => {
-            this._exercise.getExercise(this._db, this._mongodb, req.body.id, (exercise) => {
-                let clone = Object.assign({}, this._exercise.toJSON(exercise));
-                clone.id = -1;
-                this._exercise.toExercise(clone).saveExercise(this._db, this._mongodb, false, (id) => {
-                    res.redirect("/exercise/edit/" + id);
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                this._exercise.getExercise(this._db, this._mongodb, req.body.id, (exercise) => {
+                    let clone = Object.assign({}, this._exercise.toJSON(exercise));
+                    clone.id = -1;
+                    this._exercise.toExercise(clone).saveExercise(this._db, this._mongodb, false, (id) => {
+                        res.redirect("/exercise/edit/" + id);
+                    });
                 });
-            });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // export exercises
         this._app.get("/exercise/export", (req, res) => {
-            this._exercise.getExercises(this._db, [], (exercises) => {
-                res.set({"Content-Disposition":"attachment; filename=\"shm-export.json\""});
-                res.send(exercises);
-            });
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                this._exercise.getExercises(this._db, [], (exercises) => {
+                    res.set({"Content-Disposition":"attachment; filename=\"shm-export.json\""});
+                    res.send(exercises);
+                });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // import exercises
         this._app.get("/exercise/import", (req, res) => {
-            res.render("exercise/import", {
-                user : req.session.user
-            });
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+                res.render("exercise/import", {
+                    user : req.session.user
+                });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
         this._app.post("/exercise/import", (req, res) => {
+            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
 
-            let multer = require("multer");
-            require("../config/storage")(multer, this._path, (storage) => {
-                let upload = multer({storage : storage}).any("import");
+                let multer = require("multer");
+                require("../config/storage")(multer, this._path, (storage) => {
+                    let upload = multer({storage : storage}).any("import");
 
-                upload(req, res, (err) => {
+                    upload(req, res, (err) => {
 
-                    if (err) {
-                        throw err;
-                    } else if (!req.files[0]) {
-                        res.render("error", {
-                            verbose : "Aucun fichier sélectionné."
-                        });
-                    } else {
-                        let path = req.files[0].path;
+                        if (err) {
+                            throw err;
+                        } else if (!req.files[0]) {
+                            res.render("error", {
+                                verbose : "Aucun fichier sélectionné."
+                            });
+                        } else {
+                            let path = req.files[0].path;
 
-                        // checking if file has json extension
-                        if (path.match(/.*\.json/)) {
+                            // checking if file has json extension
+                            if (path.match(/.*\.json/)) {
 
-                            let importJSON = {};
+                                let importJSON = {};
 
-                            // getting content as json
-                            try {
-                                importJSON = JSON.parse(this._fs.readFileSync(path, "utf8").toString());
-                                this._exercise.importExercises(this._db, this._mongodb, importJSON);
-                                this._fs.unlinkSync(path);
-                                res.redirect("/exercise/list");
-                            } catch (ex) {
+                                // getting content as json
+                                try {
+                                    importJSON = JSON.parse(this._fs.readFileSync(path, "utf8").toString());
+                                    this._exercise.importExercises(this._db, this._mongodb, importJSON);
+                                    this._fs.unlinkSync(path);
+                                    res.redirect("/exercise/list");
+                                } catch (ex) {
+                                    this._fs.unlinkSync(path);
+                                    res.render("error", {
+                                        verbose : "Le fichier envoyé n'est pas un fichier JSON."
+                                    });
+                                }
+
+                            } else {
                                 this._fs.unlinkSync(path);
                                 res.render("error", {
                                     verbose : "Le fichier envoyé n'est pas un fichier JSON."
                                 });
                             }
-
-                        } else {
-                            this._fs.unlinkSync(path);
-                            res.render("error", {
-                                verbose : "Le fichier envoyé n'est pas un fichier JSON."
-                            });
                         }
-                    }
 
+                    });
                 });
-            });
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
+
         });
 
 
@@ -422,10 +494,33 @@ module.exports = class {
                 user : req.session.user
             });
         });
+        this._app.post("/account/edit", this._validator.body(this._validation.formEditProfile), (req, res) => {
+            this._user.getUser(this._db, req.session.user.username, (user) => {
+                if (this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
+                    if (req.body.action === "changeusername") {
+                        // TODO check username not used
+                        user.username = req.body.username;
+                        user.update(this._db, this._mongodb);
+                        req.session.destroy();
+                        res.redirect("/account/me");
+                    } else if (req.body.action === "changepassword") {
+                        user.passwd = this._bcrypt.hashSync(req.body.newpasswd,12);
+                        user.update(this._db, this._mongodb);
+                        req.session.destroy();
+                        res.redirect("/account/me");
+                    }
+                } else {
+                    res.render("error", {
+                        verbose : "Mot de passe incorrect",
+                        user : req.session.user
+                    });
+                }
+            });
+        });
 
         // account list
         this._app.get("/account/list", (req, res) => {
-            if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
+            if (req.session.user.role === "OWNER") {
                 this._user.getUsers(this._db, (users) => {
                     res.render("account/list", {
                         users : users,
@@ -442,21 +537,42 @@ module.exports = class {
 
         // create account key
         this._app.post("/account/new", this._validator.body(this._validation.formNewKey), (req, res) => {
-            this._user.create(this._db, req.body.role);
-            res.redirect("/account/list");
+            if (req.session.user.role === "OWNER") {
+                this._user.create(this._db, req.body.role);
+                res.redirect("/account/list");
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // delete account
         this._app.post("/account/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
-            // TODO account delete
-            res.redirect("/account/list");
+            if (req.session.user.role === "OWNER") {
+                // TODO account delete
+                res.redirect("/account/list");
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // edit account
         this._app.post("/account/edit", (req, res) => {
-            // TODO validation
-            // TODO edit account
-            res.redirect("/account/list");
+            if (req.session.user.role === "OWNER") {
+                // TODO validation
+                // TODO edit account
+                res.redirect("/account/list");
+            } else {
+                res.render("error", {
+                    verbose : "Permission insuffisante",
+                    user : req.session.user
+                });
+            }
         });
 
         // log out
@@ -473,7 +589,7 @@ module.exports = class {
         this._app.use((err, req, res, next) => {
             if (err && err.error && err.error.isJoi) {
                 res.status(400).render("error", {
-                    verbose : "Requête ou formulaire invalide. Veuillez vérifier les champs de votre et réessayez." + err.error.toString(),
+                    verbose : "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez.",
                     user : req.session.user
                 });
             } else {

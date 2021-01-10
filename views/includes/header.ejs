@@ -49,13 +49,14 @@
                     S'entraîner
                 </a>
 
-                <% if (typeof user !== "undefined" && (user.role === "MEMBER" || user.role === "ADMIN" || user.role === "OWNER")) { %>
+
+                <% if (typeof user !== "undefined" && (user.role === "ADMIN" || user.role === "OWNER")) { %>
                     <a class="navbar-item" href="/exercise/list">
-                    Gérer les exercices
+                        Gérer les exercices
                     </a>
                 <% } %>
 
-                <% if (typeof user !== "undefined" && (user.role === "ADMIN" || user.role === "OWNER")) { %>
+                <% if (typeof user !== "undefined" && user.role === "OWNER") { %>
                     <a class="navbar-item" href="/account/list">
                         Gérer les comptes
                     </a>

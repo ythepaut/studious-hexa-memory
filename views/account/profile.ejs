@@ -90,7 +90,6 @@
             <h1 class="title">Changer de nom d'utilisateur</h1>
             <form method="POST" action="/account/edit">
                 <input type="hidden" name="action" value="changeusername" />
-                <input type="hidden" name="id" value="<%= user.id %>" />
                 <div class="field">
                     <p class="control has-icons-left">
                         <input class="input" type="text" name="username" minlength="3" maxlength="16" placeholder="Nouveau nom d'utilisateur" required />
@@ -109,6 +108,8 @@
                 </div>
                 <input type="submit" class="button is-primary mt-2" value="Modifier" />
             </form>
+            <br />
+            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;Pour que cette modification prenne effet, vous serez déconnecté.</span>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close" data-target="modalChangeUsername"></button>
@@ -121,10 +122,9 @@
             <h1 class="title">Changer de mot de passe</h1>
             <form method="POST" action="/account/edit">
                 <input type="hidden" name="action" value="changepassword" />
-                <input type="hidden" name="id" value="<%= user.id %>" />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" name="oldpasswd" minlength="8" placeholder="Ancien mot de passe" required />
+                        <input class="input" type="password" name="passwd" minlength="8" placeholder="Ancien mot de passe" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -148,6 +148,8 @@
                 </div>
                 <input type="submit" class="button is-primary mt-2" value="Modifier" />
             </form>
+            <br />
+            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;Pour que cette modification prenne effet, vous serez déconnecté.</span>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close" data-target="modalChangePassword"></button>
@@ -160,7 +162,6 @@
             <h1 class="title">Supprimer mon compte</h1>
             <form method="POST" action="/account/edit">
                 <input type="hidden" name="action" value="delete" />
-                <input type="hidden" name="id" value="<%= user.id %>" />
                 <p class="has-text-left">
                     En cliquant sur "Valider", votre compte sera supprimé immédiatement.<br />
                     Vos données, votre rôle ainsi que la clé d'enregistrement associée a ce compte seront perdus.

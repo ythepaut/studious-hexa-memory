@@ -31,15 +31,20 @@ module.exports = {
         time : Joi.number().min(1).max(14400).required(),
         tags : Joi.string().pattern(new RegExp("^[0-9a-zA-Z-_,]{0,128}$")).allow('')
     }),
+    // Form create account (key)
     formNewKey : Joi.object({
         role : Joi.string().valid("MEMBER", "ADMIN").required()
+    }),
+    // Form change own username / password or delete own account
+    formEditProfile : Joi.object({
+        action : Joi.string().valid("changeusername", "changepassword", "delete").required(),
+        passwd : Joi.string().min(8).required(),
+        username : Joi.string().when('action', {'is' : 'changeusername', then : Joi.string().alphanum().min(3).max(16).required()}),
+        newpasswd : Joi.string().when('action', {'is' : 'changepassword', then : Joi.string().min(8).required()}),
+        newpasswd2 : Joi.string().when('action', {'is' : 'changepassword', then : Joi.ref('newpasswd')})
     }),
     // MongoDB id format
     dbIdSchema : Joi.object({
         id : Joi.string().pattern(new RegExp("^[0-9a-f]{24}$"))
-    }),
-    // User schema
-    userSchema : Joi.object({
-
     })
 };
