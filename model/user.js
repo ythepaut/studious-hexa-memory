@@ -108,11 +108,10 @@ module.exports = class User {
 
     /**
      * Creates a key
-     * @param {Object}              db              MongoClient
      * @return {string}                             New register key
      * @private
      */
-    static _generateKey(db) {
+    static _generateKey() {
         let pool = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda",
             "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega"];
         let key = "";
