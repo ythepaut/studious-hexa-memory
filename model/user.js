@@ -120,6 +120,19 @@ module.exports = class User {
         }
     }
 
+    /**
+     * Delete the user from the database
+     * @param {Object}              db              MongoClient
+     * @param {Object}              mongodb         MongoDB
+     */
+    delete(db, mongodb) {
+        if (this._id !== -1) {
+            db.collection("accounts").deleteOne(
+                {_id : mongodb.ObjectId(this._id)}
+            );
+        }
+    }
+
 
     get id() {
         return this._id;

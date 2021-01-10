@@ -508,6 +508,10 @@ module.exports = class {
                         user.update(this._db, this._mongodb);
                         req.session.destroy();
                         res.redirect("/account/me");
+                    } else if (req.body.action === "delete") {
+                        user.delete(this._db, this._mongodb);
+                        req.session.destroy();
+                        res.redirect("/account/me");
                     }
                 } else {
                     res.render("error", {
