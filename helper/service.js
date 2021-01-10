@@ -279,15 +279,20 @@ module.exports = class {
         // account status verification
         this._app.use((req, res, next) => {
             this._user.getUser(this._db, this._mongodb, req.session.user._id, (user) => {
-                req.session.user = this._user.toJSON(user);
+                if (user !== null) {
+                    req.session.user = this._user.toJSON(user);
 
-                if (req.session.user.status !== "SUSPENDED") {
-                    next();
+                    if (req.session.user.status !== "SUSPENDED") {
+                        next();
+                    } else {
+                        req.session.destroy();
+                        res.render("error", {
+                            verbose : "Votre compte est suspendu."
+                        });
+                    }
                 } else {
                     req.session.destroy();
-                    res.render("error", {
-                        verbose : "Votre compte est suspendu."
-                    });
+                    res.redirect("/");
                 }
             });
         });
@@ -579,10 +584,15 @@ module.exports = class {
         this._app.post("/account/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             if (req.session.user.role === "OWNER") {
                 this._user.getUser(this._db, this._mongodb, req.body.id, (user) => {
-                    if (user !== null) {
+                    if (user !== null && user.role !== "OWNER") {
                         user.delete(this._db, this._mongodb);
+                        res.redirect("/account/list");
+                    } else {
+                        res.render("error", {
+                            verbose : "Impossible de modifier ce compte.",
+                            user : req.session.user
+                        });
                     }
-                    res.redirect("/account/list");
                 });
             } else {
                 res.render("error", {
