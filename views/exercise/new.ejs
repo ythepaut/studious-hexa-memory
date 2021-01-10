@@ -4,7 +4,7 @@
     Ajouter un exerice
 </h1>
 
-<form method="POST" action="/manage/new">
+<form method="POST" action="/exercise/new">
 
     <!-- Title -->
     <div class="field">
@@ -14,7 +14,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" id="txtTitle" name="title" placeholder="Résolution équation différentielle linéaire du deuxieme ordre" required />
+                    <input class="input" type="text" id="txtTitle" name="title" placeholder="Résolution équation différentielle linéaire du deuxieme ordre" maxlength="256" required />
                 </p>
             </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" id="txtStatement" name="statement" placeholder="Résoudre sur $\mathbb{R}$ l'équation différentielle suivante : $y^{\prime}+y = x-e^{x}+\cos{x}$." required></textarea>
+                    <textarea class="textarea" id="txtStatement" name="statement" placeholder="Résoudre sur $\mathbb{R}$ l'équation différentielle suivante : $y^{\prime}+y = x-e^{x}+\cos{x}$." maxlength="16384" required></textarea>
                 </p>
             </div>
         </div>
@@ -62,7 +62,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" id="txtResponse" name="response" placeholder="$y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}$" required></textarea>
+                    <textarea class="textarea" id="txtResponse" name="response" placeholder="$y(x) = x - 1 - \frac{1}{2}e^{x} + \frac{1}{2}\cos{x} + \frac{1}{2}\sin{x} + \lambda{e^{-x}}$" maxlength="16384" required></textarea>
                 </p>
             </div>
         </div>
@@ -86,7 +86,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="number" min="0" max="14400" name="time" placeholder="600" required />
+                    <input class="input" type="number" min="1" max="14400" name="time" placeholder="600" required />
                 </p>
             </div>
         </div>
@@ -102,7 +102,7 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" name="tags" placeholder="PTSI,Derivées Partielles,Facile" required />
+                    <input class="input" type="text" name="tags" placeholder="PTSI,Derivées Partielles,Facile" />
                 </p>
             </div>
         </div>

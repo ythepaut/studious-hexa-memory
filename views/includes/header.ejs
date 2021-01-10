@@ -23,6 +23,7 @@
 
     <script src="/js/utils.js"></script>
     <script defer src="/js/modal.js"></script>
+    <script defer src="/js/tab.js"></script>
     <script defer src="/js/navbar.js"></script>
 </head>
 
@@ -48,9 +49,18 @@
                     S'entraîner
                 </a>
 
-                <a class="navbar-item" href="/manage">
-                    Gérer les exercices
-                </a>
+
+                <% if (typeof user !== "undefined" && (user.role === "ADMIN" || user.role === "OWNER")) { %>
+                    <a class="navbar-item" href="/exercise/list">
+                        Gérer les exercices
+                    </a>
+                <% } %>
+
+                <% if (typeof user !== "undefined" && user.role === "OWNER") { %>
+                    <a class="navbar-item" href="/account/list">
+                        Gérer les comptes
+                    </a>
+                <% } %>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
@@ -71,6 +81,16 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
+                        <a class="button is-primary is-light" href="/account/me">
+                            <% if (typeof user !== "undefined") { %>
+                                Bonjour <%= user.username %> !
+                            <% } else { %>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </span>
+                                    <span>Se connecter</span>
+                            <% } %>
+                        </a>
                         <a class="button is-light" href="https://github.com/ythepaut/studious-hexa-memory" target="_blank">
                             <i class="fab fa-github"></i>
                         </a>

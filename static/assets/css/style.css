@@ -6,3 +6,11 @@
 main {
     padding: 25px;
 }
+
+.tab-pane {
+    display: none;
+}
+
+.is-active {
+    display: initial;
+}

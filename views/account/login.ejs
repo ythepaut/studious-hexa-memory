@@ -1,0 +1,111 @@
+<%- include('../includes/header') %>
+
+<div class="has-text-centered">
+    <div class="columns is-vcentered">
+        <div class="column is-4 is-offset-2">
+
+            <div class="box">
+                <h1 class="title">Bonjour 👋</h1>
+
+
+                <div class="tabs is-fullwidth">
+                    <ul>
+                        <li class="is-active">
+                            <a id="loginForm">
+                                <span class="icon"><i class="fas fa-sign-in-alt"></i></span>
+                                <span>Connexion</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="registerForm">
+                                <span class="icon"><i class="fas fa-user-plus"></i></span>
+                                <span>Enregistrement</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="tab-content">
+                    <form method="POST" action="/account/login" class="tab-pane is-active" id="loginForm">
+                        <input type="hidden" name="next" value="/" id="inputnext" />
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" name="username" placeholder="Nom d'utilisateur" minlength="3" maxlength="16" required />
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" name="passwd" placeholder="Mot de passe" minlength="8" required />
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            </p>
+                        </div>
+                        <input type="submit" class="button is-fullwidth is-info" value="Valider" />
+                    </form>
+
+
+
+                    <form method="POST" action="/account/register" class="tab-pane" id="registerForm">
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" name="key" placeholder="Clé d'enregistrement" value="<%= key !== null ? key : "" %>" minlength="8" required />
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-key"></i>
+                            </span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" name="username" placeholder="Nom d'utilisateur" minlength="3" maxlength="16" required />
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" name="passwd" placeholder="Mot de passe" minlength="8" required />
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input" type="password" name="passwd2" placeholder="Mot de passe (confirmation)" minlength="8" required />
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            </p>
+                        </div>
+                        <input type="submit" class="button is-fullwidth is-info" value="Valider" />
+                    </form>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+
+        <div class="column">
+            <img src="/assets/img/welcome.png" alt="" />
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    document.querySelector("#inputnext").setAttribute("value", window.location.pathname);
+</script>
+
+<%- include('../includes/footer') %>

@@ -1,0 +1,190 @@
+<%- include('../includes/header') %>
+
+<nav class="level">
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Comptes actifs</p>
+            <p class="title"><%= users.filter(tuser => tuser.status === "ALIVE").length %></p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Clés non utilisées</p>
+            <p class="title"><%= users.filter(tuser => tuser.status === "PENDING_REGISTRATION").length %></p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+            <p class="heading">Comptes Admin+</p>
+            <p class="title"><%= users.filter(tuser => ["ADMIN", "OWNER"].includes(tuser.role)).length %></p>
+        </div>
+    </div>
+</nav>
+
+<hr />
+
+<div class="columns">
+    <div class="column is-3">
+        <div class="buttons is-justify-content-center">
+            <button class="button is-primary" data-toggle="modal" data-target="modalCreateAccount">Créer une clé</button>
+        </div>
+
+        <div class="notification is-light is-light">
+            <div class="has-text-centered is-fullwidth mb-3">
+                <h2 class="subtitle">Permissions des roles</h2>
+            </div>
+            <p>
+                <b>Sans compte</b> : Permet de s'entraîner uniquement.<br /><br />
+                <b>Membre</b> : Permet de s'entraîner, avec sauvegarde des resultats et des exercices pertinants pour de futures sessions.<br /><br />
+                <b>Administrateur</b> : Permet de gérer les exercices (création, edition, suppression, import, export).<br /><br />
+                <b>Propriétaire</b> : Permet de gérer les utilisateurs (création, edition du role/statut, supression).<br /><br />
+            </p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="field">
+            <p class="control has-icons-left">
+                <input class="input search-input" data-target="exerciseTable" type="text" placeholder="Rechercher parmis les comptes" />
+                <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
+                </span>
+            </p>
+        </div>
+
+        <table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
+            <thead>
+            <tr>
+                <th>Nom d'utilisateur</th>
+                <th style="width: 30%;">Clé</th>
+                <th style="width: 15%;">Role</th>
+                <th style="width: 15%;">Statut</th>
+                <th style="width: 5%; text-align: right;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (tuser of users) { %>
+                <tr>
+                    <td class="is-vcentered">
+                        <% if (tuser.username) { %>
+                            <%= tuser.username %>
+                        <% } else { %>
+                            <progress class="progress is-small" style="max-width: <%= Math.floor(Math.random()*150) + 100 %>px;" value="0" max="1"></progress>
+                        <% } %>
+                    </td>
+                    <td>
+                        <code><%= tuser.key %></code>
+                    </td>
+                    <td>
+                        <% if (tuser.role === "MEMBER") { %>
+                            <span class="tag is-info">Membre</span>
+                        <% } else if (tuser.role === "ADMIN") { %>
+                            <span class="tag is-warning">Administrateur</span>
+                        <% } else if (tuser.role === "OWNER") { %>
+                            <span class="tag is-danger">Propriétaire</span>
+                        <% } %>
+                    </td>
+                    <td>
+                        <% if (tuser.status === "ALIVE") { %>
+                            <span class="tag is-success">Actif</span>
+                        <% } else if (tuser.status === "SUSPENDED") { %>
+                            <span class="tag is-danger">Suspendu</span>
+                        <% } else if (tuser.status === "PENDING_REGISTRATION") { %>
+                            <span class="tag is-primary">Enregistrement</span>
+                        <% } %>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="field has-addons">
+                            <button type="button" class="button is-small is-primary is-light" data-toggle="modal" data-target="modalEdit<%= tuser.id %>" title="Modifier">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= tuser.id %>" title="Supprimer">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="modalCreateAccount">
+    <div class="modal-background" data-target="modalCreateAccount"></div>
+    <div class="modal-content">
+        <div class="box has-text-centered">
+            <h1 class="title">Créer une clé</h1>
+            <form method="POST" action="/account/new">
+                <div class="select">
+                    <select name="role">
+                        <option value="MEMBER">Membre</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                </div>
+                <input type="submit" class="button is-primary" value="Créer" />
+            </form>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" data-target="modalCreateAccount"></button>
+</div>
+
+<% if (typeof newKey !== "undefined") { %>
+    <div class="notification is-primary is-light">
+        <span>Clé d'enregistrement créée avec succès : <b class="is-family-code ml-2"><%= newKey %></b></span>
+    </div>
+<% } %>
+
+<!-- Modals -->
+<% for (const tuser of users) { %>
+    <div class="modal" id="modalDelete<%= tuser.id %>">
+        <div class="modal-background" data-target="modalDelete<%= tuser.id %>"></div>
+        <div class="modal-content">
+            <div class="box has-text-centered">
+                <h1 class="title">Supprimer le compte</h1>
+                <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer le compte<br /><code><%= tuser.key %></code> : "<%= tuser.username %>" ?</p>
+                <form method="POST" action="/account/delete">
+                    <input type="hidden" name="id" value="<%= tuser.id %>" />
+                    <input type="submit" class="button is-danger mt-2" value="Supprimer" />
+                </form>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close" data-target="modalDelete<%= tuser.id %>"></button>
+    </div>
+
+    <div class="modal" id="modalEdit<%= tuser.id %>">
+        <div class="modal-background" data-target="modalEdit<%= tuser.id %>"></div>
+        <div class="modal-content">
+            <div class="box has-text-centered">
+                <h1 class="title">Modifier le compte</h1>
+                <form method="POST" action="/account/adminedit">
+                    <input type="hidden" name="id" value="<%= tuser.id %>" />
+                    <div class="select">
+                        <select name="role">
+                            <option selected disabled>-- Nouveau role --</option>
+                            <option value="MEMBER">Membre</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="select">
+                        <select name="status">
+                            <option selected disabled>-- Nouveau statut --</option>
+                            <option value="ALIVE">Actif</option>
+                            <option value="SUSPENDED">Suspendu</option>
+                        </select>
+                    </div>
+                    <br />
+                    <br />
+                    <input type="submit" class="button is-primary mt-2" value="Modifier" />
+                </form>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close" data-target="modalEdit<%= tuser.id %>"></button>
+    </div>
+<% } %>
+
+<script>
+    searchEvent();
+</script>
+
+<%- include('../includes/footer') %>

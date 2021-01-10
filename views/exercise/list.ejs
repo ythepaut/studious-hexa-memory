@@ -45,9 +45,9 @@
 <div class="columns">
     <div class="column">
         <div class="buttons">
-            <a class="button is-primary" href="/manage/new">Ajouter un exercice</a>
-            <a class="button is-light" href="/manage/import">Importer</a>
-            <a class="button is-light" href="/manage/export" target="_blank">Exporter</a>
+            <a class="button is-primary" href="/exercise/new">Ajouter un exercice</a>
+            <a class="button is-light" href="/exercise/import">Importer</a>
+            <a class="button is-light" href="/exercise/export" target="_blank">Exporter</a>
         </div>
     </div>
     <div class="column is-two-thirds">
@@ -55,8 +55,8 @@
             <p class="control has-icons-left">
                 <input class="input search-input" data-target="exerciseTable" type="text" placeholder="Rechercher parmis les exercices" />
                 <span class="icon is-small is-left">
-            <i class="fas fa-search"></i>
-        </span>
+                    <i class="fas fa-search"></i>
+                </span>
             </p>
         </div>
     </div>
@@ -76,7 +76,7 @@
         <% for (const exercise of exercises) { %>
             <tr>
 
-                <th><a href="/manage/edit/<%= exercise.id %>"><%= exercise.title %></a></th>
+                <th><a href="/exercise/edit/<%= exercise.id %>"><%= exercise.title %></a></th>
                 <td>
                     <% if (exercise.statement.length > 100) { %>
                         <%= exercise.statement.substr(0,100) %>...
@@ -91,10 +91,10 @@
                 </td>
                 <td style="text-align: right;">
                     <div class="field has-addons">
-                        <a class="button is-small is-primary is-light" title="Modifier" href="/manage/edit/<%= exercise.id %>">
+                        <a class="button is-small is-primary is-light" title="Modifier" href="/exercise/edit/<%= exercise.id %>">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
-                        <form method="POST" action="/manage/clone" id="clone<%= exercise.id %>">
+                        <form method="POST" action="/exercise/clone" id="clone<%= exercise.id %>">
                             <input type="hidden" name="id" value="<%= exercise.id %>" />
                         </form>
                         <button type="submit" form="clone<%= exercise.id %>" class="button is-small is-link is-light" title="Dupliquer">
@@ -119,13 +119,13 @@
             <div class="box has-text-centered">
                 <h1 class="title">Supprimer l'exercice</h1>
                 <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer l'exercice<br />"<%= exercise.title %>" ?</p>
-                <form method="POST" action="/manage/delete">
+                <form method="POST" action="/exercise/delete">
                     <input type="hidden" name="id" value="<%= exercise.id %>" />
                     <input type="submit" class="button is-danger mt-2" value="Supprimer" />
                 </form>
             </div>
         </div>
-        <button class="modal-close is-large" aria-label="close" data-target="modalDelete"></button>
+        <button class="modal-close is-large" aria-label="close" data-target="modalDelete<%= exercise.id %>"></button>
     </div>
 <% } %>
 
