@@ -9,8 +9,8 @@ function formatLatexImage(str, formatLatex = true, formatImage = true) {
     // LateX
     if (formatLatex) {
         str = str.replace(/\$(.*?)\$/g, (a, b) => {
-            b = b.replaceAll(/&lt;/g, "<");
-            b = b.replaceAll(/&gt;/g, ">");
+            b = b.replace(/&lt;/g, "<");
+            b = b.replace(/&gt;/g, ">");
             return katex.renderToString(b, {
                 throwOnError: false
             });
@@ -19,12 +19,12 @@ function formatLatexImage(str, formatLatex = true, formatImage = true) {
     // Image
     if (formatImage) {
         str = str.replace(/\[\[(.*?)\]\]/g, (a, b) => {
-            b.replaceAll("\"", "\\\"");
+            b.replace("\"", "\\\"");
             return "<img src=\"" + b + "\" alt=\"" + b + "\" />";
         });
     }
     // New line
-    str = str.replaceAll(/\n/g, "<br />");
+    str = str.replace(/\n/g, "<br />");
 
     return str;
 }

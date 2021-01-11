@@ -51,61 +51,63 @@
             </p>
         </div>
 
-        <table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
-            <thead>
-            <tr>
-                <th>Nom d'utilisateur</th>
-                <th style="width: 30%;">Clé</th>
-                <th style="width: 15%;">Rôle</th>
-                <th style="width: 15%;">Statut</th>
-                <th style="width: 5%; text-align: right;">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% for (tuser of users) { %>
+        <div class="table-container">
+            <table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
+                <thead>
                 <tr>
-                    <td class="is-vcentered">
-                        <% if (tuser.username) { %>
-                            <%= tuser.username %>
-                        <% } else { %>
-                            <progress class="progress is-small" style="max-width: <%= Math.floor(Math.random()*150) + 100 %>px;" value="0" max="1"></progress>
-                        <% } %>
-                    </td>
-                    <td>
-                        <code><%= tuser.key %></code>
-                    </td>
-                    <td>
-                        <% if (tuser.role === "MEMBER") { %>
-                            <span class="tag is-info">Membre</span>
-                        <% } else if (tuser.role === "ADMIN") { %>
-                            <span class="tag is-warning">Administrateur</span>
-                        <% } else if (tuser.role === "OWNER") { %>
-                            <span class="tag is-danger">Propriétaire</span>
-                        <% } %>
-                    </td>
-                    <td>
-                        <% if (tuser.status === "ALIVE") { %>
-                            <span class="tag is-success">Actif</span>
-                        <% } else if (tuser.status === "SUSPENDED") { %>
-                            <span class="tag is-danger">Suspendu</span>
-                        <% } else if (tuser.status === "PENDING_REGISTRATION") { %>
-                            <span class="tag is-primary">Enregistrement</span>
-                        <% } %>
-                    </td>
-                    <td style="text-align: right;">
-                        <div class="field has-addons">
-                            <button type="button" class="button is-small is-primary is-light" data-toggle="modal" data-target="modalEdit<%= tuser.id %>" title="Modifier">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= tuser.id %>" title="Supprimer">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </td>
+                    <th>Nom d'utilisateur</th>
+                    <th style="width: 30%;">Clé</th>
+                    <th style="width: 15%;">Rôle</th>
+                    <th style="width: 15%;">Statut</th>
+                    <th style="width: 5%; text-align: right;">Actions</th>
                 </tr>
-            <% } %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <% for (tuser of users) { %>
+                    <tr>
+                        <td class="is-vcentered">
+                            <% if (tuser.username) { %>
+                                <%= tuser.username %>
+                            <% } else { %>
+                                <progress class="progress is-small" style="max-width: <%= Math.floor(Math.random()*150) + 100 %>px;" value="0" max="1"></progress>
+                            <% } %>
+                        </td>
+                        <td>
+                            <code><%= tuser.key %></code>
+                        </td>
+                        <td>
+                            <% if (tuser.role === "MEMBER") { %>
+                                <span class="tag is-info">Membre</span>
+                            <% } else if (tuser.role === "ADMIN") { %>
+                                <span class="tag is-warning">Administrateur</span>
+                            <% } else if (tuser.role === "OWNER") { %>
+                                <span class="tag is-danger">Propriétaire</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <% if (tuser.status === "ALIVE") { %>
+                                <span class="tag is-success">Actif</span>
+                            <% } else if (tuser.status === "SUSPENDED") { %>
+                                <span class="tag is-danger">Suspendu</span>
+                            <% } else if (tuser.status === "PENDING_REGISTRATION") { %>
+                                <span class="tag is-primary">Enregistrement</span>
+                            <% } %>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="field has-addons">
+                                <button type="button" class="button is-small is-primary is-light" data-toggle="modal" data-target="modalEdit<%= tuser.id %>" title="Modifier">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= tuser.id %>" title="Supprimer">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

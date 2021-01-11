@@ -53,40 +53,42 @@
     <div class="mt-3 has-text-centered">
         <span class="is-size-4">Résumé</span>
 
-        <table class="table is-striped is-fullwidth has-text-left mt-4">
-            <thead>
-            <tr>
-                <th style="width:5%;"><abbr title="Passer la souris sur les numéros pour voir les ID n'exercice">N°</abbr></th>
-                <th style="width:50%;">Titre</th>
-                <th style="width:30%;">Tags</th>
-                <th>Réussi</th>
-            </tr>
-            </thead>
-            <tbody>
-                <%
-                var i = 0;
-                for (const exercise of practice.exercisesDone) {
-                i += 1;
-                %>
+        <div class="table-container">
+            <table class="table is-striped is-fullwidth has-text-left mt-4">
+                <thead>
                 <tr>
-                    <th><span title="<%= exercise.id %>"><%= i %></span></th>
-                    <td><%= exercise.title %></td>
-                    <td>
-                        <% for (const tag of exercise.tags) { %>
-                            <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
-                        <% } %>
-                    </td>
-                    <td>
-                        <% if (exercise.success) { %>
-                            <span class="tag is-success">Oui</span>
-                        <% } else { %>
-                            <span class="tag is-danger">Non</span>
-                        <% } %>
-                    </td>
+                    <th style="width:5%;"><abbr title="Passer la souris sur les numéros pour voir les ID n'exercice">N°</abbr></th>
+                    <th style="width:50%;">Titre</th>
+                    <th style="width:30%;">Tags</th>
+                    <th>Réussi</th>
                 </tr>
-                <% } %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <%
+                    var i = 0;
+                    for (const exercise of practice.exercisesDone) {
+                    i += 1;
+                    %>
+                    <tr>
+                        <th><span title="<%= exercise.id %>"><%= i %></span></th>
+                        <td><%= exercise.title %></td>
+                        <td>
+                            <% for (const tag of exercise.tags) { %>
+                                <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <% if (exercise.success) { %>
+                                <span class="tag is-success">Oui</span>
+                            <% } else { %>
+                                <span class="tag is-danger">Non</span>
+                            <% } %>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <hr />
@@ -101,7 +103,7 @@
 <script>
     // Render LateX from table
     document.querySelectorAll("td:nth-child(2)").forEach((element) => {
-        element.innerHTML = formatLatexImage(element.innerHTML.replaceAll("\n", " "), true, false);
+        element.innerHTML = formatLatexImage(element.innerHTML.replace("\n", " "), true, false);
     });
 </script>
 

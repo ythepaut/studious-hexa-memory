@@ -44,7 +44,7 @@
 
 <div class="columns">
     <div class="column">
-        <div class="buttons">
+        <div class="buttons is-justify-content-center">
             <a class="button is-primary" href="/exercise/new">Ajouter un exercice</a>
             <a class="button is-light" href="/exercise/import">Importer</a>
             <a class="button is-light" href="/exercise/export" target="_blank">Exporter</a>
@@ -62,53 +62,54 @@
     </div>
 </div>
 
+<div class="table-container">
+    <table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
+        <thead>
+        <tr>
+            <th style="width: 30%;">Titre</th>
+            <th style="width: 50%;">Consigne</th>
+            <th>Tags</th>
+            <th style="width: 5%; text-align: right;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+            <% for (const exercise of exercises) { %>
+                <tr>
 
-<table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
-    <thead>
-    <tr>
-        <th style="width: 30%;">Titre</th>
-        <th style="width: 50%;">Consigne</th>
-        <th>Tags</th>
-        <th style="width: 5%; text-align: right;">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-        <% for (const exercise of exercises) { %>
-            <tr>
-
-                <th><a href="/exercise/edit/<%= exercise.id %>"><%= exercise.title %></a></th>
-                <td>
-                    <% if (exercise.statement.length > 100) { %>
-                        <%= exercise.statement.substr(0,100) %>...
-                    <% } else { %>
-                        <%= exercise.statement %>
-                    <% } %>
-                </td>
-                <td>
-                    <% for (const tag of exercise.tags) { %>
-                        <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
-                    <% } %>
-                </td>
-                <td style="text-align: right;">
-                    <div class="field has-addons">
-                        <a class="button is-small is-primary is-light" title="Modifier" href="/exercise/edit/<%= exercise.id %>">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
-                        <form method="POST" action="/exercise/clone" id="clone<%= exercise.id %>">
-                            <input type="hidden" name="id" value="<%= exercise.id %>" />
-                        </form>
-                        <button type="submit" form="clone<%= exercise.id %>" class="button is-small is-link is-light" title="Dupliquer">
-                            <i class="fas fa-clone"></i>
-                        </button>
-                        <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= exercise.id %>" title="Supprimer">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        <% } %>
-    </tbody>
-</table>
+                    <th><a href="/exercise/edit/<%= exercise.id %>"><%= exercise.title %></a></th>
+                    <td>
+                        <% if (exercise.statement.length > 100) { %>
+                            <%= exercise.statement.substr(0,100) %>...
+                        <% } else { %>
+                            <%= exercise.statement %>
+                        <% } %>
+                    </td>
+                    <td>
+                        <% for (const tag of exercise.tags) { %>
+                            <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
+                        <% } %>
+                    </td>
+                    <td style="text-align: right;">
+                        <div class="field has-addons">
+                            <a class="button is-small is-primary is-light" title="Modifier" href="/exercise/edit/<%= exercise.id %>">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <form method="POST" action="/exercise/clone" id="clone<%= exercise.id %>">
+                                <input type="hidden" name="id" value="<%= exercise.id %>" />
+                            </form>
+                            <button type="submit" form="clone<%= exercise.id %>" class="button is-small is-link is-light" title="Dupliquer">
+                                <i class="fas fa-clone"></i>
+                            </button>
+                            <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= exercise.id %>" title="Supprimer">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
 
 
 <!-- Delete modal & form -->
@@ -136,7 +137,7 @@
 
     // Render LateX from table
     document.querySelectorAll("th:nth-child(1) > a,td:nth-child(2)").forEach((element) => {
-        element.innerHTML = formatLatexImage(element.innerHTML.replaceAll("\n", " "), true, false);
+        element.innerHTML = formatLatexImage(element.innerHTML.replace("\n", " "), true, false);
     });
 </script>
 
