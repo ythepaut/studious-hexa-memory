@@ -28,7 +28,7 @@ btnSeeResponse.addEventListener("click", () => {
 
 // handle next exercise button
 const nextExercise = (success) => {
-    postRequest("/", "success=" + success);
+    postRequest("/", "success=" + success, () => location.reload());
 }
 btnExerciseFail.addEventListener("click", () => {
     nextExercise(false);

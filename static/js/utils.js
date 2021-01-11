@@ -54,14 +54,15 @@ function formatTime(s) {
  * Sends a post request to url
  * @param {string}              url             Target url
  * @param {string}              body            Params of POST request
+ * @param {function}            callback        Callback fct : callback(response)
  */
-function postRequest(url, body) {
+function postRequest(url, body, callback) {
     let request = new XMLHttpRequest();
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     request.onreadystatechange = function() {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            location.reload()
+            callback(this.responseText);
         }
     };
     request.send(body);

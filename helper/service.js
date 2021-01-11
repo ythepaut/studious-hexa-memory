@@ -212,12 +212,16 @@ module.exports = class {
             this._user.getUserByName(this._db, req.body.username, (user) => {
                 if (user !== null && this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
                     req.session.user = this._user.toJSON(user);
-                    res.redirect(req.body.next !== undefined ? req.body.next : "/");
+                    res.status(200).send(JSON.stringify({
+                        type : "success",
+                        message : "Bienvenue " + user.username + " !",
+                        redirect : req.body.next !== undefined ? req.body.next : "/"
+                    }));
                 } else {
-                    res.render("error", {
-                        verbose : "Identifiants de connexion incorrects.",
-                        user : req.session.user
-                    });
+                    res.status(200).send(JSON.stringify({
+                        type : "error",
+                        message : "Identifiants de connexion incorrects"
+                    }));
                 }
             });
         });
@@ -232,19 +236,22 @@ module.exports = class {
                             user.passwd = this._bcrypt.hashSync(req.body.passwd,12);
                             user.status = "ALIVE";
                             user.update(this._db, this._mongodb);
-                            res.redirect("/account/login");
+                            res.status(200).send(JSON.stringify({
+                                type : "success",
+                                message : "Compte créé avec succès. Vous pouvez désormais vous connecter."
+                            }));
                         } else {
-                            res.render("error", {
-                                verbose : "Nom d'utilisateur déjà utilisé.",
-                                user : req.session.user
-                            });
+                            res.status(200).send(JSON.stringify({
+                                type : "error",
+                                message : "Ce nom d'utilisateur est déjà utilisé."
+                            }));
                         }
                     });
                 } else {
-                    res.render("error", {
-                        verbose : "Clé d'enregistrement incorrecte ou déjà utilisée.",
-                        user : req.session.user
-                    });
+                    res.status(200).send(JSON.stringify({
+                        type : "error",
+                        message : "Cette clé d'enregistrement est incorrecte ou déjà utilisée."
+                    }));
                 }
             })
         });
@@ -267,9 +274,16 @@ module.exports = class {
                         }
                     }
                     // rendering login page
-                    res.render("account/login", {
-                        key : key
-                    });
+                    if (req.method === "POST") {
+                        res.status(200).send(JSON.stringify({
+                            type : "error",
+                            message : "Session invalide. Veuillez vous reconnecter."
+                        }));
+                    } else {
+                        res.render("account/login", {
+                            key : key
+                        });
+                    }
                 });
             } else {
                 next();
@@ -286,13 +300,27 @@ module.exports = class {
                         next();
                     } else {
                         req.session.destroy();
-                        res.render("error", {
-                            verbose : "Votre compte est suspendu."
-                        });
+                        if (req.method === "POST") {
+                            res.status(200).send(JSON.stringify({
+                                type : "error",
+                                message : "Session invalide. Veuillez vous reconnecter."
+                            }));
+                        } else {
+                            res.render("error", {
+                                verbose : "Votre compte est suspendu."
+                            });
+                        }
                     }
                 } else {
                     req.session.destroy();
-                    res.redirect("/");
+                    if (req.method === "POST") {
+                        res.status(200).send(JSON.stringify({
+                            type : "error",
+                            message : "Session invalide. Veuillez vous reconnecter."
+                        }));
+                    } else {
+                        res.redirect("/");
+                    }
                 }
             });
         });
@@ -345,12 +373,16 @@ module.exports = class {
             if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
                 const exercise = new this._exercise(-1, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
                 exercise.save(this._db, this._mongodb, false, () => {});
-                res.redirect("/exercise/list");
+                res.status(200).send(JSON.stringify({
+                    type : "success",
+                    message : "Exercice créé avec succès.",
+                    redirect : "/exercise/list"
+                }));
             } else {
-                res.render("error", {
-                    verbose : "Permission insuffisante",
-                    user : req.session.user
-                });
+                res.status(200).send(JSON.stringify({
+                    type : "error",
+                    message : "Permission requise pour effectuer cette action."
+                }));
             }
         });
 
@@ -381,12 +413,16 @@ module.exports = class {
             if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
                 const exercise = new this._exercise(req.body.id, req.body.title, req.body.statement, req.body.response, this._exercise.formatTime(req.body.time), this._exercise.formatTags(req.body.tags.split(",")));
                 exercise.save(this._db, this._mongodb, false, () => {});
-                res.redirect("/exercise/list");
+                res.status(200).send(JSON.stringify({
+                    type : "success",
+                    message : "Exercice modifié avec succès.",
+                    redirect : "/exercise/list"
+                }));
             } else {
-                res.render("error", {
-                    verbose : "Permission insuffisante",
-                    user : req.session.user
-                });
+                res.status(200).send(JSON.stringify({
+                    type : "error",
+                    message : "Permission requise pour effectuer cette action."
+                }));
             }
         });
 
@@ -394,12 +430,16 @@ module.exports = class {
         this._app.post("/exercise/delete", this._validator.body(this._validation.dbIdSchema), (req, res) => {
             if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
                 this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
-                res.redirect("/exercise/list");
+                res.status(200).send(JSON.stringify({
+                    type : "success",
+                    message : "Exercice supprimé avec succès.",
+                    redirect : "/exercise/list"
+                }));
             } else {
-                res.render("error", {
-                    verbose : "Permission insuffisante",
-                    user : req.session.user
-                });
+                res.status(200).send(JSON.stringify({
+                    type : "error",
+                    message : "Permission requise pour effectuer cette action."
+                }));
             }
         });
 
@@ -523,29 +563,41 @@ module.exports = class {
                                 user.username = req.body.username;
                                 user.update(this._db, this._mongodb);
                                 req.session.destroy();
-                                res.redirect("/account/me");
+                                res.status(200).send(JSON.stringify({
+                                    type : "success",
+                                    message : "Nom d'utilisateur changé avec succès. Déconnexion...",
+                                    redirect : "/account/login"
+                                }));
                             } else {
-                                res.render("error", {
-                                    verbose : "Nom d'utilisateur déjà utilisé.",
-                                    user : req.session.user
-                                });
+                                res.status(200).send(JSON.stringify({
+                                    type : "error",
+                                    message : "Ce nom d'utilisateur est déjà utilisé."
+                                }));
                             }
                         });
                     } else if (req.body.action === "changepassword") {
                         user.passwd = this._bcrypt.hashSync(req.body.newpasswd,12);
                         user.update(this._db, this._mongodb);
                         req.session.destroy();
-                        res.redirect("/account/me");
+                        res.status(200).send(JSON.stringify({
+                            type : "success",
+                            message : "Mot de passe changé avec succès. Déconnexion...",
+                            redirect : "/account/login"
+                        }));
                     } else if (req.body.action === "delete") {
                         user.delete(this._db, this._mongodb);
                         req.session.destroy();
-                        res.redirect("/account/me");
+                        res.status(200).send(JSON.stringify({
+                            type : "success",
+                            message : "Compte supprimé avec succès. Déconnexion...",
+                            redirect : "/account/login"
+                        }));
                     }
                 } else {
-                    res.render("error", {
-                        verbose : "Mot de passe incorrect",
-                        user : req.session.user
-                    });
+                    res.status(200).send(JSON.stringify({
+                        type : "error",
+                        message : "Mot de passe incorrect."
+                    }));
                 }
             });
         });
@@ -570,13 +622,16 @@ module.exports = class {
         // create account key
         this._app.post("/account/new", this._validator.body(this._validation.formNewKey), (req, res) => {
             if (req.session.user.role === "OWNER") {
-                this._user.create(this._db, req.body.role);
-                res.redirect("/account/list");
+                let key = this._user.create(this._db, req.body.role);
+                res.status(200).send(JSON.stringify({
+                    type : "success",
+                    message : "Clé <code>" + key + "</code> créée avec succès."
+                }));
             } else {
-                res.render("error", {
-                    verbose : "Permission insuffisante",
-                    user : req.session.user
-                });
+                res.status(200).send(JSON.stringify({
+                    type : "error",
+                    message : "Permission requise pour effectuer cette action."
+                }));
             }
         });
 
@@ -586,19 +641,23 @@ module.exports = class {
                 this._user.getUser(this._db, this._mongodb, req.body.id, (user) => {
                     if (user !== null && user.role !== "OWNER") {
                         user.delete(this._db, this._mongodb);
-                        res.redirect("/account/list");
+                        res.status(200).send(JSON.stringify({
+                            type : "success",
+                            message : "Compte supprimé avec succès.",
+                            redirect : "/account/list"
+                        }));
                     } else {
-                        res.render("error", {
-                            verbose : "Impossible de modifier cet utilisateur.",
-                            user : req.session.user
-                        });
+                        res.status(200).send(JSON.stringify({
+                            type : "error",
+                            message : "Impossible de modifier cet utilisateur."
+                        }));
                     }
                 });
             } else {
-                res.render("error", {
-                    verbose : "Permission insuffisante",
-                    user : req.session.user
-                });
+                res.status(200).send(JSON.stringify({
+                    type : "error",
+                    message : "Permission requise pour effectuer cette action."
+                }));
             }
         });
 
@@ -607,28 +666,32 @@ module.exports = class {
             if (req.session.user.role === "OWNER") {
                 this._user.getUser(this._db, this._mongodb, req.body.id, (user) => {
                     if (user !== null && user.role !== "OWNER") {
-                        if (req.body.role !== undefined) {
+                        if (req.body.role !== "void") {
                             user.role = req.body.role;
                         }
-                        if (req.body.status !== undefined) {
+                        if (req.body.status !== "void") {
                             if (user.status !== "PENDING_REGISTRATION") {
                                 user.status = req.body.status;
                             }
                         }
                         user.update(this._db, this._mongodb);
-                        res.redirect("/account/list");
+                        res.status(200).send(JSON.stringify({
+                            type : "success",
+                            message : "Utilisateur modifié avec succès.",
+                            redirect : "/account/list"
+                        }));
                     } else {
-                        res.render("error", {
-                            verbose : "Impossible de modifier cet utilisateur.",
-                            user : req.session.user
-                        });
+                        res.status(200).send(JSON.stringify({
+                            type : "error",
+                            message : "Impossible de modifier cet utilisateur."
+                        }));
                     }
                 });
             } else {
-                res.render("error", {
-                    verbose : "Permission insuffisante",
-                    user : req.session.user
-                });
+                res.status(200).send(JSON.stringify({
+                    type : "error",
+                    message : "Permission requise pour effectuer cette action."
+                }));
             }
         });
 
@@ -645,10 +708,14 @@ module.exports = class {
         // 400 - Form validation error
         this._app.use((err, req, res, next) => {
             if (err && err.error && err.error.isJoi) {
-                res.status(400).render("error", {
-                    verbose : "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez.",
-                    user : req.session.user
-                });
+                if (req.method === "POST") {
+                    res.status(400).send(JSON.stringify({type: "error", message: "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez."}));
+                } else {
+                    res.status(400).render("error", {
+                        verbose : "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez.",
+                        user : req.session.user
+                    });
+                }
                 console.log(err.error.toString());
             } else {
                 next(err);

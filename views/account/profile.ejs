@@ -88,11 +88,11 @@
     <div class="modal-content">
         <div class="box has-text-centered">
             <h1 class="title">Changer de nom d'utilisateur</h1>
-            <form method="POST" action="/account/edit">
+            <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="action" value="changeusername" />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="text" name="username" minlength="3" maxlength="16" placeholder="Nouveau nom d'utilisateur" required />
+                        <input class="input" type="text" autocomplete="username" name="username" minlength="3" maxlength="16" placeholder="Nouveau nom d'utilisateur" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>
@@ -100,13 +100,13 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" name="passwd" minlength="8" placeholder="Mot de passe requis pour confirmer votre action" required />
+                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="Mot de passe requis pour confirmer votre action" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
                     </p>
                 </div>
-                <input type="submit" class="button is-primary mt-2" value="Modifier" />
+                <button type="submit" class="button is-primary mt-2">Modifier</button>
             </form>
             <br />
             <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;Pour que cette modification prenne effet, vous serez déconnecté.</span>
@@ -120,11 +120,11 @@
     <div class="modal-content">
         <div class="box has-text-centered">
             <h1 class="title">Changer de mot de passe</h1>
-            <form method="POST" action="/account/edit">
+            <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="action" value="changepassword" />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" name="passwd" minlength="8" placeholder="Ancien mot de passe" required />
+                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="Ancien mot de passe" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -132,7 +132,7 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" name="newpasswd" minlength="8" placeholder="Nouveau mot de passe" required />
+                        <input class="input" type="password" autocomplete="new-password" name="newpasswd" minlength="8" placeholder="Nouveau mot de passe" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -140,13 +140,13 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" name="newpasswd2" minlength="8" placeholder="Nouveau mot de passe (confirmation)" required />
+                        <input class="input" type="password" autocomplete="new-password" name="newpasswd2" minlength="8" placeholder="Nouveau mot de passe (confirmation)" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
                     </p>
                 </div>
-                <input type="submit" class="button is-primary mt-2" value="Modifier" />
+                <button type="submit" class="button is-primary mt-2">Modifier</button>
             </form>
             <br />
             <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;Pour que cette modification prenne effet, vous serez déconnecté.</span>
@@ -160,7 +160,7 @@
     <div class="modal-content">
         <div class="box has-text-centered">
             <h1 class="title">Supprimer mon compte</h1>
-            <form method="POST" action="/account/edit">
+            <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="action" value="delete" />
                 <p class="has-text-left">
                     En cliquant sur "Valider", votre compte sera supprimé immédiatement.<br />
@@ -175,7 +175,7 @@
                         </span>
                     </p>
                 </div>
-                <input type="submit" class="button is-primary mt-2" value="Valider" />
+                <button type="submit" class="button is-primary mt-2">Valider</button>
             </form>
         </div>
     </div>

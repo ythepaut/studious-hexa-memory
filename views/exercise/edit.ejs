@@ -7,7 +7,7 @@
     <%= exercise.id %>
 </h3>
 
-<form method="POST" action="/exercise/edit">
+<form method="POST" action="/exercise/edit" class="ajax">
 
     <!-- Title -->
     <div class="field">
@@ -113,7 +113,7 @@
 
     <input type="hidden" name="id" value="<%= exercise.id %>">
 
-    <input type="submit" value="Modifier" class="button is-primary mt-2" />
+    <button type="submit" class="button is-primary mt-2">Modifier</button>
 </form>
 
 

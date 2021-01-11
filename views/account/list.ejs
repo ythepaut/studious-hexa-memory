@@ -114,14 +114,14 @@
     <div class="modal-content">
         <div class="box has-text-centered">
             <h1 class="title">Créer une clé</h1>
-            <form method="POST" action="/account/new">
+            <form method="POST" action="/account/new" class="ajax">
                 <div class="select">
                     <select name="role">
                         <option value="MEMBER">Membre</option>
                         <option value="ADMIN">Admin</option>
                     </select>
                 </div>
-                <input type="submit" class="button is-primary" value="Créer" />
+                <button type="submit" class="button is-primary">Créer</button>
             </form>
         </div>
     </div>
@@ -142,9 +142,9 @@
             <div class="box has-text-centered">
                 <h1 class="title">Supprimer le compte</h1>
                 <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer le compte<br /><code><%= tuser.key %></code> : "<%= tuser.username %>" ?</p>
-                <form method="POST" action="/account/delete">
+                <form method="POST" action="/account/delete" class="ajax">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
-                    <input type="submit" class="button is-danger mt-2" value="Supprimer" />
+                    <button type="submit" class="button is-danger mt-2">Supprimer</button>
                 </form>
             </div>
         </div>
@@ -156,11 +156,12 @@
         <div class="modal-content">
             <div class="box has-text-centered">
                 <h1 class="title">Modifier le compte</h1>
-                <form method="POST" action="/account/adminedit">
+                <p class="is-family-primary mb-3">Modification du compte : <code><%= tuser.key %></code> : "<%= tuser.username %>"</p>
+                <form method="POST" action="/account/adminedit" class="ajax">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
                     <div class="select">
                         <select name="role">
-                            <option selected disabled>-- Nouveau rôle --</option>
+                            <option value="void" selected disabled>-- Nouveau rôle --</option>
                             <option value="MEMBER">Membre</option>
                             <option value="ADMIN">Admin</option>
                         </select>
@@ -168,14 +169,14 @@
                     <br />
                     <div class="select">
                         <select name="status">
-                            <option selected disabled>-- Nouveau statut --</option>
+                            <option value="void" selected disabled>-- Nouveau statut --</option>
                             <option value="ALIVE">Actif</option>
                             <option value="SUSPENDED">Suspendu</option>
                         </select>
                     </div>
                     <br />
                     <br />
-                    <input type="submit" class="button is-primary mt-2" value="Modifier" />
+                    <button type="submit" class="button is-primary mt-2">Modifier</button>
                 </form>
             </div>
         </div>

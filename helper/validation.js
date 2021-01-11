@@ -46,9 +46,9 @@ module.exports = {
     // Form edit user role/status from list
     formEditUser : Joi.object({
         id : Joi.string().pattern(new RegExp("^[0-9a-f]{24}$")),
-        role : Joi.string().valid("MEMBER", "ADMIN"),
-        status : Joi.string().valid("SUSPENDED", "ALIVE")
-    }).or("role", "status"),
+        role : Joi.string().valid("MEMBER", "ADMIN", "void").required(),
+        status : Joi.string().valid("SUSPENDED", "ALIVE", "void").required() //TODO prevent both role and status having "void" as value
+    }),
     // MongoDB id format
     dbIdSchema : Joi.object({
         id : Joi.string().pattern(new RegExp("^[0-9a-f]{24}$"))

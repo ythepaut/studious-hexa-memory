@@ -119,9 +119,9 @@
             <div class="box has-text-centered">
                 <h1 class="title">Supprimer l'exercice</h1>
                 <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer l'exercice<br />"<%= exercise.title %>" ?</p>
-                <form method="POST" action="/exercise/delete">
+                <form method="POST" action="/exercise/delete" class="ajax">
                     <input type="hidden" name="id" value="<%= exercise.id %>" />
-                    <input type="submit" class="button is-danger mt-2" value="Supprimer" />
+                    <button type="submit" class="button is-danger mt-2">Supprimer</button>
                 </form>
             </div>
         </div>
