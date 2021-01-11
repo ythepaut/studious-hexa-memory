@@ -31,13 +31,13 @@
 
         <div class="notification is-light is-light">
             <div class="has-text-centered is-fullwidth mb-3">
-                <h2 class="subtitle">Permissions des roles</h2>
+                <h2 class="subtitle">Permissions des rôles</h2>
             </div>
             <p>
                 <b>Sans compte</b> : Permet de s'entraîner uniquement.<br /><br />
                 <b>Membre</b> : Permet de s'entraîner, avec sauvegarde des resultats et des exercices pertinants pour de futures sessions.<br /><br />
                 <b>Administrateur</b> : Permet de gérer les exercices (création, edition, suppression, import, export).<br /><br />
-                <b>Propriétaire</b> : Permet de gérer les utilisateurs (création, edition du role/statut, supression).<br /><br />
+                <b>Propriétaire</b> : Permet de gérer les utilisateurs (création, edition du rôle/statut, supression).<br /><br />
             </p>
         </div>
     </div>
@@ -56,7 +56,7 @@
             <tr>
                 <th>Nom d'utilisateur</th>
                 <th style="width: 30%;">Clé</th>
-                <th style="width: 15%;">Role</th>
+                <th style="width: 15%;">Rôle</th>
                 <th style="width: 15%;">Statut</th>
                 <th style="width: 5%; text-align: right;">Actions</th>
             </tr>
@@ -160,7 +160,7 @@
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
                     <div class="select">
                         <select name="role">
-                            <option selected disabled>-- Nouveau role --</option>
+                            <option selected disabled>-- Nouveau rôle --</option>
                             <option value="MEMBER">Membre</option>
                             <option value="ADMIN">Admin</option>
                         </select>

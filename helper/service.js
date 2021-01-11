@@ -589,7 +589,7 @@ module.exports = class {
                         res.redirect("/account/list");
                     } else {
                         res.render("error", {
-                            verbose : "Impossible de modifier ce compte.",
+                            verbose : "Impossible de modifier cet utilisateur.",
                             user : req.session.user
                         });
                     }
@@ -619,7 +619,7 @@ module.exports = class {
                         res.redirect("/account/list");
                     } else {
                         res.render("error", {
-                            verbose : "Impossible de modifier cet utilisateur",
+                            verbose : "Impossible de modifier cet utilisateur.",
                             user : req.session.user
                         });
                     }
