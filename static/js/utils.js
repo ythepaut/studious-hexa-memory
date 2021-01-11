@@ -1,22 +1,28 @@
 /**
  * Returns str as html elements from [image] and $Latex$
  * @param {string}              str             Raw statement/response to transform
+ * @param {boolean}             formatLatex     True to render latex
+ * @param {boolean}             formatImage     True to render images
  * @return {string}                             HTML elements
  */
-function formatLatexImage(str) {
+function formatLatexImage(str, formatLatex = true, formatImage = true) {
     // LateX
-    str = str.replace(/\$(.*?)\$/g, (a, b) => {
-        b = b.replaceAll(/&lt;/g, "<");
-        b = b.replaceAll(/&gt;/g, ">");
-        return katex.renderToString(b, {
-            throwOnError: false
+    if (formatLatex) {
+        str = str.replace(/\$(.*?)\$/g, (a, b) => {
+            b = b.replaceAll(/&lt;/g, "<");
+            b = b.replaceAll(/&gt;/g, ">");
+            return katex.renderToString(b, {
+                throwOnError: false
+            });
         });
-    });
+    }
     // Image
-    str = str.replace(/\[\[(.*?)\]\]/g, (a, b) => {
-        b.replaceAll("\"", "\\\"");
-        return "<img src=\"" + b + "\" alt=\"" + b + "\" />";
-    });
+    if (formatImage) {
+        str = str.replace(/\[\[(.*?)\]\]/g, (a, b) => {
+            b.replaceAll("\"", "\\\"");
+            return "<img src=\"" + b + "\" alt=\"" + b + "\" />";
+        });
+    }
     // New line
     str = str.replaceAll(/\n/g, "<br />");
 
@@ -27,11 +33,13 @@ function formatLatexImage(str) {
  * Adds a preview to a textarea to format latex and images
  * @param {object}              input           Element to listen to, and translate value
  * @param {object}              preview         Element to write transformed value
+ * @param {boolean}             formatLatex     True to render latex
+ * @param {boolean}             formatImage     True to render images
  */
-function addPreviewUpdate(input, preview) {
-    preview.innerHTML = formatLatexImage(input.value);
+function addPreviewUpdate(input, preview, formatLatex, formatImage) {
+    preview.innerHTML = formatLatexImage(input.value, formatLatex, formatImage);
     input.addEventListener("keyup", () => {
-        preview.innerHTML = formatLatexImage(input.value);
+        preview.innerHTML = formatLatexImage(input.value, formatLatex, formatImage);
     });
 }
 

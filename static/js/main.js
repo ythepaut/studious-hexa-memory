@@ -56,7 +56,7 @@ window.addEventListener("load", () => {
 
 
     // formats latex
-    divTitle.innerHTML = formatLatexImage(divTitle.innerHTML);
-    divStatement.innerHTML = formatLatexImage(divStatement.innerHTML);
-    divResponse.innerHTML = formatLatexImage(divResponse.innerHTML);
+    divTitle.innerHTML = formatLatexImage(divTitle.innerHTML, true, false);
+    divStatement.innerHTML = formatLatexImage(divStatement.innerHTML, true, true);
+    divResponse.innerHTML = formatLatexImage(divResponse.innerHTML, true, true);
 });

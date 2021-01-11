@@ -101,7 +101,7 @@
 <script>
     // Render LateX from table
     document.querySelectorAll("td:nth-child(2)").forEach((element) => {
-        element.innerHTML = formatLatexImage(element.innerHTML.replaceAll("\n", " "));
+        element.innerHTML = formatLatexImage(element.innerHTML.replaceAll("\n", " "), true, false);
     });
 </script>
 

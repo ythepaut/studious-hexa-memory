@@ -136,7 +136,7 @@
 
     // Render LateX from table
     document.querySelectorAll("th:nth-child(1) > a,td:nth-child(2)").forEach((element) => {
-        element.innerHTML = formatLatexImage(element.innerHTML.replaceAll("\n", " "));
+        element.innerHTML = formatLatexImage(element.innerHTML.replaceAll("\n", " "), true, false);
     });
 </script>
 
