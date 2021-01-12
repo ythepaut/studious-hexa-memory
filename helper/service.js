@@ -78,14 +78,12 @@ module.exports = class {
                         // exercise submission
 
                         // add current exercise to exercise done list
-                        req.session.practice.exercisesDone.push(
-                            {
+                        req.session.practice.exercisesDone.push({
                                 id : req.session.practice.currentExercise.id,
                                 title : req.session.practice.currentExercise.title,
                                 tags : req.session.practice.currentExercise.tags,
                                 success : req.body.success === "true"
-                            }
-                        );
+                        });
 
                         // update success count
                         if (req.body.success === "true") {
@@ -339,14 +337,12 @@ module.exports = class {
             if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
                 this._exercise.getExercises(this._db, [], (rawExercises) => {
                     const exercises = this._exercise.toJSONs(rawExercises);
-                    res.render("exercise/list",
-                        {
+                    res.render("exercise/list", {
                             exerciseDone : 0,
                             successRate : 0,
                             exercises : exercises,
                             user : req.session.user
-                        }
-                    );
+                    });
                 });
             } else {
                 res.render("error", {
