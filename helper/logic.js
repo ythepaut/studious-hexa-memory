@@ -217,7 +217,7 @@ module.exports = class {
      */
     handleExerciseList(req, callback) {
         if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
-            this._exercise.getExercises(this._db, [], "UNION", (rawExercises) => {
+            this._exercise.getExercises(this._db, [], "INTERSECTION", (rawExercises) => {
                 const exercises = this._exercise.toJSONs(rawExercises);
                 callback(this.responseView(200, "exercise/list", {
                     exerciseDone : 0,
@@ -374,7 +374,7 @@ module.exports = class {
      */
     handleExerciseExport(req, res) {
         if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
-            this._exercise.getExercises(this._db, [], "UNION", (exercises) => {
+            this._exercise.getExercises(this._db, [], "INTERSECTION", (exercises) => {
                 res.set({"Content-Disposition":"attachment; filename=\"shm-export.json\""});
                 res.send(exercises);
             });
