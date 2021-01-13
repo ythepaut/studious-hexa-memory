@@ -3,40 +3,90 @@
 <div class="box">
     <h1 class="title has-text-centered">Commencer des exercices</h1>
 
-
     <div class="columns is-align-items-center is-justify-content-center">
 
-        <div class="columm is-one-half">
+        <div class="column is-offset-1 is-5 is-vcentered">
+            <form method="POST" id="formStart">
 
-            <form method="POST" class="mt-5 mr-3" id="formStart">
-
-                <label class="label mt-3">Nombre d'exercices&nbsp;<span class="has-text-info ml-1" title="0 ou laisser vide pour ne pas limiter le nombre d'exercices"><i class="fas fa-info-circle"></i></span></label>
-                <input class="input mt-1" type="number" min="0" max="1000" name="exerciseCount" value="0" />
-
-                <label class="label mt-3">Tags&nbsp;<span class="has-text-info ml-1" title="CTRL+Clic pour la sélection multiple"><i class="fas fa-info-circle"></i></span></label>
-                <div class="select is-multiple">
-                    <select multiple name="tags" size="4" style="width: 300px">
-                        <% for (const tag of tags) { %>
-                            <option value="<%= tag %>"><%= tag.toUpperCase() %></option>
-                        <% } %>
-                    </select>
+                <div class="dropdown is-hoverable is-block">
+                    <label class="label mt-3 dropdown-trigger">
+                        Nombre d'exercices
+                        <input class="input mt-1" type="number" min="0" max="1000" name="exerciseCount" value="0" />
+                    </label>
+                    <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content has-text-weight-normal pl-2 pr-2">
+                            Saisir 0 ou laisser vide pour ne pas limiter le nombre d'exercices.<br />
+                            L'entraînement se finira lorsque vous l’arrêterez manuellement, ou alors quand il n'y aura plus d'exercice.
+                        </div>
+                    </div>
                 </div>
-            </form>
 
+                <label class="label mt-3">Tags</label>
+                <div class="columns">
+                    <div class="column">
+                        <%
+                        tags = tags.sort();
+                        for (let i = 0 ; i < tags.length ; i++) {
+                            if (i % 3 === 0) { %>
+                            <div>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="tags" value="<%= tags[i] %>" />
+                                    <%= tags[i].toUpperCase() %>
+                                </label>
+                            </div>
+                        <% }} %>
+                    </div>
+                    <div class="column">
+                        <% for (let i = 0 ; i < tags.length ; i++) {
+                        if (i % 3 === 1) { %>
+                            <div>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="tags" value="<%= tags[i] %>" />
+                                    <%= tags[i].toUpperCase() %>
+                                </label>
+                            </div>
+                        <% }} %>
+                    </div>
+                    <div class="column">
+                        <% for (let i = 0 ; i < tags.length ; i++) {
+                        if (i % 3 === 2) { %>
+                        <div>
+                            <label class="checkbox">
+                                <input type="checkbox" name="tags" value="<%= tags[i] %>" />
+                                <%= tags[i].toUpperCase() %>
+                            </label>
+                        </div>
+                        <% }} %>
+                    </div>
+                </div>
+
+                <label class="label mt-3">Les exercices de mon entraînement doivent inclure</label>
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" name="tagOperation" value="INTERSECTION" checked />
+                        Tous les tags sélectionnés ci-dessus
+                    </label>
+                    <br />
+                    <label class="radio">
+                        <input type="radio" name="tagOperation" value="UNION" />
+                        Au moins un des tags sélectionnés ci-dessus
+                    </label>
+                </div>
+
+            </form>
         </div>
 
-        <div class="column is-one-third ml-3">
 
+        <div class="column is-5">
             <img src="/assets/img/start.png" alt="" />
-
         </div>
 
     </div>
+
 
     <div class="mt-3 has-text-centered">
         <button type="submit" form="formStart" class="button is-primary is-small mt-3">Commencer</button>
     </div>
-
 
 </div>
 

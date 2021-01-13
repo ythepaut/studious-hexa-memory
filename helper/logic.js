@@ -64,6 +64,7 @@ module.exports = class {
                 exerciseSuccessCount : 0,   // number of success
                 exerciseMax : 0,            // number of exercise to do, 0 for infinite
                 exerciseTags : [],          // exercise tags filter
+                exerciseTagOperation : "",  // exercise tags operation : INTERSECTION / UNION
                 currentExercise : null,     // current exercise
                 endReason : null            // MANUAL / MAX_REACHED / DEPLETED
             }
@@ -119,7 +120,7 @@ module.exports = class {
                     if (req.session.practice.exercisesDone.length < req.session.practice.exerciseMax || req.session.practice.exerciseMax === 0) {
 
                         // finds new exercise
-                        this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone.map(e => e.id), (exercise) => {
+                        this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map(e => e.id), (exercise) => {
 
                             if (exercise !== null) {
                                 req.session.practice.currentExercise = this._exercise.toJSON(exercise);
@@ -179,7 +180,8 @@ module.exports = class {
                 } else {
                     req.session.practice.exerciseTags = [];
                 }
-                this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exercisesDone.map(e => e.id), (exercise) => {
+                req.session.practice.exerciseTagOperation = req.body.tagOperation;
+                this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map(e => e.id), (exercise) => {
 
                     if (exercise !== null) {
                         req.session.practice.currentExercise = this._exercise.toJSON(exercise);
@@ -215,7 +217,7 @@ module.exports = class {
      */
     handleExerciseList(req, callback) {
         if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
-            this._exercise.getExercises(this._db, [], (rawExercises) => {
+            this._exercise.getExercises(this._db, [], "UNION", (rawExercises) => {
                 const exercises = this._exercise.toJSONs(rawExercises);
                 callback(this.responseView(200, "exercise/list", {
                     exerciseDone : 0,
@@ -372,7 +374,7 @@ module.exports = class {
      */
     handleExerciseExport(req, res) {
         if (req.session.user.role === "ADMIN" || req.session.user.role === "OWNER") {
-            this._exercise.getExercises(this._db, [], (exercises) => {
+            this._exercise.getExercises(this._db, [], "UNION", (exercises) => {
                 res.set({"Content-Disposition":"attachment; filename=\"shm-export.json\""});
                 res.send(exercises);
             });

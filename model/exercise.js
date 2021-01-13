@@ -50,13 +50,15 @@ module.exports = class Exercise {
      * Gets all exercises that match all tags
      * @param {Object}              db              MongoClient
      * @param {Array.<string>}      tags            Tags to match
+     * @param {string}              tagOperation    Tag operation filter : intersection or union
      * @param {function}            callback        Callback fct : callback(exercises)
      */
-    static getExercises(db, tags, callback) {
+    static getExercises(db, tags, tagOperation, callback) {
         db.collection("exercises").find().toArray((err, res) => {
             let exercises = [];
             for (const json of res)
-                if (tags.every(i => json.tags.includes(i)))
+                if ((tagOperation === "INTERSECTION" && tags.every(i => json.tags.includes(i))) ||
+                    (tagOperation === "UNION" && tags.some(i => json.tags.indexOf(i) >= 0)))
                     exercises.push(new Exercise(json._id, json.title, json.statement, json.response, json.time, json.tags));
             callback(exercises);
         });
@@ -84,11 +86,12 @@ module.exports = class Exercise {
      * @param {Object}              db              MongoClient
      * @param {Object}              mongodb         MongoDB
      * @param {Array.<string>}      tags            Array of tags for filtering
+     * @param {string}              tagOperation    Tag operation filter : intersection or union
      * @param {Array.<string>}      done            Array of exercise id
      * @param {function}            callback        Callback fct : callback(exercise)
      */
-    static getNextExercise(db, mongodb, tags, done, callback) {
-        Exercise.getExercises(db, tags, (exercises) => {
+    static getNextExercise(db, mongodb, tags, tagOperation, done, callback) {
+        Exercise.getExercises(db, tags, tagOperation, (exercises) => {
             let pool = [];
             for (const exercise of exercises) {
                 if (!done.includes(exercise.id.toString())) {
