@@ -21,7 +21,6 @@ module.exports = class {
         // setting static folder
         this._app.use(this._express.static(this._path.join(__dirname, "../static")));
 
-
         /////////////////////////////////////////
         // Start / Practice / End pages
 

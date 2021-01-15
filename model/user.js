@@ -1,12 +1,13 @@
 module.exports = class User {
 
-    constructor(id = -1, username, passwd, role, status, key) {
+    constructor(id = -1, username, passwd, role, status, key, exercisesDone) {
         this._id = id;
         this._username = username;
         this._passwd = passwd;
         this._role = role;      // MEMBER / ADMIN / OWNER
         this._status = status;  // SUSPENDED / PENDING_REGISTRATION / ALIVE
         this._key = key;        // Key used to register this account
+        this._exercisesDone = exercisesDone;
     }
 
 
@@ -22,7 +23,8 @@ module.exports = class User {
             passwd : user.passwd,
             role : user.role,
             status : user.status,
-            key : user.key
+            key : user.key,
+            exercisesDone : user.exercisesDone
         }
     }
 
@@ -37,7 +39,7 @@ module.exports = class User {
     static getUser(db, mongodb, id, callback) {
         db.collection("accounts").findOne({_id : mongodb.ObjectId(id)}, (err, res) => {
             if (res !== null) {
-                callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key));
+                callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key, res.exercisesDone));
             } else {
                 callback(null);
             }
@@ -53,7 +55,7 @@ module.exports = class User {
     static getUserByName(db, username, callback) {
         db.collection("accounts").findOne({username: username}, (err, res) => {
             if (res !== null) {
-                callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key));
+                callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key, res.exercisesDone));
             } else {
                 callback(null);
             }
@@ -69,7 +71,7 @@ module.exports = class User {
     static getUserByKey(db, key, callback) {
         db.collection("accounts").findOne({key: key}, (err, res) => {
             if (res !== null) {
-                callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key));
+                callback(new User(res._id, res.username, res.passwd, res.role, res.status, res.key, res.exercisesDone));
             } else {
                 callback(null);
             }
@@ -85,7 +87,7 @@ module.exports = class User {
         db.collection("accounts").find().toArray((err, res) => {
             let users = [];
             for (const json of res)
-                users.push(new User(json._id, json.username, json.passwd, json.role, json.status, json.key));
+                users.push(new User(json._id, json.username, json.passwd, json.role, json.status, json.key, json.exercisesDone));
             callback(users);
         });
     }
@@ -149,6 +151,28 @@ module.exports = class User {
         }
     }
 
+    /**
+     * Pushs exercises to exercises done by user
+     * @param {Object}              db              MongoClient
+     * @param {Object}              mongodb         MongoDB
+     * @param {Object[]}            exercises       Exercises done to add
+     */
+    newExercisesDone(db, mongodb, exercises) {
+        exercises = exercises.map(exercise => { return ({
+                id : exercise.id,
+                success : exercise.success,
+                date : new Date()
+            });
+        });
+        if (this._exercisesDone === undefined) {
+            this._exercisesDone = [];
+        }
+        if (exercises !== []) {
+            this._exercisesDone.push(exercises);
+        }
+        this.update(db, mongodb);
+    }
+
 
     get id() {
         return this._id;
@@ -188,6 +212,14 @@ module.exports = class User {
 
     get key() {
         return this._key;
+    }
+
+    get exercisesDone() {
+        return this._exercisesDone;
+    }
+
+    set exercisesDone(exercisesDone) {
+        this._exercisesDone = exercisesDone;
     }
 
 };

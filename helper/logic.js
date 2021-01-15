@@ -203,7 +203,13 @@ module.exports = class {
             }
         } else {
             if (req.body.finish) {
+                // Submit exercise result and reset practice to home page
                 req.session.practice.practiceStatus = "IDLE";
+                if (req.session.user) {
+                    this._user.getUser(this._db, this._mongodb, req.session.user._id, (user) => {
+                        user.newExercisesDone(this._db, this._mongodb, req.session.practice.exercisesDone);
+                    });
+                }
             }
             // session undefined
             callback(this.responseRedirection("/"));
