@@ -19,17 +19,16 @@ jobs:
           script: |
             cd /root/studious-hexa-memory-demo
             git pull origin master
-            git status
             pm2 restart studious_hexa_memory_demo
       - name: Deploy to production server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USERNAME }}
-          password: ${{ secrets.PROD_PASSWORD }}
+          key: ${{ secrets.PROD_KEY }}
+          passphrase: ${{ secrets.PROD_PASSPHRASE }}
           port: ${{ secrets.PROD_PORT }}
           script: |
             cd /root/studious-hexa-memory
             git pull origin master
-            git status
             pm2 restart studious_hexa_memory
