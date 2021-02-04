@@ -17,9 +17,9 @@ jobs:
           passphrase: ${{ secrets.DEMO_PASSPHRASE }}
           port: ${{ secrets.DEMO_PORT }}
           script: |
-            sudo su
             cd ~/node-servers/studious-hexa-memory-demo
             git pull origin master
+            sudo su
             pm2 restart studious-hexa-memory-demo
       - name: Deploy to production server
         uses: appleboy/ssh-action@master
@@ -33,4 +33,5 @@ jobs:
             sudo su
             cd ~/node-servers/studious-hexa-memory
             git pull origin master
+            sudo su
             pm2 restart studious-hexa-memory
