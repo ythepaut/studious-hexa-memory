@@ -20,7 +20,7 @@ jobs:
             sudo su
             cd ~/node-servers/studious-hexa-memory-demo
             git pull origin master
-            pm2 restart studious_hexa_memory_demo
+            pm2 restart studious_hexa-memory-demo
       - name: Deploy to production server
         uses: appleboy/ssh-action@master
         with:
@@ -33,4 +33,4 @@ jobs:
             sudo su
             cd ~/node-servers/studious-hexa-memory
             git pull origin master
-            pm2 restart studious_hexa_memory
+            pm2 restart studious-hexa-memory
