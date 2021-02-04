@@ -8,7 +8,7 @@
 Studious Hexa Memomry est une application web, utilisant les technologies NodeJS et MongoDB,
 qui permet de s'entraîner sur un banque d'exercices.
 
-Serveur de démonstration : https://demo.studious-hexa-memory.ythepaut.com/
+Serveur de démonstration : https://studious-hexa-memory.demo.ythepaut.com/
 
 ***
 
