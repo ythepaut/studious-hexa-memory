@@ -17,7 +17,8 @@ jobs:
           passphrase: ${{ secrets.DEMO_PASSPHRASE }}
           port: ${{ secrets.DEMO_PORT }}
           script: |
-            cd /root/studious-hexa-memory-demo
+            sudo su
+            cd ~/node-servers/studious-hexa-memory-demo
             git pull origin master
             pm2 restart studious_hexa_memory_demo
       - name: Deploy to production server
@@ -29,6 +30,7 @@ jobs:
           passphrase: ${{ secrets.PROD_PASSPHRASE }}
           port: ${{ secrets.PROD_PORT }}
           script: |
-            cd /root/studious-hexa-memory
+            sudo su
+            cd ~/node-servers/studious-hexa-memory
             git pull origin master
             pm2 restart studious_hexa_memory
