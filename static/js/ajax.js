@@ -42,9 +42,12 @@ document.querySelectorAll("form.ajax").forEach((form) => {
             if (responseNotification === null) {
                 responseNotification = document.createElement("div")
                 responseNotification.id = id;
-                responseNotification.classList.add("notification", "is-light", "mt-2", "pt-2", "pb-2", "pl-1", "pr-1");
+                responseNotification.classList.add("notification", "ajax", "is-light", "mt-2", "pt-2", "pb-2", "pl-1", "pr-1");
+                setTimeout(() => responseNotification.classList.add("active"), 0);
             }
-            responseNotification.classList.remove("is-success", "is-info", "is-danger");
+            responseNotification.classList.add("blink");
+            setTimeout(() => responseNotification.classList.remove("blink"), 2000);
+            responseNotification.classList.remove("is-success", "is-info", "is-danger", "is-warning");
 
             if (response.target.status === 0) {
                 // unknown error
@@ -53,8 +56,18 @@ document.querySelectorAll("form.ajax").forEach((form) => {
             } else {
                 // success
                 const jsonResponse = JSON.parse(response.target.response);
-                const classPerType = {"success" : "is-success", "info" : "is-info", "error" : "is-danger"};
-                const iconPerType = {"success" : "<i class=\"fas fa-check-circle\"></i>", "info" : "<i class=\"fas fa-info-circle\"></i>", "error" : "<i class=\"fas fa-exclamation-triangle\"></i>"};
+                const classPerType = {
+                    "neutral" : "is-light",
+                    "success" : "is-success",
+                    "info" : "is-info",
+                    "warning" : "is-warning",
+                    "error" : "is-danger"};
+                const iconPerType = {
+                    "neutral" : "<i class=\"fas fa-circle\"></i>",
+                    "success" : "<i class=\"fas fa-check-circle\"></i>",
+                    "info" : "<i class=\"fas fa-info-circle\"></i>",
+                    "warning" : "<i class=\"fas fa-exclamation-triangle\"></i>",
+                    "error" : "<i class=\"fas fa-times-circle\"></i>"};
 
                 // setting notification content
                 responseNotification.classList.add(classPerType[jsonResponse.type]);

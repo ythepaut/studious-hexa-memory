@@ -49,3 +49,22 @@ main {
         transform:rotate(360deg);
     }
 }
+
+.notification.ajax {
+    opacity: 0;
+}
+
+.notification.ajax.active {
+    opacity: initial;
+    transition: opacity 0.2s;
+}
+
+.notification.ajax.blink > svg {
+    animation: blinker 0.4s linear 2;
+}
+
+@keyframes blinker {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}

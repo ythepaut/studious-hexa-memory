@@ -90,4 +90,53 @@
 
 </div>
 
+<div class="box has-text-centered">
+    <h1 class="title has-text-centered">Statistiques et recommandations&nbsp;<sup><span class="tag is-warning">Soon</span></sup></h1>
+
+    <% if (typeof user !== "undefined") { %>
+
+        <!--<div class="columns">
+            <div class="column">
+                <article class="tile is-child notification is-light mt-3">
+                    <h3>Nombre d'exercices effectués</h3>
+                    <span class="is-size-3"><%= user.exercisesDone.length %></span>
+                </article>
+            </div>
+            <div class="column">
+                <article class="tile is-child notification is-light mt-3">
+                    <h3>Régularité</h3>
+                    <span class="is-size-3">
+                        Bonne
+                    </span>
+                </article>
+            </div>
+            <div class="column">
+                <article class="tile is-child notification is-light mt-3">
+                    <h3>Taux de réussite</h3>
+                    <span class="is-size-3">
+                        69%
+                    </span>
+                </article>
+            </div>
+            <div class="column">
+                <article class="tile is-child notification is-light mt-3">
+                    <h3>Tag favoris</h3>
+                    <span class="is-size-3">
+                        SP7
+                    </span>
+                </article>
+            </div>
+        </div>-->
+
+        <span><b>Fonctionnalité indisponible :(</b><br />Suivez le développement de <b>Studious Hexa Memory</b> sur <a href="https://github.com/ythepaut/studious-hexa-memory" target="_blank">GitHub</a> !</span>
+
+    <% } else { %>
+
+        <span><b>Oups !</b> Vous devez être connecté pour avoir accès à cette fonctionnalité</span>
+
+    <% } %>
+
+
+</div>
+
 <%- include('../includes/footer') %>

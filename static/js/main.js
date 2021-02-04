@@ -31,9 +31,13 @@ const nextExercise = (success) => {
     postRequest("/", "success=" + success, () => location.reload());
 }
 btnExerciseFail.addEventListener("click", () => {
+    btnExerciseFail.classList.add("is-loading");
+    btnExerciseSuccess.classList.add("is-loading");
     nextExercise(false);
 });
 btnExerciseSuccess.addEventListener("click", () => {
+    btnExerciseFail.classList.add("is-loading");
+    btnExerciseSuccess.classList.add("is-loading");
     nextExercise(true);
 });
 
