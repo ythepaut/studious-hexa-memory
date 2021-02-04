@@ -1,0 +1,37 @@
+name: Deployment
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    name: Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to demonstration server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEMO_HOST }}
+          username: ${{ secrets.DEMO_USERNAME }}
+          key: ${{ secrets.DEMO_KEY }}
+          passphrase: ${{ secrets.DEMO_PASSPHRASE }}
+          port: ${{ secrets.DEMO_PORT }}
+          script: |
+            cd ~/node-servers/studious-hexa-memory-demo
+            git pull origin master
+            sudo su
+            pm2 restart studious-hexa-memory-demo
+      - name: Deploy to production server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          key: ${{ secrets.PROD_KEY }}
+          passphrase: ${{ secrets.PROD_PASSPHRASE }}
+          port: ${{ secrets.PROD_PORT }}
+          script: |
+            sudo su
+            cd ~/node-servers/studious-hexa-memory
+            git pull origin master
+            sudo su
+            pm2 restart studious-hexa-memory
