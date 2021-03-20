@@ -164,7 +164,7 @@ module.exports = class User {
                 date : new Date()
             });
         });
-        if (this._exercisesDone === undefined) {
+        if (this._exercisesDone === undefined || this._exercisesDone === null) {
             this._exercisesDone = [];
         }
         if (exercises !== []) {
