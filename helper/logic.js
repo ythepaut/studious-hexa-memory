@@ -782,4 +782,21 @@ module.exports = class {
         }
     }
 
+
+    /////////////////////////////////////////
+    // Miscellaneous
+
+    /**
+     * Change language form form submission
+     * @param {Object}              req             Express request
+     * @param {function}            callback        Callback fct : callback(response)
+     */
+    handleChangeLanguageSubmission(req, callback) {
+        req.session.lang = req.body.lang;
+        callback(this.responseJSON(200, {
+            type : "success",
+            message : "Langue changée.",
+            refresh : true
+        }));
+    }
 }

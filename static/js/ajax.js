@@ -78,6 +78,10 @@ document.querySelectorAll("form.ajax").forEach((form) => {
                     setTimeout(() => {
                         window.location.href = jsonResponse.redirect;
                     }, 1000);
+                } else if (jsonResponse.refresh) {
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     // reset input disable state
                     form.querySelectorAll("input,button").forEach((input) => {
