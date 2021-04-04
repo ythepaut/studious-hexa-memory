@@ -20,6 +20,66 @@ module.exports = {
         }
     },
 
+    exercise: {
+        start: {
+            startPractice: {
+                letsPractice: "Let's practice",
+                numberOfExercises: "Number of exercises",
+                numberOfExercisesHint: "Put 0 or leave blank to take as many exercises as possible.<br />\n" +
+                    "The practice session will stop manually or once there are no more exercises to do.",
+                tags: "Tags",
+                exerciseTagMode: {
+                    label: "Exercises must include",
+                    intersection: "All the tags selected",
+                    union: "At least on of the tags selected"
+                },
+                begin: "Start the practice session"
+            },
+            recommendations: {
+                statsAndRecommendations: "Statistics and recommendations",
+                soon: "Soon",
+                soonText: "<b>Unavailable at the moment :(</b><br />Follow <b>Studious Hexa Memory</b>'s development on <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> !",
+                loginRequired: "<b>Oops !</b> You must be logged in to access this feature."
+            }
+        },
+
+        exercise: {
+            exercise: "Exercise",
+            passed: "I passed the exercise",
+            notPassed: "I did not passed the exercise",
+            revealAnswer: "Reveal the answer",
+            exerciseNo: "Exercise n°",
+            tagsUsed: "used",
+            stopSession: "Stop the practice session"
+        },
+
+        end: {
+            finished: "End of training !",
+            cause: {
+                manual: "You stopped the session",
+                max: "Exercise goal achieved",
+                depleted: "You have done all the exercises with the selected tags"
+            },
+            stats: {
+                title: "Statistics",
+                exercisesDone: "Exercises done",
+                passRate: "Pass rate"
+            },
+            summary: {
+                title: "Summary",
+                table: {
+                    number: "N°",
+                    title: "Title",
+                    tags: "Tags",
+                    passed: "Passed"
+                },
+                yes: "Yes",
+                no: "No"
+            },
+            end: "Quit"
+        }
+    },
+
     error: {
         generic: "<b>Oops</b>, an error has occured."
     },
