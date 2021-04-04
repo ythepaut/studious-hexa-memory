@@ -51,7 +51,7 @@ module.exports = {
     }),
     // Language choice
     formChangeLang : Joi.object({
-        lang: Joi.string().valid("fr", "en").required()
+        lang: Joi.string().pattern(new RegExp("^[A-Z]{2}$")).required()
     }),
     // MongoDB id format
     dbIdSchema : Joi.object({

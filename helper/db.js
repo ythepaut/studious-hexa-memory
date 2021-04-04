@@ -7,8 +7,8 @@ module.exports = (callback) => {
         {useUnifiedTopology : true},
         (err, client) => {
             if (err) {
-                console.log("Erreur de connexion à la base : ");
-                console.log(err);
+                console.error("Erreur de connexion à la base : ");
+                console.error(err);
                 callback(null);
             } else {
                 callback(client.db("studious_hexa_memory"));

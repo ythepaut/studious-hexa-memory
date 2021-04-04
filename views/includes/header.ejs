@@ -120,8 +120,9 @@
                         <h1 class="title"><%= lang.header.modalChangeLanguage.changeLangTitle %></h1>
                         <div class="select">
                             <select name="lang">
-                                <option value="en">EN - English</option>
-                                <option value="fr">FR - Français</option>
+                                <% for (const supported of supportedLangs) { %>
+                                    <option value="<%= supported.iso %>"><%= supported.iso %> - <%= supported.language %></option>
+                                <% } %>
                             </select>
                         </div>
                         <br />

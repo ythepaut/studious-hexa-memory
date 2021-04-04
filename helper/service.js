@@ -9,7 +9,7 @@ module.exports = class {
             passError: true
         });
 
-        this._logic = new (require("./logic"))(db, mongodb);
+        this._logic = new (require("./logic"))(db, mongodb, path);
 
         this._initializeRoutes();
     }
@@ -240,7 +240,7 @@ module.exports = class {
                         {verbose : "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez.", user : req.session.user}
                     ));
                 }
-                console.log(err.error.toString());
+                console.error(err.error.toString());
             } else {
                 next(err);
             }
@@ -268,7 +268,8 @@ module.exports = class {
         if (response.type === "json") {
             res.status(response.code).send(JSON.stringify(response.data));
         } else if (response.type === "view") {
-            response.data.lang = req.session.lang ? require("../config/lang/" + req.session.lang) : require("../config/lang/fr");
+            response.data.supportedLangs = this._logic.language.getSupportedLanguages();
+            response.data.lang = this._logic.language.getTranslations(req.session.lang);
             res.status(response.code).render(response.view, response.data);
         } else if (response.type === "redirection") {
             res.redirect(response.target);

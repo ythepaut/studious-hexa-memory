@@ -1,12 +1,13 @@
 module.exports = class {
 
-    constructor(db, mongodb) {
+    constructor(db, mongodb, path) {
         this._db = db;
         this._mongodb = mongodb;
         this._exercise = require("../model/exercise");
         this._user = require("../model/user");
         this._fs = require("fs");
         this._bcrypt = require("bcrypt");
+        this._language = new (require("./utils/language"))(this._fs, path);
     }
 
     /**
@@ -792,11 +793,25 @@ module.exports = class {
      * @param {function}            callback        Callback fct : callback(response)
      */
     handleChangeLanguageSubmission(req, callback) {
-        req.session.lang = req.body.lang;
-        callback(this.responseJSON(200, {
-            type : "success",
-            message : "Langue changée.",
-            refresh : true
-        }));
+        if (this._language.getSupportedLanguages().map(lang => lang.iso).includes(req.body.lang)) {
+            req.session.lang = req.body.lang;
+            callback(this.responseJSON(200, {
+                type : "success",
+                message : "Langue changée.",
+                refresh : true
+            }));
+        } else {
+            callback(this.responseJSON(200, {
+                type : "error",
+                message : "Langue non supportée."
+            }));
+        }
+    }
+
+
+    /////////////////////////////////////////
+
+    get language() {
+        return this._language;
     }
 }
