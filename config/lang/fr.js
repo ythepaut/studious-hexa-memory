@@ -80,6 +80,21 @@ module.exports = {
         }
     },
 
+    account: {
+        login: {
+            hello: "Bonjour",
+            login: "Connexion",
+            register: "Enregistrement",
+            fields: {
+                username: "Nom d'utilisateur",
+                password: "Mot de passe",
+                passwordConfirm: "Mot de passe (confirmation)",
+                registerKey: "Clé d'enregistrement"
+            },
+            submit: "Valider"
+        }
+    },
+
     error: {
         generic: "<b>Oups</b>, une erreur est survenue."
     },
