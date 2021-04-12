@@ -96,31 +96,43 @@ module.exports = class User {
      * Inserts a new "blank" user to the database
      * @param {Object}              db              MongoClient
      * @param {string}              role            User role
-     * @return {string}             key             Registration key
+     * @param {function}            callback        Callback fct : callback(key)
      */
-    static create(db, role) {
-        let key = this._generateKey(db);
-        db.collection("accounts").insertOne({
-            role : role,
-            status : "PENDING_REGISTRATION",
-            key : key
+    static create(db, role, callback) {
+        this._generateKey(db, (key) => {
+            db.collection("accounts").insertOne({
+                role : role,
+                status : "PENDING_REGISTRATION",
+                key : key
+            });
+
+            callback(key);
         });
-        return key;
     }
 
     /**
      * Creates a key
-     * @return {string}                             New register key
+     * @param {Object}              db              MongoClient
+     * @param {function}            callback        Callback fct : callback(key)
      * @private
      */
-    static _generateKey() {
-        let pool = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda",
-            "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega"];
-        let key = "";
-        for (let i = 0 ; i < 4 ; i++) {
-            key += pool[Math.floor(Math.random()*pool.length)];
-        }
-        return key;
+    static _generateKey(db, callback) {
+        // Retrieve all keys
+        db.collection("accounts").distinct("key", (err, keys) => {
+
+            let key = "";
+            const pool = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda",
+                "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega"];
+
+            do {
+                key = "";
+                for (let i = 0 ; i < 4 ; i++) {
+                    key += pool[Math.floor(Math.random()*pool.length)];
+                }
+            } while (keys.includes(key));
+
+            callback(key);
+        });
     }
 
     /**
@@ -159,10 +171,10 @@ module.exports = class User {
      */
     newExercisesDone(db, mongodb, exercises) {
         exercises = exercises.map(exercise => { return ({
-                id : exercise.id,
-                success : exercise.success,
-                date : new Date()
-            });
+            id : exercise.id,
+            success : exercise.success,
+            date : new Date()
+        });
         });
         if (this._exercisesDone === undefined || this._exercisesDone === null) {
             this._exercisesDone = [];

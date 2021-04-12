@@ -488,7 +488,7 @@ module.exports = class {
                 let key = null;
                 if (users.filter(user => user.role === "OWNER" && user.status === "ALIVE").length === 0) {
                     if (users.filter(user => user.role === "OWNER" && user.status === "PENDING_REGISTRATION").length === 0) {
-                        key = this._user.create(this._db, "OWNER");
+                        this._user.create(this._db, "OWNER", () => {});
                     } else {
                         for (const user of users) {
                             if (user.role === "OWNER") {
@@ -740,11 +740,12 @@ module.exports = class {
      */
     handleAccountNewSubmission(req, callback) {
         if (req.session.user.role === "OWNER") {
-            let key = this._user.create(this._db, req.body.role);
-            callback(this.responseJSON(200, {
-                type : "success",
-                message : "Clé <code>" + key + "</code> créée avec succès."
-            }));
+            this._user.create(this._db, req.body.role, (key) => {
+                callback(this.responseJSON(200, {
+                    type : "success",
+                    message : "Clé <code>" + key + "</code> créée avec succès."
+                }));
+            });
         } else {
             callback(this.responseJSON(403, {
                 type : "error",
@@ -814,4 +815,5 @@ module.exports = class {
     get language() {
         return this._language;
     }
+
 }
