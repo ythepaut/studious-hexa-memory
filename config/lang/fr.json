@@ -96,6 +96,53 @@
                 "registerKey": "Clé d'enregistrement"
             },
             "submit": "Valider"
+        },
+        "list": {
+            "accountsActive": "Comptes actifs",
+            "unusedKeys": "Clés non utilisées",
+            "adminAccounts": "Comptes Admin+",
+            "createKey": "Créer une clé",
+            "rolePermissions": {
+                "title": "Permissions des rôles",
+                "noAccount": "Sans compte",
+                "noAccountDescription" : "Permet de s'entraîner uniquement.",
+                "member": "Membre",
+                "memberDescription": "Permet de s'entraîner, avec sauvegarde des resultats et des exercices pertinants pour de futures sessions.",
+                "admin": "Administrateur",
+                "adminDescription": "Permet de gérer les exercices (création, edition, suppression, import et export).",
+                "owner": "Propriétaire",
+                "ownerDescription": "Permet de gérer les utilisateurs (création, edition du rôle/statut et supression)."
+            },
+            "searchAccounts": "Rechercher parmis les comptes",
+            "table": {
+                "username": "Nom d'utilisateur",
+                "key": "Clé",
+                "role": "Rôle",
+                "status": "Statut",
+                "actions": "Actions",
+                "alive": "Actif",
+                "suspended": "Suspendu",
+                "pending_registration": "Enregistrement",
+                "edit": "Modifier",
+                "delete": "Supprimer"
+            },
+            "createAccount": {
+                "title": "Créer une clé",
+                "create": "Créer",
+                "keyCreated": "Clé d'enregistrement créée avec succès"
+            },
+            "deleteAccount": {
+                "title": "Supprimer le compte",
+                "description": "Êtes-vous sûr de vouloir supprimer le compte",
+                "delete": "Supprimer"
+            },
+            "editAccount": {
+                "title": "Modifier le compte",
+                "description": "Modification du compte",
+                "newRole": "Nouveau rôle",
+                "newStatus": "Nouveau statut",
+                "edit": "Modifier"
+            }
         }
     },
 

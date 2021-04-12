@@ -96,6 +96,53 @@
                 "registerKey": "Register key"
             },
             "submit": "Submit"
+        },
+        "list": {
+            "accountsActive": "Active accounts",
+            "unusedKeys": "Unused keys",
+            "adminAccounts": "Admin+ accounts",
+            "createKey": "Create a key",
+            "rolePermissions": {
+                "title": "Role permissions",
+                "noAccount": "No account",
+                "noAccountDescription" : "Can practice exercises.",
+                "member": "Member",
+                "memberDescription": "Can practice exercises, with saved results and the recommendation system.",
+                "admin": "Administrator",
+                "adminDescription": "Can manage exercises (create, edit, delete, import and export).",
+                "owner": "Owner",
+                "ownerDescription": "Can manage users (create, edit role/status and delete)."
+            },
+            "searchAccounts": "Search accounts",
+            "table": {
+                "username": "Username",
+                "key": "Key",
+                "role": "Role",
+                "status": "Status",
+                "actions": "Actions",
+                "alive": "Alive",
+                "suspended": "Suspended",
+                "pending_registration": "Pending registration",
+                "edit": "Edit",
+                "delete": "Delete"
+            },
+            "createAccount": {
+                "title": "Create a key",
+                "create": "Create",
+                "keyCreated": "Register key created successfully"
+            },
+            "deleteAccount": {
+                "title": "Delete account",
+                "description": "Are you sure you want to delete the account",
+                "delete": "Delete"
+            },
+            "editAccount": {
+                "title": "Edit account",
+                "description": "Editing account",
+                "newRole": "New role",
+                "newStatus": "New status",
+                "edit": "Edit"
+            }
         }
     },
 
