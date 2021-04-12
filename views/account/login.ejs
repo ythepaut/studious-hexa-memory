@@ -5,7 +5,7 @@
         <div class="column is-4 is-offset-2">
 
             <div class="box">
-                <h1 class="title">Bonjour 👋</h1>
+                <h1 class="title"><%= lang.account.login.hello %>&nbsp;👋</h1>
 
 
                 <div class="tabs is-fullwidth">
@@ -13,13 +13,13 @@
                         <li class="is-active">
                             <a id="loginForm">
                                 <span class="icon"><i class="fas fa-sign-in-alt"></i></span>
-                                <span>Connexion</span>
+                                <span><%= lang.account.login.login %></span>
                             </a>
                         </li>
                         <li>
                             <a id="registerForm">
                                 <span class="icon"><i class="fas fa-user-plus"></i></span>
-                                <span>Enregistrement</span>
+                                <span><%= lang.account.login.register %></span>
                             </a>
                         </li>
                     </ul>
@@ -31,7 +31,7 @@
                         <input type="hidden" name="next" value="/" id="inputnext" />
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" autocomplete="username" name="username" placeholder="Nom d'utilisateur" minlength="3" maxlength="16" required />
+                                <input class="input" type="text" autocomplete="username" name="username" placeholder="<%= lang.account.login.fields.username %>" minlength="3" maxlength="16" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -39,13 +39,13 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" autocomplete="current-password" name="passwd" placeholder="Mot de passe" minlength="8" required />
+                                <input class="input" type="password" autocomplete="current-password" name="passwd" placeholder="<%= lang.account.login.fields.password %>" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
                             </p>
                         </div>
-                        <button type="submit" class="button is-fullwidth is-info">Valider</button>
+                        <button type="submit" class="button is-fullwidth is-info"><%= lang.account.login.submit %></button>
                     </form>
 
 
@@ -53,7 +53,7 @@
                     <form method="POST" action="/account/register" class="ajax tab-pane" id="registerForm">
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" name="key" placeholder="Clé d'enregistrement" value="<%= key !== null ? key : "" %>" minlength="8" required />
+                                <input class="input" type="text" name="key" placeholder="<%= lang.account.login.fields.registerKey %>" value="<%= key !== null ? key : "" %>" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-key"></i>
                             </span>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" autocomplete="username" name="username" placeholder="Nom d'utilisateur" minlength="3" maxlength="16" required />
+                                <input class="input" type="text" autocomplete="username" name="username" placeholder="<%= lang.account.login.fields.username %>" minlength="3" maxlength="16" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" autocomplete="new-password" name="passwd" placeholder="Mot de passe" minlength="8" required />
+                                <input class="input" type="password" autocomplete="new-password" name="passwd" placeholder="<%= lang.account.login.fields.password %>" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -77,13 +77,13 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" autocomplete="new-password" name="passwd2" placeholder="Mot de passe (confirmation)" minlength="8" required />
+                                <input class="input" type="password" autocomplete="new-password" name="passwd2" placeholder="<%= lang.account.login.fields.passwordConfirm %>" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
                             </p>
                         </div>
-                        <button type="submit" class="button is-fullwidth is-info">Valider</button>
+                        <button type="submit" class="button is-fullwidth is-info"><%= lang.account.login.submit %></button>
                     </form>
                 </div>
 

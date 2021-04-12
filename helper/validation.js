@@ -49,6 +49,10 @@ module.exports = {
         role : Joi.string().valid("MEMBER", "ADMIN", "void").required(),
         status : Joi.string().valid("SUSPENDED", "ALIVE", "void").required() //TODO prevent both role and status having "void" as value
     }),
+    // Language choice
+    formChangeLang : Joi.object({
+        lang: Joi.string().pattern(new RegExp("^[A-Z]{2}$")).required()
+    }),
     // MongoDB id format
     dbIdSchema : Joi.object({
         id : Joi.string().pattern(new RegExp("^[0-9a-f]{24}$"))

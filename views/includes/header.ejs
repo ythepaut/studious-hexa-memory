@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="<%= lang.meta.lang %>>">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,7 +9,7 @@
     <title>Studious Hexa Memory</title>
 
     <!-- SEO -->
-    <meta name="description" content="Application de révisions" />
+    <meta name="description" content="<%= lang.meta.description %>" />
     <meta name="author" content="Yohann THEPAUT <contact@ythepaut.com> (ythepaut)" />
 
     <!-- Style -->
@@ -48,33 +48,33 @@
         <div class="navbar-menu" id="navMenu">
             <div class="navbar-start">
                 <a class="navbar-item" href="/">
-                    S'entraîner
+                    <%= lang.header.practice %>
                 </a>
 
 
                 <% if (typeof user !== "undefined" && (user.role === "ADMIN" || user.role === "OWNER")) { %>
                     <a class="navbar-item" href="/exercise/list">
-                        Gérer les exercices
+                        <%= lang.header.manageExercises %>
                     </a>
                 <% } %>
 
                 <% if (typeof user !== "undefined" && user.role === "OWNER") { %>
                     <a class="navbar-item" href="/account/list">
-                        Gérer les comptes
+                        <%= lang.header.manageUsers %>
                     </a>
                 <% } %>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        Plus
+                        <%= lang.header.more %>
                     </a>
 
                     <div class="navbar-dropdown">
                         <a class="navbar-item" href="/about">
-                            A propos
+                            <%= lang.header.about %>
                         </a>
                         <a class="navbar-item" href="/legal">
-                            Mentions légales
+                            <%= lang.header.legal %>
                         </a>
                     </div>
                 </div>
@@ -85,14 +85,17 @@
                     <div class="buttons">
                         <a class="button is-primary is-light" href="/account/me">
                             <% if (typeof user !== "undefined") { %>
-                                Bonjour <%= user.username %> !
+                                <%= lang.header.hello %> <%= user.username %> !
                             <% } else { %>
                                     <span class="icon is-small">
                                         <i class="fas fa-sign-in-alt"></i>
                                     </span>
-                                    <span>Se connecter</span>
+                                    <span><%= lang.header.connect %></span>
                             <% } %>
                         </a>
+                        <button class="button is-light" data-toggle="modal" data-target="modalChangeLanguage">
+                            <b><i class="fas fa-globe"></i>&nbsp;&nbsp;<%= lang.header.lang %></b>
+                        </button>
                         <a class="button is-light" href="https://github.com/ythepaut/studious-hexa-memory" target="_blank">
                             <i class="fab fa-github"></i>
                         </a>
@@ -107,4 +110,25 @@
 
         <div class="loading-container">
             <div class="loading-animation"></div>
+        </div>
+
+        <div class="modal" id="modalChangeLanguage">
+            <div class="modal-background" data-target="modalChangeLanguage"></div>
+            <div class="modal-content">
+                <div class="box has-text-centered">
+                    <form method="POST" action="/lang" class="ajax">
+                        <h1 class="title"><%= lang.header.modalChangeLanguage.changeLangTitle %></h1>
+                        <div class="select">
+                            <select name="lang">
+                                <% for (const supported of supportedLangs) { %>
+                                    <option value="<%= supported.iso %>"><%= supported.iso %> - <%= supported.language %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <br />
+                        <button type="submit" class="button is-primary mt-2"><%= lang.header.modalChangeLanguage.choose %></button>
+                    </form>
+                </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close" data-target="modalChangeLanguage"></button>
         </div>

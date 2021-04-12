@@ -3,19 +3,19 @@
 <nav class="level">
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">Comptes actifs</p>
+            <p class="heading"><%= lang.account.list.accountsActive %></p>
             <p class="title"><%= users.filter(tuser => tuser.status === "ALIVE").length %></p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">Clés non utilisées</p>
+            <p class="heading"><%= lang.account.list.unusedKeys %></p>
             <p class="title"><%= users.filter(tuser => tuser.status === "PENDING_REGISTRATION").length %></p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">Comptes Admin+</p>
+            <p class="heading"><%= lang.account.list.adminAccounts %></p>
             <p class="title"><%= users.filter(tuser => ["ADMIN", "OWNER"].includes(tuser.role)).length %></p>
         </div>
     </div>
@@ -26,25 +26,25 @@
 <div class="columns">
     <div class="column is-3">
         <div class="buttons is-justify-content-center">
-            <button class="button is-primary" data-toggle="modal" data-target="modalCreateAccount">Créer une clé</button>
+            <button class="button is-primary" data-toggle="modal" data-target="modalCreateAccount"><%= lang.account.list.createKey %></button>
         </div>
 
         <div class="notification is-light is-light">
             <div class="has-text-centered is-fullwidth mb-3">
-                <h2 class="subtitle">Permissions des rôles</h2>
+                <h2 class="subtitle"><%= lang.account.list.rolePermissions.title %></h2>
             </div>
             <p>
-                <b>Sans compte</b> : Permet de s'entraîner uniquement.<br /><br />
-                <b>Membre</b> : Permet de s'entraîner, avec sauvegarde des resultats et des exercices pertinants pour de futures sessions.<br /><br />
-                <b>Administrateur</b> : Permet de gérer les exercices (création, edition, suppression, import, export).<br /><br />
-                <b>Propriétaire</b> : Permet de gérer les utilisateurs (création, edition du rôle/statut, supression).<br /><br />
+                <b><%= lang.account.list.rolePermissions.noAccount %></b> : <%= lang.account.list.rolePermissions.noAccountDescription %><br /><br />
+                <b><%= lang.account.list.rolePermissions.member %></b> : <%= lang.account.list.rolePermissions.memberDescription %><br /><br />
+                <b><%= lang.account.list.rolePermissions.admin %></b> : <%= lang.account.list.rolePermissions.adminDescription %><br /><br />
+                <b><%= lang.account.list.rolePermissions.owner %></b> : <%= lang.account.list.rolePermissions.ownerDescription %><br /><br />
             </p>
         </div>
     </div>
     <div class="column">
         <div class="field">
             <p class="control has-icons-left">
-                <input class="input search-input" data-target="exerciseTable" type="text" placeholder="Rechercher parmis les comptes" />
+                <input class="input search-input" data-target="exerciseTable" type="text" placeholder="<%= lang.account.list.searchAccounts %>" />
                 <span class="icon is-small is-left">
                     <i class="fas fa-search"></i>
                 </span>
@@ -55,11 +55,11 @@
             <table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
                 <thead>
                 <tr>
-                    <th>Nom d'utilisateur</th>
-                    <th style="width: 30%;">Clé</th>
-                    <th style="width: 15%;">Rôle</th>
-                    <th style="width: 15%;">Statut</th>
-                    <th style="width: 5%; text-align: right;">Actions</th>
+                    <th><%= lang.account.list.table.username %></th>
+                    <th style="width: 30%;"><%= lang.account.list.table.key %></th>
+                    <th style="width: 15%;"><%= lang.account.list.table.role %></th>
+                    <th style="width: 15%;"><%= lang.account.list.table.status %></th>
+                    <th style="width: 5%; text-align: right;"><%= lang.account.list.table.actions %></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,28 +77,28 @@
                         </td>
                         <td>
                             <% if (tuser.role === "MEMBER") { %>
-                                <span class="tag is-info">Membre</span>
+                                <span class="tag is-info"><%= lang.account.list.rolePermissions.member %></span>
                             <% } else if (tuser.role === "ADMIN") { %>
-                                <span class="tag is-warning">Administrateur</span>
+                                <span class="tag is-warning"><%= lang.account.list.rolePermissions.admin %></span>
                             <% } else if (tuser.role === "OWNER") { %>
-                                <span class="tag is-danger">Propriétaire</span>
+                                <span class="tag is-danger"><%= lang.account.list.rolePermissions.owner %></span>
                             <% } %>
                         </td>
                         <td>
                             <% if (tuser.status === "ALIVE") { %>
-                                <span class="tag is-success">Actif</span>
+                                <span class="tag is-success"><%= lang.account.list.table.alive %></span>
                             <% } else if (tuser.status === "SUSPENDED") { %>
-                                <span class="tag is-danger">Suspendu</span>
+                                <span class="tag is-danger"><%= lang.account.list.table.suspended %></span>
                             <% } else if (tuser.status === "PENDING_REGISTRATION") { %>
-                                <span class="tag is-primary">Enregistrement</span>
+                                <span class="tag is-primary"><%= lang.account.list.table.pending_registration %></span>
                             <% } %>
                         </td>
                         <td style="text-align: right;">
                             <div class="field has-addons">
-                                <button type="button" class="button is-small is-primary is-light" data-toggle="modal" data-target="modalEdit<%= tuser.id %>" title="Modifier">
+                                <button type="button" class="button is-small is-primary is-light" data-toggle="modal" data-target="modalEdit<%= tuser.id %>" title="<%= lang.account.list.table.edit %>">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= tuser.id %>" title="Supprimer">
+                                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= tuser.id %>" title="<%= lang.account.list.table.delete %>">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
@@ -115,15 +115,15 @@
     <div class="modal-background" data-target="modalCreateAccount"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <h1 class="title">Créer une clé</h1>
+            <h1 class="title"><%= lang.account.list.createAccount.title %></h1>
             <form method="POST" action="/account/new" class="ajax">
                 <div class="select">
                     <select name="role">
-                        <option value="MEMBER">Membre</option>
-                        <option value="ADMIN">Admin</option>
+                        <option value="MEMBER"><%= lang.account.list.rolePermissions.member %></option>
+                        <option value="ADMIN"><%= lang.account.list.rolePermissions.admin %></option>
                     </select>
                 </div>
-                <button type="submit" class="button is-primary">Créer</button>
+                <button type="submit" class="button is-primary"><%= lang.account.list.createAccount.create %></button>
             </form>
         </div>
     </div>
@@ -132,7 +132,7 @@
 
 <% if (typeof newKey !== "undefined") { %>
     <div class="notification is-primary is-light">
-        <span>Clé d'enregistrement créée avec succès : <b class="is-family-code ml-2"><%= newKey %></b></span>
+        <span><%= lang.account.list.createAccount.keyCreated %> : <b class="is-family-code ml-2"><%= newKey %></b></span>
     </div>
 <% } %>
 
@@ -142,11 +142,11 @@
         <div class="modal-background" data-target="modalDelete<%= tuser.id %>"></div>
         <div class="modal-content">
             <div class="box has-text-centered">
-                <h1 class="title">Supprimer le compte</h1>
-                <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer le compte<br /><code><%= tuser.key %></code> : "<%= tuser.username %>" ?</p>
+                <h1 class="title"><%= lang.account.list.deleteAccount.title %></h1>
+                <p class="is-family-primary"><%= lang.account.list.deleteAccount.description %><br /><code><%= tuser.key %></code> : "<%= tuser.username %>" ?</p>
                 <form method="POST" action="/account/delete" class="ajax">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
-                    <button type="submit" class="button is-danger mt-2">Supprimer</button>
+                    <button type="submit" class="button is-danger mt-2"><%= lang.account.list.deleteAccount.delete %></button>
                 </form>
             </div>
         </div>
@@ -157,28 +157,28 @@
         <div class="modal-background" data-target="modalEdit<%= tuser.id %>"></div>
         <div class="modal-content">
             <div class="box has-text-centered">
-                <h1 class="title">Modifier le compte</h1>
-                <p class="is-family-primary mb-3">Modification du compte : <code><%= tuser.key %></code> : "<%= tuser.username %>"</p>
+                <h1 class="title"><%= lang.account.list.editAccount.title %></h1>
+                <p class="is-family-primary mb-3"><%= lang.account.list.editAccount.description %> : <code><%= tuser.key %></code> : "<%= tuser.username %>"</p>
                 <form method="POST" action="/account/adminedit" class="ajax">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
                     <div class="select">
                         <select name="role">
-                            <option value="void" selected disabled>-- Nouveau rôle --</option>
-                            <option value="MEMBER">Membre</option>
-                            <option value="ADMIN">Admin</option>
+                            <option value="void" selected disabled>-- <%= lang.account.list.editAccount.newRole %> --</option>
+                            <option value="MEMBER"><%= lang.account.list.rolePermissions.member %></option>
+                            <option value="ADMIN"><%= lang.account.list.rolePermissions.admin %></option>
                         </select>
                     </div>
                     <br />
                     <div class="select">
                         <select name="status">
-                            <option value="void" selected disabled>-- Nouveau statut --</option>
-                            <option value="ALIVE">Actif</option>
-                            <option value="SUSPENDED">Suspendu</option>
+                            <option value="void" selected disabled>-- <%= lang.account.list.editAccount.newStatus %> --</option>
+                            <option value="ALIVE"><%= lang.account.list.table.alive %></option>
+                            <option value="SUSPENDED"><%= lang.account.list.table.suspended %></option>
                         </select>
                     </div>
                     <br />
                     <br />
-                    <button type="submit" class="button is-primary mt-2">Modifier</button>
+                    <button type="submit" class="button is-primary mt-2"><%= lang.account.list.editAccount.edit %></button>
                 </form>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <%- include('../includes/header') %>
 
 <div class="box">
-    <h1 class="title has-text-centered">Commencer des exercices</h1>
+    <h1 class="title has-text-centered"><%= lang.exercise.start.startPractice.letsPractice %></h1>
 
     <div class="columns is-align-items-center is-justify-content-center">
 
@@ -10,18 +10,17 @@
 
                 <div class="dropdown is-hoverable is-block">
                     <label class="label mt-3 dropdown-trigger">
-                        Nombre d'exercices
+                        <%= lang.exercise.start.startPractice.numberOfExercises %>
                         <input class="input mt-1" type="number" min="0" max="1000" name="exerciseCount" value="0" />
                     </label>
                     <div class="dropdown-menu" role="menu">
                         <div class="dropdown-content has-text-weight-normal pl-2 pr-2">
-                            Saisir 0 ou laisser vide pour ne pas limiter le nombre d'exercices.<br />
-                            L'entraînement se finira lorsque vous l’arrêterez manuellement, ou alors quand il n'y aura plus d'exercice.
+                            <%- lang.exercise.start.startPractice.numberOfExercisesHint %>
                         </div>
                     </div>
                 </div>
 
-                <label class="label mt-3">Tags</label>
+                <label class="label mt-3"><%= lang.exercise.start.startPractice.tags %></label>
                 <div class="columns">
                     <div class="column">
                         <%
@@ -60,16 +59,16 @@
                     </div>
                 </div>
 
-                <label class="label mt-3">Les exercices de mon entraînement doivent inclure</label>
+                <label class="label mt-3"><%= lang.exercise.start.startPractice.exerciseTagMode.label %></label>
                 <div class="control">
                     <label class="radio">
                         <input type="radio" name="tagOperation" value="INTERSECTION" checked />
-                        Tous les tags sélectionnés ci-dessus
+                        <%= lang.exercise.start.startPractice.exerciseTagMode.intersection %>
                     </label>
                     <br />
                     <label class="radio">
                         <input type="radio" name="tagOperation" value="UNION" />
-                        Au moins un des tags sélectionnés ci-dessus
+                        <%= lang.exercise.start.startPractice.exerciseTagMode.union %>
                     </label>
                 </div>
 
@@ -85,13 +84,13 @@
 
 
     <div class="mt-3 has-text-centered">
-        <button type="submit" form="formStart" class="button is-primary is-small mt-3">Commencer</button>
+        <button type="submit" form="formStart" class="button is-primary is-small mt-3"><%= lang.exercise.start.startPractice.begin %></button>
     </div>
 
 </div>
 
 <div class="box has-text-centered">
-    <h1 class="title has-text-centered">Statistiques et recommandations&nbsp;<sup><span class="tag is-warning">Soon</span></sup></h1>
+    <h1 class="title has-text-centered"><%= lang.exercise.start.recommendations.statsAndRecommendations %>&nbsp;<sup><span class="tag is-warning"><%= lang.exercise.start.recommendations.soon %></span></sup></h1>
 
     <% if (typeof user !== "undefined") { %>
 
@@ -128,11 +127,11 @@
             </div>
         </div>-->
 
-        <span><b>Fonctionnalité indisponible :(</b><br />Suivez le développement de <b>Studious Hexa Memory</b> sur <a href="https://github.com/ythepaut/studious-hexa-memory" target="_blank">GitHub</a> !</span>
+        <span><%- lang.exercise.start.recommendations.soonText %></span>
 
     <% } else { %>
 
-        <span><b>Oups !</b> Vous devez être connecté pour avoir accès à cette fonctionnalité</span>
+        <span><%- lang.exercise.start.recommendations.loginRequired %></span>
 
     <% } %>
 

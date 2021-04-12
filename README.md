@@ -3,10 +3,12 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/ythepaut/studious-hexa-memory/badge/master)](https://www.codefactor.io/repository/github/ythepaut/studious-hexa-memory/overview/master)
 [![Known Vulnerabilities](https://snyk.io/test/github/ythepaut/studious-hexa-memory/badge.svg?targetFile=package.json)](https://snyk.io/test/github/ythepaut/studious-hexa-memory?targetFile=package.json)
 
+**:arrow_down: [English version below](#english) :arrow_down:**
+
 ## A propos
 
 Studious Hexa Memomry est une application web, utilisant les technologies NodeJS et MongoDB,
-qui permet de s'entraîner sur un banque d'exercices.
+qui permet de s'entraîner sur une banque d'exercices.
 
 Serveur de démonstration : https://studious-hexa-memory.demo.ythepaut.com/
 
@@ -95,5 +97,105 @@ Serveur de démonstration : https://studious-hexa-memory.demo.ythepaut.com/
    ```$ npm install```
 
 3. Redémarrer l'instance
+
+   ```$ pm2 restart studious_hexa_memory```
+
+** **
+
+# English
+
+
+## About
+
+Studious Hexa Memomry is a web app that uses NodeJS and MongoDB.
+Its goal is to help people to study exercises and auto-evaluate themselves.
+
+Demonstration server : https://studious-hexa-memory.demo.ythepaut.com/
+
+***
+
+## Deploy an instance
+
+1. Install NodeJS and MongoDB
+
+   ```$ sudo apt-get install nodejs mongodb``` for Debian-based linux distributions
+
+2. Clone this repository
+
+   ```$ git clone https://github.com/ythepaut/studious-hexa-memory.git```
+
+3. Install the dependencies
+
+   ```$ cd studious-hexa-memory```
+
+   ```$ npm install```
+
+4. Database configuration
+
+    * Access MongoDB's CLI
+
+      `$ mongo`
+
+    * Create a collection called `exercises` in the database `studious_hexa_memory`
+
+      `> use studious_hexa_memory`
+
+      `> db.createCollection("exercises")`
+
+    * Check that the database, and the collection were created
+
+      `> show dbs`
+
+      `> show collections`
+
+    * Create an admin user for the database `studious_hexa_memory`
+
+      ```
+      > db.createUser({
+         user: "<USERNAME>",
+         pwd: "<PASSWORD>",
+         roles: [
+             {role: "dbAdmin", db: "studious_hexa_memory"}
+         ]
+      })
+      ```
+
+    * Exit MongoDB's CLI
+
+      `> exit`
+
+
+5. Add the environment variables with `$ setenv CLÉ=VALEUR`
+   or create a `.env` at the root folder of the project.
+
+   Environment variable list :
+   ```
+   STUDIOUSHEXAMEMORY_SERVER_PORT=80
+   STUDIOUSHEXAMEMORY_MONGODB_USER=<USERNAME>
+   STUDIOUSHEXAMEMORY_MONGODB_PASSWORD=<PASSWORD>
+   STUDIOUSHEXAMEMORY_SESSION_SECRET=<SECRET_STRING>
+   ```
+
+6. Install Process Manager 2
+
+   ```$ npm install pm2 -g```
+
+7. Start the server
+
+   ```$ pm2 start app.js --name studious_hexa_memory```
+
+***
+
+## Update an instance
+
+1. Recover the updated files from the repository
+
+   ```$ git pull origin master```
+
+2. Install any new dependencies
+
+   ```$ npm install```
+
+3. Restart the server
 
    ```$ pm2 restart studious_hexa_memory```
