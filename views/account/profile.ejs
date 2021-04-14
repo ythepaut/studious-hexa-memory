@@ -2,19 +2,19 @@
 
 <div class="container">
 
-    <h1 class="title">Mon compte</h1>
+    <h1 class="title"><%= lang.account.profile.myAccount %></h1>
 
     <table class="table is-fullwidth">
         <thead>
         <tr>
-            <th style="width: 40%;">Mes informations</th>
+            <th style="width: 40%;"><%= lang.account.profile.myInformations %></th>
             <th style="width: auto;"></th>
             <th style="width: 10%;"></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>Nom d'utilisateur</td>
+            <td><%= lang.account.profile.username %></td>
             <td><%= user.username %></td>
             <td>
                 <button type="button" class="button is-small is-link is-light" data-toggle="modal" data-target="modalChangeUsername" title="Modifier">
@@ -23,7 +23,7 @@
             </td>
         </tr>
         <tr>
-            <td>Mot de passe</td>
+            <td><%= lang.account.profile.password %></td>
             <td>**************</td>
             <td>
                 <button type="button" class="button is-small is-link is-light" data-toggle="modal" data-target="modalChangePassword" title="Modifier">
@@ -32,19 +32,19 @@
             </td>
         </tr>
         <tr>
-            <td>Clé</td>
+            <td><%= lang.account.profile.key %></td>
             <td><code><%= user.key %></code></td>
             <td></td>
         </tr>
         <tr>
-            <td>Rôle</td>
+            <td><%= lang.account.profile.role %></td>
             <td>
                 <% if (user.role === "MEMBER") { %>
-                    <span class="tag is-info">Membre</span>
+                    <span class="tag is-info"><%= lang.account.profile.member %></span>
                 <% } else if (user.role === "ADMIN") { %>
-                    <span class="tag is-warning">Administrateur</span>
+                    <span class="tag is-warning"><%= lang.account.profile.admin %></span>
                 <% } else if (user.role === "OWNER") { %>
-                    <span class="tag is-danger">Propriétaire</span>
+                    <span class="tag is-danger"><%= lang.account.profile.owner %></span>
                 <% } %>
             </td>
             <td></td>
@@ -54,26 +54,26 @@
     <table class="table is-fullwidth">
         <thead>
         <tr>
-            <th style="width: 40%;">Actions</th>
+            <th style="width: 40%;"><%= lang.account.profile.actions %></th>
             <th style="width: auto;"></th>
             <th style="width: 10%;"></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>Me deconnecter</td>
+            <td><%= lang.account.profile.disconnect %></td>
             <td></td>
             <td>
-                <a href="/account/logout" class="button is-small is-danger is-light" title="Me deconnecter">
+                <a href="/account/logout" class="button is-small is-danger is-light" title="<%= lang.account.profile.disconnect %>">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </td>
         </tr>
         <tr>
-            <td>Supprimer mon compte</td>
+            <td><%= lang.account.profile.deleteAccount.title %></td>
             <td></td>
             <td>
-                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDeleteAccount" title="Supprimer mon compte">
+                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDeleteAccount" title="<%= lang.account.profile.deleteAccount.title %>">
                     <i class="fas fa-times-circle"></i>
                 </button>
             </td>
@@ -87,12 +87,12 @@
     <div class="modal-background" data-target="modalChangeUsername"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <h1 class="title">Changer de nom d'utilisateur</h1>
+            <h1 class="title"><%= lang.account.profile.changeUsername.title %></h1>
             <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="action" value="changeusername" />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="text" autocomplete="username" name="username" minlength="3" maxlength="16" placeholder="Nouveau nom d'utilisateur" required />
+                        <input class="input" type="text" autocomplete="username" name="username" minlength="3" maxlength="16" placeholder="<%= lang.account.profile.changeUsername.newUsername %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>
@@ -100,16 +100,16 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="Mot de passe requis pour confirmer votre action" required />
+                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="<%= lang.account.profile.currentPassword %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
                     </p>
                 </div>
-                <button type="submit" class="button is-primary mt-2">Modifier</button>
+                <button type="submit" class="button is-primary mt-2"><%= lang.account.profile.edit %></button>
             </form>
             <br />
-            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;Pour que cette modification prenne effet, vous serez déconnecté.</span>
+            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;<%= lang.account.profile.willDisconnect %></span>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close" data-target="modalChangeUsername"></button>
@@ -119,12 +119,12 @@
     <div class="modal-background" data-target="modalChangePassword"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <h1 class="title">Changer de mot de passe</h1>
+            <h1 class="title"><%= lang.account.profile.changePassword.title %></h1>
             <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="action" value="changepassword" />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="Ancien mot de passe" required />
+                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="<%= lang.account.profile.changePassword.oldPassword %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -132,7 +132,7 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" autocomplete="new-password" name="newpasswd" minlength="8" placeholder="Nouveau mot de passe" required />
+                        <input class="input" type="password" autocomplete="new-password" name="newpasswd" minlength="8" placeholder="<%= lang.account.profile.changePassword.newPassword %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -140,16 +140,16 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" autocomplete="new-password" name="newpasswd2" minlength="8" placeholder="Nouveau mot de passe (confirmation)" required />
+                        <input class="input" type="password" autocomplete="new-password" name="newpasswd2" minlength="8" placeholder="<%= lang.account.profile.changePassword.confirmNewPassword %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
                     </p>
                 </div>
-                <button type="submit" class="button is-primary mt-2">Modifier</button>
+                <button type="submit" class="button is-primary mt-2"><%= lang.account.profile.edit %></button>
             </form>
             <br />
-            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;Pour que cette modification prenne effet, vous serez déconnecté.</span>
+            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;<%= lang.account.profile.willDisconnect %></span>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close" data-target="modalChangePassword"></button>
@@ -159,23 +159,22 @@
     <div class="modal-background" data-target="modalDeleteAccount"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <h1 class="title">Supprimer mon compte</h1>
+            <h1 class="title"><%= lang.account.profile.deleteAccount.title %></h1>
             <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="action" value="delete" />
                 <p class="has-text-left">
-                    En cliquant sur "Valider", votre compte sera supprimé immédiatement.<br />
-                    Vos données, votre rôle ainsi que la clé d'enregistrement associée a ce compte seront perdus.
+                    <%- lang.account.profile.deleteAccount.description %>
                 </p>
                 <br />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" name="passwd" minlength="8" placeholder="Mot de passe requis pour confirmer votre action" required />
+                        <input class="input" type="password" name="passwd" minlength="8" placeholder="<%= lang.account.profile.currentPassword %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
                     </p>
                 </div>
-                <button type="submit" class="button is-primary mt-2">Valider</button>
+                <button type="submit" class="button is-primary mt-2"><%= lang.account.profile.deleteAccount.submit %></button>
             </form>
         </div>
     </div>

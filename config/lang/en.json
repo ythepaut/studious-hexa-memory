@@ -143,6 +143,37 @@
                 "newStatus": "New status",
                 "edit": "Edit"
             }
+        },
+        "profile": {
+            "myAccount" : "My account",
+            "myInformations" : "My informations",
+            "username" : "Username",
+            "password" : "Password",
+            "key" : "Key",
+            "role" : "Role",
+            "member" : "Member",
+            "admin" : "Administrator",
+            "owner" : "Owner",
+            "actions" : "Actions",
+            "disconnect" : "Disconnect",
+            "changeUsername" : {
+                "title" : "Change my username",
+                "newUsername" : "New username"
+            },
+            "currentPassword" : "Password required to confirm this action",
+            "edit" : "Edit",
+            "willDisconnect" : "You will be disconnected to make this action take effect.",
+            "changePassword" : {
+                "title" : "Change my password",
+                "oldPassword" : "Old password",
+                "newPassword" : "New password",
+                "confirmNewPassword" : "Confirm new password"
+            },
+            "deleteAccount" : {
+                "title" : "Delete my account",
+                "description" : "By clicking on \"Submit\", your account will be deleted permanently.<br />\n                    Your data, your permissions and your register will be lost.",
+                "submit" : "Submit"
+            }
         }
     },
 

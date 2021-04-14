@@ -143,6 +143,37 @@
                 "newStatus": "Nouveau statut",
                 "edit": "Modifier"
             }
+        },
+        "profile": {
+            "myAccount" : "Mon compte",
+            "myInformations" : "Mes informations",
+            "username" : "Nom d'utilisateur",
+            "password" : "Mot de passe",
+            "key" : "Clé",
+            "role" : "Rôle",
+            "member" : "Membre",
+            "admin" : "Administrateur",
+            "owner" : "Propriétaire",
+            "actions" : "Actions",
+            "disconnect" : "Me déconnecter",
+            "changeUsername" : {
+                "title" : "Changer de nom d'utilisateur",
+                "newUsername" : "Nouveau nom d'utilisateur"
+            },
+            "currentPassword" : "Mot de passe requis pour confirmer votre action",
+            "edit" : "Modifier",
+            "willDisconnect" : "Pour que cette modification prenne effet, vous serez déconnecté.",
+            "changePassword" : {
+                "title" : "Changer de mot de passe",
+                "oldPassword" : "Ancien mot de passe",
+                "newPassword" : "Nouveau mot de passe",
+                "confirmNewPassword" : "Nouveau mot de passe (confirmation)"
+            },
+            "deleteAccount" : {
+                "title" : "Supprimer mon compte",
+                "description" : "En cliquant sur \"Valider\", votre compte sera supprimé immédiatement.<br />Vos données, votre rôle ainsi que la clé d'enregistrement associée a ce compte seront perdus.",
+                "submit" : "Valider"
+            }
         }
     },
 

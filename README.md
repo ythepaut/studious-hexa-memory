@@ -165,7 +165,7 @@ Demonstration server : https://studious-hexa-memory.demo.ythepaut.com/
       `> exit`
 
 
-5. Add the environment variables with `$ setenv CLÉ=VALEUR`
+5. Add the environment variables with `$ setenv KEY=VALUE`
    or create a `.env` at the root folder of the project.
 
    Environment variable list :
