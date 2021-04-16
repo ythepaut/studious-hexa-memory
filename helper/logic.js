@@ -436,7 +436,7 @@ module.exports = class {
                         let path = req.files[0].path;
 
                         // checking if file has json extension
-                        if (path.match(/.*\.json/)) {
+                        if (path.match(/.{0,100}\.json/)) {
 
                             let importJSON = {};
 
