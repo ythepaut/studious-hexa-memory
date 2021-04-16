@@ -4,7 +4,8 @@ let http = require("http"),
     path = require("path"),
     bodyParser = require("body-parser"),
     mongodb = require("mongodb"),
-    session = require("express-session");
+    session = require("express-session"),
+    RateLimit = require("express-rate-limit");
 let app = express(),
     server = http.createServer(app);
 
@@ -12,6 +13,11 @@ let app = express(),
 // setting middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(new RateLimit({
+    windowMs: 5 * 60 * 1000,
+    max: 1000
+}));
 
 app.use(session({
     secret : process.env.STUDIOUSHEXAMEMORY_SESSION_SECRET,
