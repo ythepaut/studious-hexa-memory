@@ -28,6 +28,7 @@
 
                 <div class="tab-content">
                     <form method="POST" action="/account/login" class="ajax tab-pane is-active" id="loginForm">
+                        <input type="hidden" name="_csrf" value="<%= csrf() %>">
                         <input type="hidden" name="next" value="/" id="inputnext" />
                         <div class="field">
                             <p class="control has-icons-left">
@@ -51,6 +52,7 @@
 
 
                     <form method="POST" action="/account/register" class="ajax tab-pane" id="registerForm">
+                        <input type="hidden" name="_csrf" value="<%= csrf() %>">
                         <div class="field">
                             <p class="control has-icons-left">
                                 <input class="input" type="text" name="key" placeholder="<%= lang.account.login.fields.registerKey %>" value="<%= key !== null ? key : "" %>" minlength="8" required />

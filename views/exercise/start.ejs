@@ -7,6 +7,7 @@
 
         <div class="column is-offset-1 is-5 is-vcentered">
             <form method="POST" id="formStart">
+                <input type="hidden" name="_csrf" value="<%= csrf() %>">
 
                 <div class="dropdown is-hoverable is-block">
                     <label class="label mt-3 dropdown-trigger">

@@ -117,6 +117,7 @@
             <div class="modal-content">
                 <div class="box has-text-centered">
                     <form method="POST" action="/lang" class="ajax">
+                        <input type="hidden" name="_csrf" value="<%= csrf() %>">
                         <h1 class="title"><%= lang.header.modalChangeLanguage.changeLangTitle %></h1>
                         <div class="select">
                             <select name="lang">

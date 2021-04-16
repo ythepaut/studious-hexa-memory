@@ -37,6 +37,7 @@
         <br />
 
         <form method="POST" action="/">
+            <input type="hidden" name="_csrf" value="<%= csrf() %>">
             <input class="button is-danger is-small mt-3" type="submit" name="end" value="<%= lang.exercise.exercise.stopSession %>" />
         </form>
     </div>

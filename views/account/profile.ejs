@@ -89,6 +89,7 @@
         <div class="box has-text-centered">
             <h1 class="title"><%= lang.account.profile.changeUsername.title %></h1>
             <form method="POST" action="/account/edit" class="ajax">
+                <input type="hidden" name="_csrf" value="<%= csrf() %>">
                 <input type="hidden" name="action" value="changeusername" />
                 <div class="field">
                     <p class="control has-icons-left">
@@ -121,6 +122,7 @@
         <div class="box has-text-centered">
             <h1 class="title"><%= lang.account.profile.changePassword.title %></h1>
             <form method="POST" action="/account/edit" class="ajax">
+                <input type="hidden" name="_csrf" value="<%= csrf() %>">
                 <input type="hidden" name="action" value="changepassword" />
                 <div class="field">
                     <p class="control has-icons-left">
@@ -161,6 +163,7 @@
         <div class="box has-text-centered">
             <h1 class="title"><%= lang.account.profile.deleteAccount.title %></h1>
             <form method="POST" action="/account/edit" class="ajax">
+                <input type="hidden" name="_csrf" value="<%= csrf() %>">
                 <input type="hidden" name="action" value="delete" />
                 <p class="has-text-left">
                     <%- lang.account.profile.deleteAccount.description %>

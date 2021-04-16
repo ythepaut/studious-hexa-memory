@@ -117,6 +117,7 @@
         <div class="box has-text-centered">
             <h1 class="title"><%= lang.account.list.createAccount.title %></h1>
             <form method="POST" action="/account/new" class="ajax">
+                <input type="hidden" name="_csrf" value="<%= csrf() %>">
                 <div class="select">
                     <select name="role">
                         <option value="MEMBER"><%= lang.account.list.rolePermissions.member %></option>
@@ -145,6 +146,7 @@
                 <h1 class="title"><%= lang.account.list.deleteAccount.title %></h1>
                 <p class="is-family-primary"><%= lang.account.list.deleteAccount.description %><br /><code><%= tuser.key %></code> : "<%= tuser.username %>" ?</p>
                 <form method="POST" action="/account/delete" class="ajax">
+                    <input type="hidden" name="_csrf" value="<%= csrf() %>">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
                     <button type="submit" class="button is-danger mt-2"><%= lang.account.list.deleteAccount.delete %></button>
                 </form>
@@ -160,6 +162,7 @@
                 <h1 class="title"><%= lang.account.list.editAccount.title %></h1>
                 <p class="is-family-primary mb-3"><%= lang.account.list.editAccount.description %> : <code><%= tuser.key %></code> : "<%= tuser.username %>"</p>
                 <form method="POST" action="/account/adminedit" class="ajax">
+                    <input type="hidden" name="_csrf" value="<%= csrf() %>">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
                     <div class="select">
                         <select name="role">

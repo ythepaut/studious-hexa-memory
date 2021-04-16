@@ -94,6 +94,7 @@
 
     <div class="mt-3 has-text-centered">
         <form method="POST" action="/">
+            <input type="hidden" name="_csrf" value="<%= csrf() %>">
             <input class="button is-warning is-small mt-3" type="submit" name="finish" value="<%= lang.exercise.end.end %>" />
         </form>
     </div>

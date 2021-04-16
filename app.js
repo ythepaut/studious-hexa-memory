@@ -5,25 +5,33 @@ let http = require("http"),
     bodyParser = require("body-parser"),
     mongodb = require("mongodb"),
     session = require("express-session"),
-    RateLimit = require("express-rate-limit");
+    RateLimit = require("express-rate-limit"),
+    csrf = require("csurf");
 let app = express(),
     server = http.createServer(app);
 
 
 // setting middlewares
+
+// body parser setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// rate limit (1000 request / 5min window max) setup
 app.use(new RateLimit({
     windowMs: 5 * 60 * 1000,
     max: 1000
 }));
 
+// session setup
 app.use(session({
     secret : process.env.STUDIOUSHEXAMEMORY_SESSION_SECRET,
     resave : false,
     saveUninitialized : false
 }));
+
+// CSRF protection
+app.use(csrf({}));
 
 app.set("view engine", "ejs");
 

@@ -246,6 +246,26 @@ module.exports = class {
             }
         });
 
+        // 403 - Form tampered with
+        this._app.use((err, req, res, next) => {
+            if (err && err.code === "EBADCSRFTOKEN") {
+                if (req.method === "POST") {
+                    this._sendResponse(req, res, this._logic.responseJSON(
+                        403,
+                        {type: "error", message: "Session invalide."}
+                    ));
+                } else {
+                    this._sendResponse(req, res, this._logic.responseView(
+                        403,
+                        "error",
+                        {verbose : "Session invalide.", user : req.session.user}
+                    ));
+                }
+            } else {
+                next(err);
+            }
+        });
+
         // 404 - No route
         this._app.use((req, res) => {
             this._sendResponse(req, res, this._logic.responseView(
@@ -270,6 +290,7 @@ module.exports = class {
         } else if (response.type === "view") {
             response.data.supportedLangs = this._logic.language.getSupportedLanguages();
             response.data.lang = this._logic.language.getTranslations(req.session.lang);
+            response.data.csrf = req.csrfToken;
             res.status(response.code).render(response.view, response.data);
         } else if (response.type === "redirection") {
             res.redirect(response.target);

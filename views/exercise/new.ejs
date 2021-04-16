@@ -6,6 +6,8 @@
 
 <form method="POST" action="/exercise/new" class="ajax">
 
+    <input type="hidden" name="_csrf" value="<%= csrf() %>">
+
     <!-- Title -->
     <div class="field">
         <div class="is-normal">
