@@ -6,6 +6,7 @@ module.exports = class {
         this._exercise = require("../model/exercise");
         this._user = require("../model/user");
         this._fs = require("fs");
+        this._path = path;
         this._bcrypt = require("bcrypt");
         this._language = new (require("./utils/language"))(this._fs, path);
     }
@@ -433,7 +434,7 @@ module.exports = class {
                             verbose : "Aucun fichier sélectionné."
                         }));
                     } else {
-                        let path = req.files[0].path;
+                        let path = this._path.join("uploads/", req.files[0].filename);
 
                         // checking if file has json extension
                         if (path.match(/.{0,100}\.json/)) {
@@ -444,21 +445,19 @@ module.exports = class {
                             try {
                                 importJSON = JSON.parse(this._fs.readFileSync(path, "utf8").toString());
                                 this._exercise.importExercises(this._db, this._mongodb, importJSON);
-                                this._fs.unlinkSync(path);
                                 callback(this.responseRedirection("/exercise/list"));
                             } catch (ex) {
-                                this._fs.unlinkSync(path);
                                 callback(this.responseView(400, "error", {
                                     verbose : "Le fichier envoyé n'est pas un fichier JSON."
                                 }));
                             }
 
                         } else {
-                            this._fs.unlinkSync(path);
                             callback(this.responseView(400, "error", {
                                 verbose : "Le fichier envoyé n'est pas un fichier JSON."
                             }));
                         }
+                        this._fs.unlinkSync(path);
                     }
 
                 });
