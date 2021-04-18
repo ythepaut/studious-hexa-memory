@@ -1,0 +1,218 @@
+{
+    "config": {
+        "lang": "es",
+        "iso": "ES",
+        "language": "Español"
+    },
+
+    "generic": {
+        "actions": {
+            "submit": "Enviar",
+            "edit": "Editar",
+            "delete": "Borrar",
+            "create": "Crear"
+        },
+        "fields": {
+            "username": "Nombre del usuario",
+            "password": "Contraseña",
+            "passwordConfirmation": "Confirmación de contraseña",
+            "registerKey": "Clave de registro"
+        },
+        "table": {
+            "number": "No.",
+            "actions": "Acciones"
+        },
+        "other": {
+            "tags": "Categorías",
+            "exercise": {
+                "exercise": "Ejercicio",
+                "title": "Título",
+                "statement": "Declaración"
+            },
+            "account": {
+                "roles": {
+                    "noAccount": "Sin cuenta",
+                    "member": "Miembro",
+                    "admin": "Administrador",
+                    "owner": "Dueño"
+                },
+                "statusList": {
+                    "alive": "Activo",
+                    "suspended": "Suspendido",
+                    "pendingRegistration": "Esperando registro"
+                },
+                "username": "Nombre del usuario",
+                "password": "Contraseña",
+                "key": "Llave",
+                "role": "Rol",
+                "status": "Estatus"
+            },
+            "yes": "Sí",
+            "no": "No"
+        }
+    },
+
+    "application": {
+        "name": "Studious Hexa Memory",
+        "description": "Aplicación de práctica de ejercicios"
+    },
+
+    "nav": {
+        "links": {
+            "practice": "Entrenarse",
+            "manageExercises": "Gestionar ejercicios",
+            "manageUsers": "Gestionar cuentas",
+            "more": {
+                "more": "Más",
+                "about": "A proposito",
+                "legal": "Notas legales"
+            }
+        },
+        "buttons": {
+            "connect": {
+                "notConnected": "Conectarse",
+                "connected": "Buenos dias %% !"
+            },
+            "languageModal": {
+                "title": "Cambiar el idioma"
+            }
+        }
+    },
+
+    "practice": {
+        "start": {
+            "startPractice": {
+                "letsPractice": "Vamos a practicar",
+                "numberOfExercises": "Numero de ejercicios",
+                "numberOfExercisesHint": "Ingrese 0 o déjelo en blanco para no limitar el número de ejercicios.<br />\nEl entrenamiento terminará cuando lo detenga manualmente o cuando no haya más ejercicio.",
+                "exerciseTagMode": {
+                    "label": "Los ejercicios de mi entrenamiento deben incluir",
+                    "intersection": "Todas las categorías seleccionadas arriba",
+                    "union": "Al menos una de las categorías seleccionadas anteriormente"
+                },
+                "begin": "Empezar a entrenar"
+            },
+            "recommendations": {
+                "statsAndRecommendations": "Estadísticas y recomendaciones",
+                "soon": "Próximamente",
+                "soonText": "<b>Característica no disponible :(</b><br />Sigue el desarrollo de <b>Studious Hexa Memory</b> sobre <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> !",
+                "loginRequired": "<b>UPS !</b> Debes iniciar sesión para acceder a esta función."
+            }
+        },
+
+        "exercise": {
+            "title": "Ejercicio %%",
+            "evaluation": {
+                "passed": "Pasé el ejercicio",
+                "notPassed": "No pasé el ejercicio"
+            },
+            "revealAnswer": "Ver la respuesta",
+            "exerciseNo": "Ejercicio no. %%/%%",
+            "practiceTags": "Categorías del entrenamiento",
+            "stopPractice": "Paral el entrenamiento"
+        },
+
+        "end": {
+            "title": "Fin del entrenamiento !",
+            "cause": {
+                "manual": "Has terminado la sesión",
+                "max": "Objetivo de ejercicio alcanzado",
+                "depleted": "Ha realizado todos los ejercicios para las categorias seleccionadas"
+            },
+            "stats": {
+                "title": "Estadísticas",
+                "exercisesDone": "Número de ejercicios realizados",
+                "passRate": "Porcentaje de acierto"
+            },
+            "summary": {
+                "title": "Resumen",
+                "table": {
+                    "hoverToSeeID": "Pase el mouse sobre los números para ver los ID de los ejercicios",
+                    "passed": "Ejercicio exitoso"
+                }
+            },
+            "finish": "Terminar"
+        }
+    },
+
+    "account": {
+        "login": {
+            "hello": "Buenos dias&nbsp;\uD83D\uDC4B",
+            "login": "Iniciar sesión",
+            "register": "Grabación"
+        },
+
+        "list": {
+            "stats": {
+                "accountsActive": "Cuentas activas",
+                "unusedKeys": "Claves no utilizadas",
+                "adminAccounts": "Cuentas de administrador"
+            },
+            "createKey": "Crear una clave",
+            "searchAccounts": "Encuentra una cuenta",
+            "roleDescriptions": {
+                "title": "Permisos de rol",
+                "noAccountDescription" : "Solo permite entrenar.",
+                "memberDescription": "Permite entrenar, con guardado de resultados y ejercicios relevantes para futuras sesiones.",
+                "adminDescription": "Le permite administrar ejercicios (creación, edición, eliminación, importación y exportación).",
+                "ownerDescription": "Le permite administrar usuarios (creación, edición del rol / estado y eliminación)."
+            },
+            "createAccount": {
+                "title": "Crear una clave"
+            },
+            "deleteAccount": {
+                "title": "Borrar cuenta",
+                "description": "¿Estás seguro de que quieres eliminar la cuenta<br /><code>%%</code> : \"%%\"?"
+            },
+            "editAccount": {
+                "title": "Editar cuenta",
+                "description": "Modificación de la cuenta <code>%%</code> : \"%%\"",
+                "newRole": "Nuevo rol",
+                "newStatus": "Nuevo estado"
+            }
+        },
+        "profile": {
+            "myAccount" : "Mi cuenta",
+            "myInformations" : "Mis informaciones",
+            "disconnect" : "Desconectar",
+            "willDisconnect" : "Para que este cambio surta efecto, se cerrará la sesión.",
+            "currentPassword" : "Se requiere contraseña para confirmar su acción",
+            "changeUsername" : {
+                "title" : "Cambie el nombre de usuario",
+                "newUsername" : "Nuevo nombre de usuario"
+            },
+            "changePassword" : {
+                "title" : "Cambiar la contraseña",
+                "oldPassword" : "Antigua contraseña",
+                "newPassword" : "Nueva contraseña",
+                "confirmNewPassword" : "Nueva contraseña (confirmación)"
+            },
+            "deleteAccount" : {
+                "title" : "Borrar mi cuenta",
+                "description" : "Al hacer clic en \"Validar\", su cuenta se eliminará inmediatamente.<br />Se perderán sus datos, su función y la clave de registro asociada a esta cuenta."
+            }
+        }
+    },
+
+    "error": {
+        "oops": "<b>Vaya</b>, ha ocurrido un error."
+    },
+
+    "about": {
+        "description": "<b>Studious Hexa Memory</b> es un sitio de entrenamiento y revisión de ejercicios ofrecidos por sus usuarios.\n<br /><br />\n            El objetivo no es responder los ejercicios del sitio en forma de MCQ, sino hacer el ejercicio propuesta dentro de un tiempo determinado.<br />\nUna vez transcurrido este tiempo o después de haber terminado el ejercicio, puedes consultar su corrección y validar o no tu resultado.\n            <br /><br />\n            Las funcionalidades de Studious Hexa Memory son desarrolladas por <a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a> y supervisadas por <a href=\"https://www.youtube.com/channel/UCtgWzEBDJy_Jj7J7v2Y39UA\" target=\"_blank\">Baptiste BRUGEROLLE</a>.\n            <br /><br />\n            Código fuente disponible en <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> bajo la licencia GNU GPL v3."
+    },
+
+    "legal": {
+        "editor": {
+            "description": "Editor de sitios web « Studious Hexa Memory » :"
+        },
+        "webmaster": {
+            "description": "Webmaster de los sitios web del dominios « ythepaut.com » :",
+            "value": "<a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a>"
+        },
+        "host": {
+            "description": "Anfitrión :",
+            "value": "Los sitios del dominio \"ythepaut.com\" están alojados por la empresa OVH <a href=\"https://www.ovh.com/\" target=\"_blank\">OVHcloud</a>.<br />OVH<br />2 rue Kellermann<br />59100 Roubaix<br />FRANCIA"
+        }
+    }
+}
