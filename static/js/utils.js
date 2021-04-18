@@ -19,8 +19,7 @@ function formatLatexImage(str, formatLatex = true, formatImage = true) {
     // Image
     if (formatImage) {
         str = str.replace(/\[\[(.*?)]]/g, (a, b) => {
-            b.replace(/\\/g, "");
-            b.replace(/"/g, "\\\"");
+            b.replace(/\\?"/g, "\\\"");
             return "<img src=\"" + b + "\" alt=\"" + b + "\" />";
         });
     }
