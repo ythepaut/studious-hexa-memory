@@ -1,37 +1,90 @@
 {
     "config": {
+        "lang": "en",
         "iso": "EN",
         "language": "English"
     },
 
-    "meta": {
-        "lang": "en",
-        "description": "Exercice practice application"
-    },
-
-    "header": {
-        "practice": "Practice",
-        "manageExercises": "Manage exercises",
-        "manageUsers": "Manage accounts",
-        "more": "More",
-        "about": "About",
-        "legal": "Legal",
-        "hello": "Hello",
-        "connect": "Sign in",
-        "lang": "EN",
-        "modalChangeLanguage": {
-            "changeLangTitle": "Change language",
-            "choose": "Change"
+    "generic": {
+        "actions": {
+            "submit": "Submit",
+            "edit": "Edit",
+            "delete": "Delete",
+            "create": "Create"
+        },
+        "fields": {
+            "username": "Username",
+            "password": "Password",
+            "passwordConfirmation": "Confirm password",
+            "registerKey": "Register key"
+        },
+        "table": {
+            "number": "No.",
+            "actions": "Actions"
+        },
+        "other": {
+            "tags": "Tags",
+            "exercise": {
+                "exercise": "Exercise",
+                "title": "Title",
+                "statement": "Statement"
+            },
+            "account": {
+                "roles": {
+                    "noAccount": "No account",
+                    "member": "Member",
+                    "admin": "Administrator",
+                    "owner": "Owner"
+                },
+                "statusList": {
+                    "alive": "Active",
+                    "suspended": "Suspended",
+                    "pendingRegistration": "Pending registration"
+                },
+                "username": "Username",
+                "password": "Password",
+                "key": "Key",
+                "role": "Role",
+                "status": "Status"
+            },
+            "yes": "Yes",
+            "no": "No"
         }
     },
 
-    "exercise": {
+    "application": {
+        "name": "Studious Hexa Memory",
+        "description": "Exercice practice application"
+    },
+
+    "nav": {
+        "links": {
+            "practice": "Practice",
+            "manageExercises": "Manage exercises",
+            "manageUsers": "Manage accounts",
+            "more": {
+                "more": "More",
+                "about": "About",
+                "legal": "Legal"
+            }
+        },
+        "buttons": {
+            "connect": {
+                "notConnected": "Sign in",
+                "connected": "Hello %% !"
+            },
+            "languageModal": {
+                "title": "Change language"
+            }
+        }
+    },
+
+    "practice": {
         "start": {
             "startPractice": {
                 "letsPractice": "Let's practice",
                 "numberOfExercises": "Number of exercises",
                 "numberOfExercisesHint": "Put 0 or leave blank to take as many exercises as possible.<br />\nThe practice session will stop manually or once there are no more exercises to do.",
-                "tags": "Tags",
                 "exerciseTagMode": {
                     "label": "Exercises must include",
                     "intersection": "All the tags selected",
@@ -48,17 +101,19 @@
         },
 
         "exercise": {
-            "exercise": "Exercise",
-            "passed": "I passed the exercise",
-            "notPassed": "I did not passed the exercise",
+            "title": "Exercise %%",
+            "evaluation": {
+                "passed": "I passed the exercise",
+                "notPassed": "I did not passed the exercise"
+            },
             "revealAnswer": "Reveal the answer",
-            "exerciseNo": "Exercise n°",
-            "tagsUsed": "used",
-            "stopSession": "Stop the practice session"
+            "exerciseNo": "Exercise n°%%/%%",
+            "practiceTags": "Practice session tags",
+            "stopPractice": "Stop the practice session"
         },
 
         "end": {
-            "finished": "End of training !",
+            "title": "End of training !",
             "cause": {
                 "manual": "You stopped the session",
                 "max": "Exercise goal achieved",
@@ -72,97 +127,60 @@
             "summary": {
                 "title": "Summary",
                 "table": {
-                    "number": "N°",
-                    "title": "Title",
-                    "tags": "Tags",
+                    "hoverToSeeID": "Hover the exercise number to reveal its ID",
                     "passed": "Passed"
-                },
-                "yes": "Yes",
-                "no": "No"
+                }
             },
-            "end": "Quit"
+            "finish": "Quit"
         }
     },
 
     "account": {
         "login": {
-            "hello": "Hello",
+            "hello": "Hello&nbsp;\uD83D\uDC4B",
             "login": "Login",
-            "register": "Register",
-            "fields": {
-                "username": "Username",
-                "password": "Password",
-                "passwordConfirm": "Confirm password",
-                "registerKey": "Register key"
-            },
-            "submit": "Submit"
+            "register": "Register"
         },
+
         "list": {
-            "accountsActive": "Active accounts",
-            "unusedKeys": "Unused keys",
-            "adminAccounts": "Admin+ accounts",
+            "stats": {
+                "accountsActive": "Active accounts",
+                "unusedKeys": "Unused keys",
+                "adminAccounts": "Admin+ accounts"
+            },
             "createKey": "Create a key",
-            "rolePermissions": {
+            "searchAccounts": "Search accounts",
+            "roleDescriptions": {
                 "title": "Role permissions",
-                "noAccount": "No account",
                 "noAccountDescription" : "Can practice exercises.",
-                "member": "Member",
                 "memberDescription": "Can practice exercises, with saved results and the recommendation system.",
-                "admin": "Administrator",
                 "adminDescription": "Can manage exercises (create, edit, delete, import and export).",
-                "owner": "Owner",
                 "ownerDescription": "Can manage users (create, edit role/status and delete)."
             },
-            "searchAccounts": "Search accounts",
-            "table": {
-                "username": "Username",
-                "key": "Key",
-                "role": "Role",
-                "status": "Status",
-                "actions": "Actions",
-                "alive": "Alive",
-                "suspended": "Suspended",
-                "pending_registration": "Pending registration",
-                "edit": "Edit",
-                "delete": "Delete"
-            },
             "createAccount": {
-                "title": "Create a key",
-                "create": "Create",
-                "keyCreated": "Register key created successfully"
+                "title": "Create a key"
             },
             "deleteAccount": {
                 "title": "Delete account",
-                "description": "Are you sure you want to delete the account",
-                "delete": "Delete"
+                "description": "Are you sure you want to delete the account<br /><code>%%</code> : \"%%\" ?"
             },
             "editAccount": {
                 "title": "Edit account",
-                "description": "Editing account",
+                "description": "Editing account <code>%%</code> : \"%%\"",
                 "newRole": "New role",
-                "newStatus": "New status",
-                "edit": "Edit"
+                "newStatus": "New status"
             }
         },
         "profile": {
             "myAccount" : "My account",
             "myInformations" : "My informations",
-            "username" : "Username",
-            "password" : "Password",
-            "key" : "Key",
-            "role" : "Role",
-            "member" : "Member",
-            "admin" : "Administrator",
-            "owner" : "Owner",
-            "actions" : "Actions",
             "disconnect" : "Disconnect",
+            "willDisconnect" : "You will be disconnected to make this action take effect.",
+            "currentPassword" : "Password required to confirm this action",
             "changeUsername" : {
                 "title" : "Change my username",
                 "newUsername" : "New username"
             },
-            "currentPassword" : "Password required to confirm this action",
-            "edit" : "Edit",
-            "willDisconnect" : "You will be disconnected to make this action take effect.",
             "changePassword" : {
                 "title" : "Change my password",
                 "oldPassword" : "Old password",
@@ -170,24 +188,31 @@
                 "confirmNewPassword" : "Confirm new password"
             },
             "deleteAccount" : {
-                "title" : "Delete my account",
-                "description" : "By clicking on \"Submit\", your account will be deleted permanently.<br />\n                    Your data, your permissions and your register will be lost.",
-                "submit" : "Submit"
+                "title": "Delete my account",
+                "description": "By clicking on \"Submit\", your account will be deleted permanently.<br />\n                    Your data, your permissions and your register will be lost."
             }
         }
     },
 
     "error": {
-        "generic": "<b>Oops</b>, an error has occured."
+        "oops": "<b>Oops</b>, an error has occured."
     },
 
     "about": {
-        "paragraph": "<b>Studious Hexa Memory</b> is a web application whose purpose is to help practicing exercises.\n            <br /><br />\n            The goal is not to respond to exercises from the site in the form of a MCQ, but rather to make the statement proposed by the exercise within a given time.<br />\nOnce this time has elapsed or after completing the exercise, you will be able to see its correction and validate or not your result.\n            <br /><br />\n            The features of Studious Hexa Memory are developed by <a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a> and overseen <a href=\"https://www.youtube.com/channel/UCtgWzEBDJy_Jj7J7v2Y39UA\" target=\"_blank\">Baptiste BRUGEROLLE</a>.\n            <br /><br />\n            Source code available <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> under the GNU GPL v3 license."
+        "description": "<b>Studious Hexa Memory</b> est un site d’entraînement et de révision sur des exercices proposés par ses utilisateurs.\n<br /><br />\n            Le but n’est pas de répondre aux exercices depuis le site sous la forme d’un QCM, mais plutôt de faire l’énoncé proposé par l’exercice dans un temps imparti.<br />\nUne fois ce temps écoulé ou après avoir fini l’exercice, vous pourrez consulter sa correction et valider ou non votre résultat.\n            <br /><br />\n            Les fonctionnalités de Studious Hexa Memory sont développées par <a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a> et supervisées par <a href=\"https://www.youtube.com/channel/UCtgWzEBDJy_Jj7J7v2Y39UA\" target=\"_blank\">Baptiste BRUGEROLLE</a>.\n            <br /><br />\n            Code source disponible sur <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> sous licence GNU GPL v3."
     },
 
     "legal": {
-        "editor": "Editor :",
-        "host": "Host",
-        "hostedBy": "The website « ythepaut.com » is hosted by the OVHcloud company."
+        "editor": {
+            "description": "Editor of the « Studious Hexa Memory » web applcation :"
+        },
+        "webmaster": {
+            "description": "Webmaster of the « ythepaut.com » websites :",
+            "value": "<a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a>"
+        },
+        "host": {
+            "description": "Host :",
+            "value": "The websites on « ythepaut.com » are hosted by the <a href=\"https://www.ovh.com/\" target=\"_blank\">OVHcloud</a> company.<br />OVH<br />2 rue Kellermann<br />59100 Roubaix<br />FRANCE"
+        }
     }
 }

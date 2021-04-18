@@ -1,37 +1,90 @@
 {
     "config": {
+        "lang": "fr",
         "iso": "FR",
         "language": "Français"
     },
 
-    "meta": {
-        "lang": "fr",
-        "description": "Application de révisions"
-    },
-
-    "header": {
-        "practice": "S'entraîner",
-        "manageExercises": "Gérer les exercices",
-        "manageUsers": "Gérer les comptes",
-        "more": "Plus",
-        "about": "A propos",
-        "legal": "Mentions légales",
-        "hello": "Bonjour",
-        "connect": "Se connecter",
-        "lang": "FR",
-        "modalChangeLanguage": {
-            "changeLangTitle": "Changer la langue",
-            "choose": "Changer"
+    "generic": {
+        "actions": {
+            "submit": "Valider",
+            "edit": "Modifier",
+            "delete": "Supprimer",
+            "create": "Créer"
+        },
+        "fields": {
+            "username": "Nom d'utilisateur",
+            "password": "Mot de passe",
+            "passwordConfirmation": "Mot de passe (confirmation)",
+            "registerKey": "Clé d'enregistrement"
+        },
+        "table": {
+            "number": "N°",
+            "actions": "Actions"
+        },
+        "other": {
+            "tags": "Tags",
+            "exercise": {
+                "exercise": "Exercice",
+                "title": "Titre",
+                "statement": "Énoncé"
+            },
+            "account": {
+                "roles": {
+                    "noAccount": "Sans compte",
+                    "member": "Membre",
+                    "admin": "Administrateur",
+                    "owner": "Propriétaire"
+                },
+                "statusList": {
+                    "alive": "Actif",
+                    "suspended": "Suspendu",
+                    "pendingRegistration": "Enregistrement"
+                },
+                "username": "Nom d'utilisateur",
+                "password": "Mot de passe",
+                "key": "Clé",
+                "role": "Rôle",
+                "status": "Statut"
+            },
+            "yes": "Oui",
+            "no": "Non"
         }
     },
 
-    "exercise": {
+    "application": {
+        "name": "Studious Hexa Memory",
+        "description": "Application de révisions"
+    },
+
+    "nav": {
+        "links": {
+            "practice": "S'entraîner",
+            "manageExercises": "Gérer les exercices",
+            "manageUsers": "Gérer les comptes",
+            "more": {
+                "more": "Plus",
+                "about": "A propos",
+                "legal": "Mentions légales"
+            }
+        },
+        "buttons": {
+            "connect": {
+                "notConnected": "Se connecter",
+                "connected": "Bonjour %% !"
+            },
+            "languageModal": {
+                "title": "Changer la langue"
+            }
+        }
+    },
+
+    "practice": {
         "start": {
             "startPractice": {
                 "letsPractice": "Commencer des exercices",
                 "numberOfExercises": "Nombre d'exercices",
                 "numberOfExercisesHint": "Saisir 0 ou laisser vide pour ne pas limiter le nombre d'exercices.<br />\nL'entraînement se finira lorsque vous l’arrêterez manuellement, ou alors quand il n'y aura plus d'exercice.",
-                "tags": "Tags",
                 "exerciseTagMode": {
                     "label": "Les exercices de mon entraînement doivent inclure",
                     "intersection": "Tous les tags sélectionnés ci-dessus",
@@ -48,17 +101,19 @@
         },
 
         "exercise": {
-            "exercise": "Exercice",
-            "passed": "J'ai réussi l'exercice",
-            "notPassed": "Je n'ai pas réussi l'exercice",
+            "title": "Exercice %%",
+            "evaluation": {
+                "passed": "J'ai réussi l'exercice",
+                "notPassed": "Je n'ai pas réussi l'exercice"
+            },
             "revealAnswer": "Voir la réponse",
-            "exerciseNo": "Exercice n°",
-            "tagsUsed": "de l'entraînement",
-            "stopSession": "Arrêter mon entraînement"
+            "exerciseNo": "Exercice n°%%/%%",
+            "practiceTags": "Tags de l'entraînement",
+            "stopPractice": "Arrêter mon entraînement"
         },
 
         "end": {
-            "finished": "Fin de l'entraînement !",
+            "title": "Fin de l'entraînement !",
             "cause": {
                 "manual": "Vous avez arrêté les exercices",
                 "max": "Objectif d'exercices atteint",
@@ -72,97 +127,60 @@
             "summary": {
                 "title": "Résumé",
                 "table": {
-                    "number": "N°",
-                    "title": "Titre",
-                    "tags": "Tags",
+                    "hoverToSeeID": "Passer la souris sur les numéros pour voir les ID n'exercice",
                     "passed": "Réussi"
-                },
-                "yes": "Oui",
-                "no": "Non"
+                }
             },
-            "end": "Terminer"
+            "finish": "Terminer"
         }
     },
 
     "account": {
         "login": {
-            "hello": "Bonjour",
+            "hello": "Bonjour&nbsp;\uD83D\uDC4B",
             "login": "Connexion",
-            "register": "Enregistrement",
-            "fields": {
-                "username": "Nom d'utilisateur",
-                "password": "Mot de passe",
-                "passwordConfirm": "Mot de passe (confirmation)",
-                "registerKey": "Clé d'enregistrement"
-            },
-            "submit": "Valider"
+            "register": "Enregistrement"
         },
+
         "list": {
-            "accountsActive": "Comptes actifs",
-            "unusedKeys": "Clés non utilisées",
-            "adminAccounts": "Comptes Admin+",
+            "stats": {
+                "accountsActive": "Comptes actifs",
+                "unusedKeys": "Clés non utilisées",
+                "adminAccounts": "Comptes Admin+"
+            },
             "createKey": "Créer une clé",
-            "rolePermissions": {
+            "searchAccounts": "Rechercher parmis les comptes",
+            "roleDescriptions": {
                 "title": "Permissions des rôles",
-                "noAccount": "Sans compte",
                 "noAccountDescription" : "Permet de s'entraîner uniquement.",
-                "member": "Membre",
                 "memberDescription": "Permet de s'entraîner, avec sauvegarde des resultats et des exercices pertinants pour de futures sessions.",
-                "admin": "Administrateur",
                 "adminDescription": "Permet de gérer les exercices (création, edition, suppression, import et export).",
-                "owner": "Propriétaire",
                 "ownerDescription": "Permet de gérer les utilisateurs (création, edition du rôle/statut et supression)."
             },
-            "searchAccounts": "Rechercher parmis les comptes",
-            "table": {
-                "username": "Nom d'utilisateur",
-                "key": "Clé",
-                "role": "Rôle",
-                "status": "Statut",
-                "actions": "Actions",
-                "alive": "Actif",
-                "suspended": "Suspendu",
-                "pending_registration": "Enregistrement",
-                "edit": "Modifier",
-                "delete": "Supprimer"
-            },
             "createAccount": {
-                "title": "Créer une clé",
-                "create": "Créer",
-                "keyCreated": "Clé d'enregistrement créée avec succès"
+                "title": "Créer une clé"
             },
             "deleteAccount": {
                 "title": "Supprimer le compte",
-                "description": "Êtes-vous sûr de vouloir supprimer le compte",
-                "delete": "Supprimer"
+                "description": "Êtes-vous sûr de vouloir supprimer le compte<br /><code>%%</code> : \"%%\" ?"
             },
             "editAccount": {
                 "title": "Modifier le compte",
-                "description": "Modification du compte",
+                "description": "Modification du compte <code>%%</code> : \"%%\"",
                 "newRole": "Nouveau rôle",
-                "newStatus": "Nouveau statut",
-                "edit": "Modifier"
+                "newStatus": "Nouveau statut"
             }
         },
         "profile": {
             "myAccount" : "Mon compte",
             "myInformations" : "Mes informations",
-            "username" : "Nom d'utilisateur",
-            "password" : "Mot de passe",
-            "key" : "Clé",
-            "role" : "Rôle",
-            "member" : "Membre",
-            "admin" : "Administrateur",
-            "owner" : "Propriétaire",
-            "actions" : "Actions",
             "disconnect" : "Me déconnecter",
+            "willDisconnect" : "Pour que cette modification prenne effet, vous serez déconnecté.",
+            "currentPassword" : "Mot de passe requis pour confirmer votre action",
             "changeUsername" : {
                 "title" : "Changer de nom d'utilisateur",
                 "newUsername" : "Nouveau nom d'utilisateur"
             },
-            "currentPassword" : "Mot de passe requis pour confirmer votre action",
-            "edit" : "Modifier",
-            "willDisconnect" : "Pour que cette modification prenne effet, vous serez déconnecté.",
             "changePassword" : {
                 "title" : "Changer de mot de passe",
                 "oldPassword" : "Ancien mot de passe",
@@ -171,23 +189,30 @@
             },
             "deleteAccount" : {
                 "title" : "Supprimer mon compte",
-                "description" : "En cliquant sur \"Valider\", votre compte sera supprimé immédiatement.<br />Vos données, votre rôle ainsi que la clé d'enregistrement associée a ce compte seront perdus.",
-                "submit" : "Valider"
+                "description" : "En cliquant sur \"Valider\", votre compte sera supprimé immédiatement.<br />Vos données, votre rôle ainsi que la clé d'enregistrement associée a ce compte seront perdus."
             }
         }
     },
 
     "error": {
-        "generic": "<b>Oups</b>, une erreur est survenue."
+        "oops": "<b>Oups</b>, une erreur est survenue."
     },
 
     "about": {
-        "paragraph": "<b>Studious Hexa Memory</b> est un site d’entraînement et de révision sur des exercices proposés par ses utilisateurs.\n<br /><br />\n            Le but n’est pas de répondre aux exercices depuis le site sous la forme d’un QCM, mais plutôt de faire l’énoncé proposé par l’exercice dans un temps imparti.<br />\nUne fois ce temps écoulé ou après avoir fini l’exercice, vous pourrez consulter sa correction et valider ou non votre résultat.\n            <br /><br />\n            Les fonctionnalités de Studious Hexa Memory sont développées par <a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a> et supervisées par <a href=\"https://www.youtube.com/channel/UCtgWzEBDJy_Jj7J7v2Y39UA\" target=\"_blank\">Baptiste BRUGEROLLE</a>.\n            <br /><br />\n            Code source disponible sur <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> sous licence GNU GPL v3."
+        "description": "<b>Studious Hexa Memory</b> est un site d’entraînement et de révision sur des exercices proposés par ses utilisateurs.\n<br /><br />\n            Le but n’est pas de répondre aux exercices depuis le site sous la forme d’un QCM, mais plutôt de faire l’énoncé proposé par l’exercice dans un temps imparti.<br />\nUne fois ce temps écoulé ou après avoir fini l’exercice, vous pourrez consulter sa correction et valider ou non votre résultat.\n            <br /><br />\n            Les fonctionnalités de Studious Hexa Memory sont développées par <a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a> et supervisées par <a href=\"https://www.youtube.com/channel/UCtgWzEBDJy_Jj7J7v2Y39UA\" target=\"_blank\">Baptiste BRUGEROLLE</a>.\n            <br /><br />\n            Code source disponible sur <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> sous licence GNU GPL v3."
     },
 
     "legal": {
-        "editor": "Editeur du site internet « ythepaut.com » :",
-        "host": "Hebergeur",
-        "hostedBy": "Le site « ythepaut.com » est hébergé par la société OVHcloud."
+        "editor": {
+            "description": "Editeur de l'application « Studious Hexa Memory » :"
+        },
+        "webmaster": {
+            "description": "Webmaster des sites Internet du domaine « ythepaut.com » :",
+            "value": "<a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a>"
+        },
+        "host": {
+            "description": "Hébergeur :",
+            "value": "Les sites sur le domaine « ythepaut.com » sont hébergés par la société <a href=\"https://www.ovh.com/\" target=\"_blank\">OVHcloud</a>.<br />OVH<br />2 rue Kellermann<br />59100 Roubaix"
+        }
     }
 }

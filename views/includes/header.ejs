@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="<%= lang.meta.lang %>>">
+<html lang="<%= getString(lang.config.lang) %>>">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="icon" href="/assets/img/favicon.ico" />
-    <title>Studious Hexa Memory</title>
+    <title><%= getString(lang.application.name) %></title>
 
     <!-- SEO -->
-    <meta name="description" content="<%= lang.meta.description %>" />
+    <meta name="description" content="<%= getString(lang.application.description) %>" />
     <meta name="author" content="Yohann THEPAUT <contact@ythepaut.com> (ythepaut)" />
 
     <!-- Style -->
@@ -48,33 +48,33 @@
         <div class="navbar-menu" id="navMenu">
             <div class="navbar-start">
                 <a class="navbar-item" href="/">
-                    <%= lang.header.practice %>
+                    <%= getString(lang.nav.links.practice) %>
                 </a>
 
 
                 <% if (typeof user !== "undefined" && (user.role === "ADMIN" || user.role === "OWNER")) { %>
                     <a class="navbar-item" href="/exercise/list">
-                        <%= lang.header.manageExercises %>
+                        <%= getString(lang.nav.links.manageExercises) %>
                     </a>
                 <% } %>
 
                 <% if (typeof user !== "undefined" && user.role === "OWNER") { %>
                     <a class="navbar-item" href="/account/list">
-                        <%= lang.header.manageUsers %>
+                        <%= getString(lang.nav.links.manageUsers) %>
                     </a>
                 <% } %>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        <%= lang.header.more %>
+                        <%= getString(lang.nav.links.more.more) %>
                     </a>
 
                     <div class="navbar-dropdown">
                         <a class="navbar-item" href="/about">
-                            <%= lang.header.about %>
+                            <%= getString(lang.nav.links.more.about) %>
                         </a>
                         <a class="navbar-item" href="/legal">
-                            <%= lang.header.legal %>
+                            <%= getString(lang.nav.links.more.legal) %>
                         </a>
                     </div>
                 </div>
@@ -85,16 +85,16 @@
                     <div class="buttons">
                         <a class="button is-primary is-light" href="/account/me">
                             <% if (typeof user !== "undefined") { %>
-                                <%= lang.header.hello %> <%= user.username %> !
+                                <%= getString(lang.nav.buttons.connect.connected, user.username) %>
                             <% } else { %>
                                     <span class="icon is-small">
                                         <i class="fas fa-sign-in-alt"></i>
                                     </span>
-                                    <span><%= lang.header.connect %></span>
+                                    <span><%= getString(lang.nav.buttons.connect.notConnected) %></span>
                             <% } %>
                         </a>
                         <button class="button is-light" data-toggle="modal" data-target="modalChangeLanguage">
-                            <b><i class="fas fa-globe"></i>&nbsp;&nbsp;<%= lang.header.lang %></b>
+                            <b><i class="fas fa-globe"></i>&nbsp;&nbsp;<%= getString(lang.config.iso) %></b>
                         </button>
                         <a class="button is-light" href="https://github.com/ythepaut/studious-hexa-memory" target="_blank">
                             <i class="fab fa-github"></i>
@@ -118,7 +118,7 @@
                 <div class="box has-text-centered">
                     <form method="POST" action="/lang" class="ajax">
                         <input type="hidden" name="_csrf" value="<%= csrf() %>">
-                        <h1 class="title"><%= lang.header.modalChangeLanguage.changeLangTitle %></h1>
+                        <h1 class="title"><%= getString(lang.nav.buttons.languageModal.title) %></h1>
                         <div class="select">
                             <select name="lang">
                                 <% for (const supported of supportedLangs) { %>
@@ -127,7 +127,7 @@
                             </select>
                         </div>
                         <br />
-                        <button type="submit" class="button is-primary mt-2"><%= lang.header.modalChangeLanguage.choose %></button>
+                        <button type="submit" class="button is-primary mt-2"><%= getString(lang.generic.actions.submit) %></button>
                     </form>
                 </div>
             </div>

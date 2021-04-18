@@ -3,19 +3,19 @@
 <nav class="level">
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading"><%= lang.account.list.accountsActive %></p>
+            <p class="heading"><%= getString(lang.account.list.stats.accountsActive) %></p>
             <p class="title"><%= users.filter(tuser => tuser.status === "ALIVE").length %></p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading"><%= lang.account.list.unusedKeys %></p>
+            <p class="heading"><%= getString(lang.account.list.stats.unusedKeys) %></p>
             <p class="title"><%= users.filter(tuser => tuser.status === "PENDING_REGISTRATION").length %></p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading"><%= lang.account.list.adminAccounts %></p>
+            <p class="heading"><%= getString(lang.account.list.stats.adminAccounts) %></p>
             <p class="title"><%= users.filter(tuser => ["ADMIN", "OWNER"].includes(tuser.role)).length %></p>
         </div>
     </div>
@@ -26,25 +26,25 @@
 <div class="columns">
     <div class="column is-3">
         <div class="buttons is-justify-content-center">
-            <button class="button is-primary" data-toggle="modal" data-target="modalCreateAccount"><%= lang.account.list.createKey %></button>
+            <button class="button is-primary" data-toggle="modal" data-target="modalCreateAccount"><%= getString(lang.account.list.createKey) %></button>
         </div>
 
         <div class="notification is-light is-light">
             <div class="has-text-centered is-fullwidth mb-3">
-                <h2 class="subtitle"><%= lang.account.list.rolePermissions.title %></h2>
+                <h2 class="subtitle"><%= getString(lang.account.list.roleDescriptions.title) %></h2>
             </div>
             <p>
-                <b><%= lang.account.list.rolePermissions.noAccount %></b> : <%= lang.account.list.rolePermissions.noAccountDescription %><br /><br />
-                <b><%= lang.account.list.rolePermissions.member %></b> : <%= lang.account.list.rolePermissions.memberDescription %><br /><br />
-                <b><%= lang.account.list.rolePermissions.admin %></b> : <%= lang.account.list.rolePermissions.adminDescription %><br /><br />
-                <b><%= lang.account.list.rolePermissions.owner %></b> : <%= lang.account.list.rolePermissions.ownerDescription %><br /><br />
+                <b><%= getString(lang.generic.other.account.roles.noAccount) %></b> : <%= getString(lang.account.list.roleDescriptions.noAccountDescription) %><br /><br />
+                <b><%= getString(lang.generic.other.account.roles.member) %></b> : <%= getString(lang.account.list.roleDescriptions.memberDescription) %><br /><br />
+                <b><%= getString(lang.generic.other.account.roles.admin) %></b> : <%= getString(lang.account.list.roleDescriptions.adminDescription) %><br /><br />
+                <b><%= getString(lang.generic.other.account.roles.owner) %></b> : <%= getString(lang.account.list.roleDescriptions.ownerDescription) %><br /><br />
             </p>
         </div>
     </div>
     <div class="column">
         <div class="field">
             <p class="control has-icons-left">
-                <input class="input search-input" data-target="exerciseTable" type="text" placeholder="<%= lang.account.list.searchAccounts %>" />
+                <input class="input search-input" data-target="exerciseTable" type="text" placeholder="<%= getString(lang.account.list.searchAccounts) %>" />
                 <span class="icon is-small is-left">
                     <i class="fas fa-search"></i>
                 </span>
@@ -55,11 +55,11 @@
             <table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
                 <thead>
                 <tr>
-                    <th><%= lang.account.list.table.username %></th>
-                    <th style="width: 30%;"><%= lang.account.list.table.key %></th>
-                    <th style="width: 15%;"><%= lang.account.list.table.role %></th>
-                    <th style="width: 15%;"><%= lang.account.list.table.status %></th>
-                    <th style="width: 5%; text-align: right;"><%= lang.account.list.table.actions %></th>
+                    <th><%= getString(lang.generic.other.account.username) %></th>
+                    <th style="width: 30%;"><%= getString(lang.generic.other.account.key) %></th>
+                    <th style="width: 15%;"><%= getString(lang.generic.other.account.role) %></th>
+                    <th style="width: 15%;"><%= getString(lang.generic.other.account.status) %></th>
+                    <th style="width: 5%; text-align: right;"><%= getString(lang.generic.table.actions) %></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,28 +77,28 @@
                         </td>
                         <td>
                             <% if (tuser.role === "MEMBER") { %>
-                                <span class="tag is-info"><%= lang.account.list.rolePermissions.member %></span>
+                                <span class="tag is-info"><%= getString(lang.generic.other.account.roles.member) %></span>
                             <% } else if (tuser.role === "ADMIN") { %>
-                                <span class="tag is-warning"><%= lang.account.list.rolePermissions.admin %></span>
+                                <span class="tag is-warning"><%= getString(lang.generic.other.account.roles.admin) %></span>
                             <% } else if (tuser.role === "OWNER") { %>
-                                <span class="tag is-danger"><%= lang.account.list.rolePermissions.owner %></span>
+                                <span class="tag is-danger"><%= getString(lang.generic.other.account.roles.owner) %></span>
                             <% } %>
                         </td>
                         <td>
                             <% if (tuser.status === "ALIVE") { %>
-                                <span class="tag is-success"><%= lang.account.list.table.alive %></span>
+                                <span class="tag is-success"><%= getString(lang.generic.other.account.statusList.alive) %></span>
                             <% } else if (tuser.status === "SUSPENDED") { %>
-                                <span class="tag is-danger"><%= lang.account.list.table.suspended %></span>
+                                <span class="tag is-danger"><%= getString(lang.generic.other.account.statusList.suspended) %></span>
                             <% } else if (tuser.status === "PENDING_REGISTRATION") { %>
-                                <span class="tag is-primary"><%= lang.account.list.table.pending_registration %></span>
+                                <span class="tag is-primary"><%= getString(lang.generic.other.account.statusList.pendingRegistration) %></span>
                             <% } %>
                         </td>
                         <td style="text-align: right;">
                             <div class="field has-addons">
-                                <button type="button" class="button is-small is-primary is-light" data-toggle="modal" data-target="modalEdit<%= tuser.id %>" title="<%= lang.account.list.table.edit %>">
+                                <button type="button" class="button is-small is-primary is-light" data-toggle="modal" data-target="modalEdit<%= tuser.id %>" title="<%= getString(lang.generic.actions.edit) %>">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= tuser.id %>" title="<%= lang.account.list.table.delete %>">
+                                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= tuser.id %>" title="<%= getString(lang.generic.actions.delete) %>">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
@@ -115,27 +115,21 @@
     <div class="modal-background" data-target="modalCreateAccount"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <h1 class="title"><%= lang.account.list.createAccount.title %></h1>
+            <h1 class="title"><%= getString(lang.account.list.createAccount.title) %></h1>
             <form method="POST" action="/account/new" class="ajax">
                 <input type="hidden" name="_csrf" value="<%= csrf() %>">
                 <div class="select">
                     <select name="role">
-                        <option value="MEMBER"><%= lang.account.list.rolePermissions.member %></option>
-                        <option value="ADMIN"><%= lang.account.list.rolePermissions.admin %></option>
+                        <option value="MEMBER"><%= getString(lang.generic.other.account.roles.member) %></option>
+                        <option value="ADMIN"><%= getString(lang.generic.other.account.roles.admin) %></option>
                     </select>
                 </div>
-                <button type="submit" class="button is-primary"><%= lang.account.list.createAccount.create %></button>
+                <button type="submit" class="button is-primary"><%= getString(lang.generic.actions.create) %></button>
             </form>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close" data-target="modalCreateAccount"></button>
 </div>
-
-<% if (typeof newKey !== "undefined") { %>
-    <div class="notification is-primary is-light">
-        <span><%= lang.account.list.createAccount.keyCreated %> : <b class="is-family-code ml-2"><%= newKey %></b></span>
-    </div>
-<% } %>
 
 <!-- Modals -->
 <% for (const tuser of users) { %>
@@ -143,12 +137,12 @@
         <div class="modal-background" data-target="modalDelete<%= tuser.id %>"></div>
         <div class="modal-content">
             <div class="box has-text-centered">
-                <h1 class="title"><%= lang.account.list.deleteAccount.title %></h1>
-                <p class="is-family-primary"><%= lang.account.list.deleteAccount.description %><br /><code><%= tuser.key %></code> : "<%= tuser.username %>" ?</p>
+                <h1 class="title"><%= getString(lang.account.list.deleteAccount.title) %></h1>
+                <p class="is-family-primary"><%- getString(lang.account.list.deleteAccount.description, tuser.key, tuser.username) %></p>
                 <form method="POST" action="/account/delete" class="ajax">
                     <input type="hidden" name="_csrf" value="<%= csrf() %>">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
-                    <button type="submit" class="button is-danger mt-2"><%= lang.account.list.deleteAccount.delete %></button>
+                    <button type="submit" class="button is-danger mt-2"><%= getString(lang.generic.actions.delete) %></button>
                 </form>
             </div>
         </div>
@@ -159,29 +153,29 @@
         <div class="modal-background" data-target="modalEdit<%= tuser.id %>"></div>
         <div class="modal-content">
             <div class="box has-text-centered">
-                <h1 class="title"><%= lang.account.list.editAccount.title %></h1>
-                <p class="is-family-primary mb-3"><%= lang.account.list.editAccount.description %> : <code><%= tuser.key %></code> : "<%= tuser.username %>"</p>
+                <h1 class="title"><%= getString(lang.account.list.editAccount.title) %></h1>
+                <p class="is-family-primary mb-3"><%- getString(lang.account.list.editAccount.description, tuser.key, tuser.username) %></p>
                 <form method="POST" action="/account/adminedit" class="ajax">
                     <input type="hidden" name="_csrf" value="<%= csrf() %>">
                     <input type="hidden" name="id" value="<%= tuser.id %>" />
                     <div class="select">
                         <select name="role">
-                            <option value="void" selected disabled>-- <%= lang.account.list.editAccount.newRole %> --</option>
-                            <option value="MEMBER"><%= lang.account.list.rolePermissions.member %></option>
-                            <option value="ADMIN"><%= lang.account.list.rolePermissions.admin %></option>
+                            <option value="void" selected disabled>-- <%= getString(lang.account.list.editAccount.newRole) %> --</option>
+                            <option value="MEMBER"><%= getString(lang.generic.other.account.roles.member) %></option>
+                            <option value="ADMIN"><%= getString(lang.generic.other.account.roles.admin) %></option>
                         </select>
                     </div>
                     <br />
                     <div class="select">
                         <select name="status">
-                            <option value="void" selected disabled>-- <%= lang.account.list.editAccount.newStatus %> --</option>
-                            <option value="ALIVE"><%= lang.account.list.table.alive %></option>
-                            <option value="SUSPENDED"><%= lang.account.list.table.suspended %></option>
+                            <option value="void" selected disabled>-- <%= getString(lang.account.list.editAccount.newStatus) %> --</option>
+                            <option value="ALIVE"><%= getString(lang.generic.other.account.statusList.alive) %></option>
+                            <option value="SUSPENDED"><%= getString(lang.generic.other.account.statusList.suspended) %></option>
                         </select>
                     </div>
                     <br />
                     <br />
-                    <button type="submit" class="button is-primary mt-2"><%= lang.account.list.editAccount.edit %></button>
+                    <button type="submit" class="button is-primary mt-2"><%= getString(lang.generic.actions.edit) %></button>
                 </form>
             </div>
         </div>
