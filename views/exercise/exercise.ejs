@@ -1,7 +1,7 @@
 <%- include('../includes/header') %>
 
 <div class="box">
-    <h1 class="title has-text-centered"><%= lang.exercise.exercise.exercise %> <%= practice.exercisesDone.length + 1 %></h1>
+    <h1 class="title has-text-centered"><%= getString(lang.practice.exercise.title, practice.exercisesDone.length + 1) %></h1>
     <h2 class="subtitle has-text-centered" id="divTitle"><%= practice.currentExercise.title %></h2>
 
 
@@ -12,24 +12,24 @@
 
 
     <div class="buttons level-right is-hidden mt-6" id="divNextButtons">
-        <button class="button is-danger" id="btnExerciseFail"><%= lang.exercise.exercise.notPassed %></button>
-        <button class="button is-success" id="btnExerciseSuccess"><%= lang.exercise.exercise.passed %></button>
+        <button class="button is-danger" id="btnExerciseFail"><%= getString(lang.practice.exercise.evaluation.notPassed) %></button>
+        <button class="button is-success" id="btnExerciseSuccess"><%= getString(lang.practice.exercise.evaluation.passed) %></button>
     </div>
 
     <div class="mt-6 has-text-centered" id="divTimer">
         <progress class="progress is-primary" value="<%= practice.currentExercise.time*100 %>" max="<%= practice.currentExercise.time*100 %>" id="progressTimer"></progress>
         <span class="tag is-large" id="labelTimer"><%= practice.currentExercise.time %></span>
-        <button class="button is-warning" id="btnSeeResponse"><%= lang.exercise.exercise.revealAnswer %></button>
+        <button class="button is-warning" id="btnSeeResponse"><%= getString(lang.practice.exercise.revealAnswer) %></button>
     </div>
 
     <hr />
 
     <div class="mt-3 has-text-centered">
         <span>
-            <%= lang.exercise.exercise.exerciseNo %><%= practice.exercisesDone.length + 1 %>/<% if (practice.exerciseMax === 0) {%><i class="fas fa-infinity"></i><%} else {%><%= practice.exerciseMax %><%} %><br />
+            <%- getString(lang.practice.exercise.exerciseNo, practice.exercisesDone.length + 1, (practice.exerciseMax === 0) ? "<i class=\"fas fa-infinity\"></i>" : practice.exerciseMax) %><br />
             ID <span class="is-family-code"><%= practice.currentExercise.id %></span><br />
             <% if (practice.exerciseTags.length > 0) { %>
-            Tag<% if (practice.exerciseTags.length > 1) { %>s<% } %> <%= lang.exercise.exercise.tagsUsed %> :
+            <%= getString(lang.practice.exercise.practiceTags) %> :
             <% for (const tag of practice.exerciseTags) { %>
                 <span class="tag is-primary is-small"><%= tag.toUpperCase() %></span>
             <% }} %>
@@ -38,7 +38,7 @@
 
         <form method="POST" action="/">
             <input type="hidden" name="_csrf" value="<%= csrf() %>">
-            <input class="button is-danger is-small mt-3" type="submit" name="end" value="<%= lang.exercise.exercise.stopSession %>" />
+            <input class="button is-danger is-small mt-3" type="submit" name="end" value="<%= getString(lang.practice.exercise.stopPractice) %>" />
         </form>
     </div>
 </div>

@@ -5,7 +5,7 @@
         <div class="column is-4 is-offset-2">
 
             <div class="box">
-                <h1 class="title"><%= lang.account.login.hello %>&nbsp;👋</h1>
+                <h1 class="title"><%- getString(lang.account.login.hello) %></h1>
 
 
                 <div class="tabs is-fullwidth">
@@ -13,13 +13,13 @@
                         <li class="is-active">
                             <a id="loginForm">
                                 <span class="icon"><i class="fas fa-sign-in-alt"></i></span>
-                                <span><%= lang.account.login.login %></span>
+                                <span><%= getString(lang.account.login.login) %></span>
                             </a>
                         </li>
                         <li>
                             <a id="registerForm">
                                 <span class="icon"><i class="fas fa-user-plus"></i></span>
-                                <span><%= lang.account.login.register %></span>
+                                <span><%= getString(lang.account.login.register) %></span>
                             </a>
                         </li>
                     </ul>
@@ -32,7 +32,7 @@
                         <input type="hidden" name="next" value="/" id="inputnext" />
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" autocomplete="username" name="username" placeholder="<%= lang.account.login.fields.username %>" minlength="3" maxlength="16" required />
+                                <input class="input" type="text" autocomplete="username" name="username" placeholder="<%= getString(lang.generic.fields.username) %>" minlength="3" maxlength="16" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -40,13 +40,13 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" autocomplete="current-password" name="passwd" placeholder="<%= lang.account.login.fields.password %>" minlength="8" required />
+                                <input class="input" type="password" autocomplete="current-password" name="passwd" placeholder="<%= getString(lang.generic.fields.password) %>" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
                             </p>
                         </div>
-                        <button type="submit" class="button is-fullwidth is-info"><%= lang.account.login.submit %></button>
+                        <button type="submit" class="button is-fullwidth is-info"><%= getString(lang.generic.actions.submit) %></button>
                     </form>
 
 
@@ -55,7 +55,7 @@
                         <input type="hidden" name="_csrf" value="<%= csrf() %>">
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" name="key" placeholder="<%= lang.account.login.fields.registerKey %>" value="<%= key !== null ? key : "" %>" minlength="8" required />
+                                <input class="input" type="text" name="key" placeholder="<%= getString(lang.generic.fields.registerKey) %>" value="<%= key !== null ? key : "" %>" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-key"></i>
                             </span>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="text" autocomplete="username" name="username" placeholder="<%= lang.account.login.fields.username %>" minlength="3" maxlength="16" required />
+                                <input class="input" type="text" autocomplete="username" name="username" placeholder="<%= getString(lang.generic.fields.username) %>" minlength="3" maxlength="16" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-user"></i>
                             </span>
@@ -71,7 +71,7 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" autocomplete="new-password" name="passwd" placeholder="<%= lang.account.login.fields.password %>" minlength="8" required />
+                                <input class="input" type="password" autocomplete="new-password" name="passwd" placeholder="<%= getString(lang.generic.fields.password) %>" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -79,13 +79,13 @@
                         </div>
                         <div class="field">
                             <p class="control has-icons-left">
-                                <input class="input" type="password" autocomplete="new-password" name="passwd2" placeholder="<%= lang.account.login.fields.passwordConfirm %>" minlength="8" required />
+                                <input class="input" type="password" autocomplete="new-password" name="passwd2" placeholder="<%= getString(lang.generic.fields.passwordConfirmation) %>" minlength="8" required />
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
                             </p>
                         </div>
-                        <button type="submit" class="button is-fullwidth is-info"><%= lang.account.login.submit %></button>
+                        <button type="submit" class="button is-fullwidth is-info"><%= getString(lang.generic.actions.submit) %></button>
                     </form>
                 </div>
 

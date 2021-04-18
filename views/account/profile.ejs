@@ -2,49 +2,49 @@
 
 <div class="container">
 
-    <h1 class="title"><%= lang.account.profile.myAccount %></h1>
+    <h1 class="title"><%= getString(lang.account.profile.myAccount) %></h1>
 
     <table class="table is-fullwidth">
         <thead>
         <tr>
-            <th style="width: 40%;"><%= lang.account.profile.myInformations %></th>
+            <th style="width: 40%;"><%= getString(lang.account.profile.myInformations) %></th>
             <th style="width: auto;"></th>
             <th style="width: 10%;"></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td><%= lang.account.profile.username %></td>
+            <td><%= getString(lang.generic.other.account.username) %></td>
             <td><%= user.username %></td>
             <td>
-                <button type="button" class="button is-small is-link is-light" data-toggle="modal" data-target="modalChangeUsername" title="Modifier">
+                <button type="button" class="button is-small is-link is-light" data-toggle="modal" data-target="modalChangeUsername" title="<%= getString(lang.generic.actions.edit) %>">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
             </td>
         </tr>
         <tr>
-            <td><%= lang.account.profile.password %></td>
+            <td><%= getString(lang.generic.other.account.password) %></td>
             <td>**************</td>
             <td>
-                <button type="button" class="button is-small is-link is-light" data-toggle="modal" data-target="modalChangePassword" title="Modifier">
+                <button type="button" class="button is-small is-link is-light" data-toggle="modal" data-target="modalChangePassword" title="<%= getString(lang.generic.actions.edit) %>">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
             </td>
         </tr>
         <tr>
-            <td><%= lang.account.profile.key %></td>
+            <td><%= getString(lang.generic.other.account.key) %></td>
             <td><code><%= user.key %></code></td>
             <td></td>
         </tr>
         <tr>
-            <td><%= lang.account.profile.role %></td>
+            <td><%= getString(lang.generic.other.account.role) %></td>
             <td>
                 <% if (user.role === "MEMBER") { %>
-                    <span class="tag is-info"><%= lang.account.profile.member %></span>
+                    <span class="tag is-info"><%= getString(lang.generic.other.account.roles.member) %></span>
                 <% } else if (user.role === "ADMIN") { %>
-                    <span class="tag is-warning"><%= lang.account.profile.admin %></span>
+                    <span class="tag is-warning"><%= getString(lang.generic.other.account.roles.admin) %></span>
                 <% } else if (user.role === "OWNER") { %>
-                    <span class="tag is-danger"><%= lang.account.profile.owner %></span>
+                    <span class="tag is-danger"><%= getString(lang.generic.other.account.roles.owner) %></span>
                 <% } %>
             </td>
             <td></td>
@@ -54,26 +54,26 @@
     <table class="table is-fullwidth">
         <thead>
         <tr>
-            <th style="width: 40%;"><%= lang.account.profile.actions %></th>
+            <th style="width: 40%;"><%= getString(lang.generic.table.actions) %></th>
             <th style="width: auto;"></th>
             <th style="width: 10%;"></th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td><%= lang.account.profile.disconnect %></td>
+            <td><%= getString(lang.account.profile.disconnect) %></td>
             <td></td>
             <td>
-                <a href="/account/logout" class="button is-small is-danger is-light" title="<%= lang.account.profile.disconnect %>">
+                <a href="/account/logout" class="button is-small is-danger is-light" title="<%= getString(lang.account.profile.disconnect) %>">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </td>
         </tr>
         <tr>
-            <td><%= lang.account.profile.deleteAccount.title %></td>
+            <td><%= getString(lang.account.profile.deleteAccount.title) %></td>
             <td></td>
             <td>
-                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDeleteAccount" title="<%= lang.account.profile.deleteAccount.title %>">
+                <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDeleteAccount" title="<%= getString(lang.account.profile.deleteAccount.title) %>">
                     <i class="fas fa-times-circle"></i>
                 </button>
             </td>
@@ -87,13 +87,13 @@
     <div class="modal-background" data-target="modalChangeUsername"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <h1 class="title"><%= lang.account.profile.changeUsername.title %></h1>
+            <h1 class="title"><%= getString(lang.account.profile.changeUsername.title) %></h1>
             <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="_csrf" value="<%= csrf() %>">
                 <input type="hidden" name="action" value="changeusername" />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="text" autocomplete="username" name="username" minlength="3" maxlength="16" placeholder="<%= lang.account.profile.changeUsername.newUsername %>" required />
+                        <input class="input" type="text" autocomplete="username" name="username" minlength="3" maxlength="16" placeholder="<%= getString(lang.account.profile.changeUsername.newUsername) %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>
@@ -101,16 +101,16 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="<%= lang.account.profile.currentPassword %>" required />
+                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="<%= getString(lang.account.profile.currentPassword) %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
                     </p>
                 </div>
-                <button type="submit" class="button is-primary mt-2"><%= lang.account.profile.edit %></button>
+                <button type="submit" class="button is-primary mt-2"><%= getString(lang.generic.actions.edit) %></button>
             </form>
             <br />
-            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;<%= lang.account.profile.willDisconnect %></span>
+            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;<%= getString(lang.account.profile.willDisconnect) %></span>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close" data-target="modalChangeUsername"></button>
@@ -120,13 +120,13 @@
     <div class="modal-background" data-target="modalChangePassword"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <h1 class="title"><%= lang.account.profile.changePassword.title %></h1>
+            <h1 class="title"><%= getString(lang.account.profile.changePassword.title) %></h1>
             <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="_csrf" value="<%= csrf() %>">
                 <input type="hidden" name="action" value="changepassword" />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="<%= lang.account.profile.changePassword.oldPassword %>" required />
+                        <input class="input" type="password" autocomplete="current-password" name="passwd" minlength="8" placeholder="<%= getString(lang.account.profile.changePassword.oldPassword) %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -134,7 +134,7 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" autocomplete="new-password" name="newpasswd" minlength="8" placeholder="<%= lang.account.profile.changePassword.newPassword %>" required />
+                        <input class="input" type="password" autocomplete="new-password" name="newpasswd" minlength="8" placeholder="<%= getString(lang.account.profile.changePassword.newPassword) %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -142,16 +142,16 @@
                 </div>
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" autocomplete="new-password" name="newpasswd2" minlength="8" placeholder="<%= lang.account.profile.changePassword.confirmNewPassword %>" required />
+                        <input class="input" type="password" autocomplete="new-password" name="newpasswd2" minlength="8" placeholder="<%= getString(lang.account.profile.changePassword.confirmNewPassword) %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
                     </p>
                 </div>
-                <button type="submit" class="button is-primary mt-2"><%= lang.account.profile.edit %></button>
+                <button type="submit" class="button is-primary mt-2"><%= getString(lang.generic.actions.edit) %></button>
             </form>
             <br />
-            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;<%= lang.account.profile.willDisconnect %></span>
+            <span><i class="fas fa-info-circle has-text-info"></i>&nbsp;&nbsp;<%= getString(lang.account.profile.willDisconnect) %></span>
         </div>
     </div>
     <button class="modal-close is-large" aria-label="close" data-target="modalChangePassword"></button>
@@ -161,23 +161,23 @@
     <div class="modal-background" data-target="modalDeleteAccount"></div>
     <div class="modal-content">
         <div class="box has-text-centered">
-            <h1 class="title"><%= lang.account.profile.deleteAccount.title %></h1>
+            <h1 class="title"><%= getString(lang.account.profile.deleteAccount.title) %></h1>
             <form method="POST" action="/account/edit" class="ajax">
                 <input type="hidden" name="_csrf" value="<%= csrf() %>">
                 <input type="hidden" name="action" value="delete" />
                 <p class="has-text-left">
-                    <%- lang.account.profile.deleteAccount.description %>
+                    <%- getString(lang.account.profile.deleteAccount.description) %>
                 </p>
                 <br />
                 <div class="field">
                     <p class="control has-icons-left">
-                        <input class="input" type="password" name="passwd" minlength="8" placeholder="<%= lang.account.profile.currentPassword %>" required />
+                        <input class="input" type="password" name="passwd" minlength="8" placeholder="<%= getString(lang.account.profile.currentPassword) %>" required />
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
                     </p>
                 </div>
-                <button type="submit" class="button is-primary mt-2"><%= lang.account.profile.deleteAccount.submit %></button>
+                <button type="submit" class="button is-primary mt-2"><%= getString(lang.generic.actions.delete) %></button>
             </form>
         </div>
     </div>

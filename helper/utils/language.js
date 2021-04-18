@@ -26,8 +26,21 @@ module.exports = class {
     getSupportedLanguages() {
         let languages = [];
         for (const lang in this._langs)
-            languages.push(this._langs[lang].config)
+            if (this._langs.hasOwnProperty(lang))
+                languages.push(this._langs[lang].config)
         return languages;
+    }
+
+
+    /**
+     * Formats a string with the given parameters
+     * @param {string}              format          String to format
+     * @param {any}                 args            Arguments to add to the format string
+     */
+    stringFormatter(format, ...args) {
+        for (let i = 0 ; i < args.length ; ++i)
+            format = format.replace(/%%/, args[i]);
+        return format;
     }
 
 

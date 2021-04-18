@@ -4,14 +4,14 @@
     <div class="column">
 
         <p class="is-size-5" style="top:30%;">
-            <b><%= lang.legal.editor %></b><br />
-            M. THEPAUT Yohann<br />
+            <b><%= getString(lang.legal.editor.description) %></b><br />
+            <a href="https://www.ythepaut.com/" target="_blank">Yohann THEPAUT</a><br />
             <br />
-            <b><%= lang.legal.host %> :</b><br />
-            <%= lang.legal.hostedBy %><br />
-            OVH<br />
-            2 rue Kellermann<br />
-            59100 Roubaix
+            <b><%= getString(lang.legal.webmaster.description) %></b><br />
+            <%- getString(lang.legal.webmaster.value) %><br />
+            <br />
+            <b><%= getString(lang.legal.host.description) %></b><br />
+            <%- getString(lang.legal.host.value) %><br />
         </p>
 
     </div>
