@@ -236,7 +236,7 @@ module.exports = class {
             });
         } else {
             callback(this.responseView(403, "error", {
-                verbose : "Permission requise pour afficher cette page.",
+                verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.accessDenied,
                 user : req.session.user
             }));
         }
@@ -254,7 +254,7 @@ module.exports = class {
             }));
         } else {
             callback(this.responseView(403, "error", {
-                verbose : "Permission requise pour afficher cette page.",
+                verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.accessDenied,
                 user : req.session.user
             }));
         }
@@ -271,13 +271,13 @@ module.exports = class {
             exercise.save(this._db, this._mongodb, false, () => {});
             callback(this.responseJSON(200, {
                 type : "success",
-                message : "Exercice créé avec succès.",
+                message : this.language.getTranslations(req.session.lang).exercise.createEdit.verbose.success.created,
                 redirect : "/exercise/list"
             }));
         } else {
             callback(this.responseJSON(403, {
                 type : "error",
-                message : "Permission requise pour effectuer cette action."
+                message : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied
             }));
         }
     }
@@ -297,14 +297,14 @@ module.exports = class {
                     }));
                 } else {
                     callback(this.responseView(404, "error", {
-                        verbose : "Exercice innexistant.",
+                        verbose : this.language.getTranslations(req.session.lang).exercise.createEdit.verbose.error.notFound,
                         user : req.session.user
                     }));
                 }
             });
         } else {
             callback(this.responseView(403, "error", {
-                verbose : "Permission requise pour afficher cette page.",
+                verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.accessDenied,
                 user : req.session.user
             }));
         }
@@ -321,13 +321,13 @@ module.exports = class {
             exercise.save(this._db, this._mongodb, false, () => {});
             callback(this.responseJSON(200, {
                 type : "success",
-                message : "Exercice modifié avec succès.",
+                message : this.language.getTranslations(req.session.lang).exercise.createEdit.verbose.success.edited,
                 redirect : "/exercise/list"
             }));
         } else {
             callback(this.responseJSON(403, {
                 type : "error",
-                message : "Permission requise pour effectuer cette action."
+                message : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied
             }));
         }
     }
@@ -342,13 +342,13 @@ module.exports = class {
             this._exercise.deleteExercise(this._db, this._mongodb, req.body.id);
             callback(this.responseJSON(200, {
                 type : "success",
-                message : "Exercice supprimé avec succès.",
+                message : this.language.getTranslations(req.session.lang).exercise.list.verbose.success.deleted,
                 redirect : "/exercise/list"
             }));
         } else {
             callback(this.responseJSON(403, {
                 type : "error",
-                message : "Permission requise pour effectuer cette action."
+                message : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied
             }));
         }
     }
@@ -369,7 +369,7 @@ module.exports = class {
             });
         } else {
             callback(this.responseView(403, "error", {
-                verbose : "Permission requise pour effectuer cette action.",
+                verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied,
                 user : req.session.user
             }));
         }
@@ -388,7 +388,7 @@ module.exports = class {
             });
         } else {
             res.status(403).render("error", {
-                verbose : "Permission requise pour effectuer cette action.",
+                verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied,
                 user : req.session.user
             });
         }
@@ -406,7 +406,7 @@ module.exports = class {
             }));
         } else {
             callback(this.responseView(403, "error", {
-                verbose : "Permission requise pour afficher cette page.",
+                verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.accessDenied,
                 user : req.session.user
             }));
         }
@@ -431,7 +431,7 @@ module.exports = class {
                         throw err;
                     } else if (!req.files[0]) {
                         callback(this.responseView(400, "error", {
-                            verbose : "Aucun fichier sélectionné."
+                            verbose : this.language.getTranslations(req.session.lang).exercise.import.verbose.error.noFileSelected
                         }));
                     } else {
                         let path = this._path.join("uploads/", req.files[0].filename);
@@ -448,13 +448,13 @@ module.exports = class {
                                 callback(this.responseRedirection("/exercise/list"));
                             } catch (ex) {
                                 callback(this.responseView(400, "error", {
-                                    verbose : "Le fichier envoyé n'est pas un fichier JSON."
+                                    verbose : this.language.getTranslations(req.session.lang).exercise.import.verbose.error.wrongFormat
                                 }));
                             }
 
                         } else {
                             callback(this.responseView(400, "error", {
-                                verbose : "Le fichier envoyé n'est pas un fichier JSON."
+                                verbose : this.language.getTranslations(req.session.lang).exercise.import.verbose.error.wrongFormat
                             }));
                         }
                         this._fs.unlinkSync(path);
@@ -464,7 +464,7 @@ module.exports = class {
             });
         } else {
             callback(this.responseView(403, "error", {
-                verbose : "Permission requise pour effectuer cette action.",
+                verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied,
                 user : req.session.user
             }));
         }
@@ -500,7 +500,7 @@ module.exports = class {
                 if (req.method === "POST") {
                     callback(this.responseJSON(401, {
                         type : "error",
-                        message : "Session invalide. Veuillez vous reconnecter."
+                        message : this.language.getTranslations(req.session.lang).generic.verbose.error.invalidSession
                     }));
                 } else {
                     callback(this.responseView(401, "account/login", {
@@ -527,28 +527,28 @@ module.exports = class {
                 if (req.session.user.status !== "SUSPENDED") {
                     next();
                 } else {
-                    req.session.destroy();
                     if (req.method === "POST") {
                         callback(this.responseJSON(401, {
                             type : "error",
-                            message : "Session invalide. Veuillez vous reconnecter."
+                            message : this.language.getTranslations(req.session.lang).generic.verbose.error.invalidSession
                         }));
                     } else {
                         callback(this.responseView(200, "error", {
-                            verbose : "Connexion impossible : Votre compte a été suspendu pour une durée indeterminée."
+                            verbose : this.language.getTranslations(req.session.lang).account.login.verbose.error.accountSuspended
                         }));
                     }
+                    req.session.destroy();
                 }
             } else {
-                req.session.destroy();
                 if (req.method === "POST") {
                     callback(this.responseJSON(401, {
                         type : "error",
-                        message : "Session invalide. Veuillez vous reconnecter."
+                        message : this.language.getTranslations(req.session.lang).generic.verbose.error.invalidSession
                     }));
                 } else {
                     callback(this.responseRedirection("/"));
                 }
+                req.session.destroy();
             }
         });
     }
@@ -564,13 +564,16 @@ module.exports = class {
                 req.session.user = this._user.toJSON(user);
                 callback(this.responseJSON(200, {
                     type : "success",
-                    message : "Bienvenue " + user.username + " !",
+                    message : this._language.stringFormatter(
+                        this.language.getTranslations(req.session.lang).account.login.verbose.success.welcome,
+                        user.username
+                    ),
                     redirect : req.body.next !== undefined ? req.body.next : "/"
                 }));
             } else {
                 callback(this.responseJSON(200, {
                     type : "error",
-                    message : "Identifiants de connexion incorrects"
+                    message : this.language.getTranslations(req.session.lang).account.login.verbose.error.invalidCredentials
                 }));
             }
         });
@@ -602,19 +605,19 @@ module.exports = class {
                         user.update(this._db, this._mongodb);
                         callback(this.responseJSON(200, {
                             type : "success",
-                            message : "Compte créé avec succès. Vous pouvez désormais vous connecter."
+                            message : this.language.getTranslations(req.session.lang).account.login.verbose.success.accountCreated
                         }));
                     } else {
                         callback(this.responseJSON(200, {
                             type : "error",
-                            message : "Ce nom d'utilisateur est déjà utilisé."
+                            message : this.language.getTranslations(req.session.lang).generic.verbose.error.usernameAlreadyUsed
                         }));
                     }
                 });
             } else {
                 callback(this.responseJSON(200, {
                     type : "error",
-                    message : "Cette clé d'enregistrement est incorrecte ou déjà utilisée."
+                    message : this.language.getTranslations(req.session.lang).account.login.verbose.error.invalidKey
                 }));
             }
         });
@@ -633,41 +636,41 @@ module.exports = class {
                         if (u === null) {
                             user.username = req.body.username;
                             user.update(this._db, this._mongodb);
-                            req.session.destroy();
                             callback(this.responseJSON(200, {
                                 type : "success",
-                                message : "Nom d'utilisateur changé avec succès. Déconnexion...",
+                                message : this.language.getTranslations(req.session.lang).account.profile.verbose.success.usernameChanged,
                                 redirect : "/account/login"
                             }));
+                            req.session.destroy();
                         } else {
                             callback(this.responseJSON(200, {
                                 type : "error",
-                                message : "Ce nom d'utilisateur est déjà utilisé."
+                                message : this.language.getTranslations(req.session.lang).generic.verbose.error.usernameAlreadyUsed
                             }));
                         }
                     });
                 } else if (req.body.action === "changepassword") {
                     user.passwd = this._bcrypt.hashSync(req.body.newpasswd,12);
                     user.update(this._db, this._mongodb);
-                    req.session.destroy();
                     callback(this.responseJSON(200, {
                         type : "success",
-                        message : "Mot de passe changé avec succès. Déconnexion...",
+                        message : this.language.getTranslations(req.session.lang).account.profile.verbose.success.passwordChanged,
                         redirect : "/account/login"
                     }));
+                    req.session.destroy();
                 } else if (req.body.action === "delete") {
                     user.delete(this._db, this._mongodb);
-                    req.session.destroy();
                     callback(this.responseJSON(200, {
                         type : "success",
-                        message : "Compte supprimé avec succès. Déconnexion...",
+                        message : this.language.getTranslations(req.session.lang).account.profile.verbose.success.accountDeleted,
                         redirect : "/account/login"
                     }));
+                    req.session.destroy();
                 }
             } else {
                 callback(this.responseJSON(200, {
                     type : "error",
-                    message : "Mot de passe incorrect."
+                    message : this.language.getTranslations(req.session.lang).account.profile.verbose.error.invalidPassword
                 }));
             }
         });
@@ -693,20 +696,20 @@ module.exports = class {
                     user.update(this._db, this._mongodb);
                     callback(this.responseJSON(200, {
                         type : "success",
-                        message : "Utilisateur modifié avec succès.",
+                        message : this.language.getTranslations(req.session.lang).account.list.verbose.success.userEdited,
                         redirect : "/account/list"
                     }));
                 } else {
                     callback(this.responseJSON(200, {
                         type : "error",
-                        message : "Impossible de modifier cet utilisateur."
+                        message : this.language.getTranslations(req.session.lang).generic.verbose.error.cantEditUser
                     }));
                 }
             });
         } else {
             callback(this.responseJSON(403, {
                 type : "error",
-                message : "Permission requise pour effectuer cette action."
+                message : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied
             }));
         }
     }
@@ -726,7 +729,7 @@ module.exports = class {
             });
         } else {
             callback(this.responseView(403, "error", {
-                verbose : "Permission requise pour afficher cette page.",
+                verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.accessDenied,
                 user : req.session.user
             }));
         }
@@ -742,13 +745,16 @@ module.exports = class {
             this._user.create(this._db, req.body.role, (key) => {
                 callback(this.responseJSON(200, {
                     type : "success",
-                    message : "Clé <code>" + key + "</code> créée avec succès."
+                    message : this._language.stringFormatter(
+                        this.language.getTranslations(req.session.lang).account.list.verbose.success.keyCreated,
+                        key
+                    )
                 }));
             });
         } else {
             callback(this.responseJSON(403, {
                 type : "error",
-                message : "Permission requise pour effectuer cette action."
+                message : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied
             }));
         }
     }
@@ -765,20 +771,20 @@ module.exports = class {
                     user.delete(this._db, this._mongodb);
                     callback(this.responseJSON(200, {
                         type : "success",
-                        message : "Compte supprimé avec succès.",
+                        message : this.language.getTranslations(req.session.lang).account.list.verbose.success.userDeleted,
                         redirect : "/account/list"
                     }));
                 } else {
                     callback(this.responseJSON(200, {
                         type : "error",
-                        message : "Impossible de modifier cet utilisateur."
+                        message : this.language.getTranslations(req.session.lang).generic.verbose.error.cantEditUser
                     }));
                 }
             });
         } else {
             callback(this.responseJSON(403, {
                 type : "error",
-                message : "Permission requise pour effectuer cette action."
+                message : this.language.getTranslations(req.session.lang).generic.verbose.error.permissionDenied
             }));
         }
     }
@@ -797,13 +803,13 @@ module.exports = class {
             req.session.lang = req.body.lang;
             callback(this.responseJSON(200, {
                 type : "success",
-                message : "Langue changée.",
+                message : this.language.getTranslations(req.session.lang).language.verbose.success.languageChanged,
                 refresh : true
             }));
         } else {
             callback(this.responseJSON(200, {
                 type : "error",
-                message : "Langue non supportée."
+                message : this.language.getTranslations(req.session.lang).language.verbose.error.notSupported
             }));
         }
     }

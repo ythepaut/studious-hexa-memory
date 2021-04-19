@@ -15,6 +15,17 @@
             "import": "Import",
             "export": "Export"
         },
+        "verbose": {
+            "error": {
+                "accessDenied": "Permission required to access this page.",
+                "permissionDenied": "Permission required to perform this action.",
+                "invalidSession": "Invalid session. Please reconnect.",
+                "usernameAlreadyUsed": "Username already used.",
+                "cantEditUser": "Cannot modify this user.",
+                "invalidForm": "Invalid form or request. Please check the fields and try again.",
+                "pageNotFound": "This page does not exist."
+            }
+        },
         "fields": {
             "username": "Username",
             "password": "Password",
@@ -75,7 +86,7 @@
         "buttons": {
             "connect": {
                 "notConnected": "Sign in",
-                "connected": "Hello %% !"
+                "connected": "Hello %%!"
             },
             "languageModal": {
                 "title": "Change language"
@@ -99,8 +110,8 @@
             "recommendations": {
                 "statsAndRecommendations": "Statistics and recommendations",
                 "soon": "Soon",
-                "soonText": "<b>Unavailable at the moment :(</b><br />Follow <b>Studious Hexa Memory</b>'s development on <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> !",
-                "loginRequired": "<b>Oops !</b> You must be logged in to access this feature."
+                "soonText": "<b>Unavailable at the moment :(</b><br />Follow <b>Studious Hexa Memory</b>'s development on <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a>!",
+                "loginRequired": "<b>Oops!</b> You must be logged in to access this feature."
             }
         },
 
@@ -117,7 +128,7 @@
         },
 
         "end": {
-            "title": "End of training !",
+            "title": "End of training!",
             "cause": {
                 "manual": "You stopped the session",
                 "max": "Exercise goal achieved",
@@ -155,6 +166,11 @@
             "deleteExercise": {
                 "title": "Delete an exercise",
                 "description": "Are you sure you want to delete the exercise <br />\"%%\" ?"
+            },
+            "verbose": {
+                "success": {
+                    "deleted": "Exercise successfully deleted."
+                }
             }
         },
 
@@ -173,6 +189,15 @@
                 "statement": "Solve on $\\mathbb{R}$ the following differential equation : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
                 "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
                 "tags": "Math, Partial Derivatives, Easy"
+            },
+            "verbose": {
+                "success": {
+                    "created": "Exercise created successfully.",
+                    "edited": "Successfully modified exercise."
+                },
+                "error": {
+                    "notFound": "This exercise does not exist."
+                }
             }
         },
 
@@ -180,7 +205,13 @@
             "title": "Import exercises",
             "description": "Only <code>.json</code> files exported from this application are supported.",
             "chooseFile": "Choose a file...",
-            "noFileChosen": "No file chosen"
+            "noFileChosen": "No file chosen",
+            "verbose": {
+                "error": {
+                    "noFileSelected": "No file were selected.",
+                    "wrongFormat": "The file sent is not in the correct format (JSON)."
+                }
+            }
         }
     },
 
@@ -188,7 +219,18 @@
         "login": {
             "hello": "Hello&nbsp;\uD83D\uDC4B",
             "login": "Login",
-            "register": "Register"
+            "register": "Register",
+            "verbose": {
+                "error": {
+                    "accountSuspended": "Unable to connect : Your account has been suspended indefinitely.",
+                    "invalidCredentials": "Incorrect login credentials",
+                    "invalidKey": "This registration key is incorrect or has already been used."
+                },
+                "success": {
+                    "welcome": "Welcome %%!",
+                    "accountCreated": "Account successfully created. You may now log in."
+                }
+            }
         },
 
         "list": {
@@ -218,8 +260,16 @@
                 "description": "Editing account <code>%%</code> : \"%%\"",
                 "newRole": "New role",
                 "newStatus": "New status"
+            },
+            "verbose": {
+                "success": {
+                    "userEdited": "Successfully modified user.",
+                    "userDeleted": "Account successfully deleted.",
+                    "keyCreated": "The registration key <code>%%</code> has been created."
+                }
             }
         },
+
         "profile": {
             "myAccount" : "My account",
             "myInformations" : "My informations",
@@ -239,6 +289,27 @@
             "deleteAccount" : {
                 "title": "Delete my account",
                 "description": "By clicking on \"Submit\", your account will be deleted permanently.<br />\n                    Your data, your permissions and your register will be lost."
+            },
+            "verbose": {
+                "success": {
+                    "usernameChanged": "Username changed successfully. Logging out...",
+                    "passwordChanged": "Password successfully changed. Logging out...",
+                    "accountDeleted": "Account successfully deleted. Logging out..."
+                },
+                "error": {
+                    "invalidPassword": "Incorrect password."
+                }
+            }
+        }
+    },
+
+    "language": {
+        "verbose": {
+            "success": {
+                "languageChanged": "Language changed."
+            },
+            "error": {
+                "notSupported": "Language not supported."
             }
         }
     },

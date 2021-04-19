@@ -231,13 +231,13 @@ module.exports = class {
                 if (req.method === "POST") {
                     this._sendResponse(req, res, this._logic.responseJSON(
                         400,
-                        {type: "error", message: "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez."}
+                        {type: "error", message: this._logic.language.getTranslations(req.session.lang).generic.verbose.error.invalidForm}
                     ));
                 } else {
                     this._sendResponse(req, res, this._logic.responseView(
                         400,
                         "error",
-                        {verbose : "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez.", user : req.session.user}
+                        {verbose : this._logic.language.getTranslations(req.session.lang).generic.verbose.error.invalidForm, user : req.session.user}
                     ));
                 }
                 console.error(err.error.toString());
@@ -252,13 +252,13 @@ module.exports = class {
                 if (req.method === "POST") {
                     this._sendResponse(req, res, this._logic.responseJSON(
                         403,
-                        {type: "error", message: "Session invalide."}
+                        {type: "error", message: this._logic.language.getTranslations(req.session.lang).generic.verbose.error.invalidSession}
                     ));
                 } else {
                     this._sendResponse(req, res, this._logic.responseView(
                         403,
                         "error",
-                        {verbose : "Session invalide.", user : req.session.user}
+                        {verbose : this._logic.language.getTranslations(req.session.lang).generic.verbose.error.invalidSession, user : req.session.user}
                     ));
                 }
             } else {
@@ -271,7 +271,7 @@ module.exports = class {
             this._sendResponse(req, res, this._logic.responseView(
                 404,
                 "error",
-                {verbose : "Cette page n'éxiste pas.", user : req.session.user}
+                {verbose : this._logic.language.getTranslations(req.session.lang).generic.verbose.error.pageNotFound, user : req.session.user}
             ));
         });
 

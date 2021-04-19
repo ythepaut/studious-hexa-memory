@@ -15,6 +15,17 @@
             "import": "Importar",
             "export": "Exportar"
         },
+        "verbose": {
+            "error": {
+                "accessDenied": "Se requiere permiso para ver esta página.",
+                "permissionDenied": "Se requiere permiso para realizar esta acción.",
+                "invalidSession": "Sesión inválida. Por favor inicie sesión.",
+                "usernameAlreadyUsed": "El nombre de usuario ya esta siendo usado.",
+                "cantEditUser": "No se puede editar este usuario.",
+                "invalidForm": "Solicitud o formulario no válido. Por favor revise los campos y vuelva a intentarlo.",
+                "pageNotFound": "Esta página no existe."
+            }
+        },
         "fields": {
             "username": "Nombre del usuario",
             "password": "Contraseña",
@@ -155,6 +166,11 @@
             "deleteExercise": {
                 "title": "Eliminar ejercicio",
                 "description": "¿Está seguro de que quiere borrar el ejercicio<br />\"%%\"?"
+            },
+            "verbose": {
+                "success": {
+                    "deleted": "Ejercicio eliminado."
+                }
             }
         },
 
@@ -173,6 +189,15 @@
                 "statement": "Resuelva la siguiente ecuación diferencial : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
                 "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
                 "tags": "Matemáticas, Derivadas parciales, Fácil"
+            },
+            "verbose": {
+                "success": {
+                    "created": "Ejercicio creado.",
+                    "edited": "Ejercicio modificado."
+                },
+                "error": {
+                    "notFound": "Ejercicio inexistente."
+                }
             }
         },
 
@@ -180,7 +205,13 @@
             "title": "Importar ejercicios",
             "description": "Solo se admiten archivos <code>.json</code> exportados desde esta aplicación.",
             "chooseFile": "Escoge un archivo...",
-            "noFileChosen": "Ningún archivo elegido"
+            "noFileChosen": "Ningún archivo elegido",
+            "verbose": {
+                "error": {
+                    "noFileSelected": "No se ha seleccionado ningún archivo.",
+                    "wrongFormat": "El archivo enviado no tiene el formato correcto (JSON)."
+                }
+            }
         }
     },
 
@@ -188,7 +219,18 @@
         "login": {
             "hello": "Buenos dias&nbsp;\uD83D\uDC4B",
             "login": "Iniciar sesión",
-            "register": "Grabación"
+            "register": "Grabación",
+            "verbose": {
+                "error": {
+                    "accountSuspended": "No se puede iniciar sesión: su cuenta ha sido suspendida indefinidamente.",
+                    "invalidCredentials": "Credenciales de inicio de sesión incorrectas",
+                    "invalidKey": "Esta clave es incorrecta o ya está en uso."
+                },
+                "success": {
+                    "welcome": "Bienvenidos %% !",
+                    "accountCreated": "Cuenta creada. Ahora puede iniciar sesión."
+                }
+            }
         },
 
         "list": {
@@ -218,8 +260,16 @@
                 "description": "Modificación de la cuenta <code>%%</code> : \"%%\"",
                 "newRole": "Nuevo rol",
                 "newStatus": "Nuevo estado"
+            },
+            "verbose": {
+                "success": {
+                    "userEdited": "Usuario modificado.",
+                    "userDeleted": "Cuenta borrada.",
+                    "keyCreated": "Clave <code>%%</code> creada."
+                }
             }
         },
+
         "profile": {
             "myAccount" : "Mi cuenta",
             "myInformations" : "Mis informaciones",
@@ -239,6 +289,27 @@
             "deleteAccount" : {
                 "title" : "Borrar mi cuenta",
                 "description" : "Al hacer clic en \"Validar\", su cuenta se eliminará inmediatamente.<br />Se perderán sus datos, su función y la clave de registro asociada a esta cuenta."
+            },
+            "verbose": {
+                "success": {
+                    "usernameChanged": "Nombre de usuario cambiado. Desconectando...",
+                    "passwordChanged": "Contraseña cambiada. Desconectando...",
+                    "accountDeleted": "Cuenta borrada. Desconectando..."
+                },
+                "error": {
+                    "invalidPassword": "Contraseña incorrecta."
+                }
+            }
+        }
+    },
+
+    "language": {
+        "verbose": {
+            "success": {
+                "languageChanged": "Idioma cambiado."
+            },
+            "error": {
+                "notSupported": "Idioma no admitido."
             }
         }
     },

@@ -15,6 +15,17 @@
             "import": "Importer",
             "export": "Exporter"
         },
+        "verbose": {
+            "error": {
+                "accessDenied": "Permission requise pour afficher cette page.",
+                "permissionDenied": "Permission requise pour effectuer cette action.",
+                "invalidSession": "Session invalide. Veuillez vous reconnecter.",
+                "usernameAlreadyUsed": "Ce nom d'utilisateur est déjà utilisé.",
+                "cantEditUser": "Impossible de modifier cet utilisateur.",
+                "invalidForm": "Requête ou formulaire invalide. Veuillez vérifier les champs et réessayez.",
+                "pageNotFound": "Cette page n'éxiste pas."
+            }
+        },
         "fields": {
             "username": "Nom d'utilisateur",
             "password": "Mot de passe",
@@ -155,6 +166,11 @@
             "deleteExercise": {
                 "title": "Supprimer l'exercice",
                 "description": "Êtes-vous sûr de vouloir supprimer l'exercice<br />\"%%\" ?"
+            },
+            "verbose": {
+                "success": {
+                    "deleted": "Exercice supprimé avec succès."
+                }
             }
         },
 
@@ -173,6 +189,15 @@
                 "statement": "Résoudre sur $\\mathbb{R}$ l'équation différentielle suivante : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
                 "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
                 "tags": "Maths, Derivées Partielles, Facile"
+            },
+            "verbose": {
+                "success": {
+                    "created": "Exercice créé avec succès.",
+                    "edited": "Exercice modifié avec succès."
+                },
+                "error": {
+                    "notFound": "Exercice inexistant."
+                }
             }
         },
 
@@ -180,7 +205,13 @@
             "title": "Importer des exercices",
             "description": "Seuls les fichiers au format <code>.json</code> exportés depuis le site sont supportés.",
             "chooseFile": "Choisir un fichier...",
-            "noFileChosen": "Aucun fichier choisi"
+            "noFileChosen": "Aucun fichier choisi",
+            "verbose": {
+                "error": {
+                    "noFileSelected": "Aucun fichier n'a été sélectionné.",
+                    "wrongFormat": "Le fichier envoyé n'est pas au bon format (JSON)."
+                }
+            }
         }
     },
 
@@ -188,7 +219,18 @@
         "login": {
             "hello": "Bonjour&nbsp;\uD83D\uDC4B",
             "login": "Connexion",
-            "register": "Enregistrement"
+            "register": "Enregistrement",
+            "verbose": {
+                "error": {
+                    "accountSuspended": "Connexion impossible : Votre compte a été suspendu pour une durée indeterminée.",
+                    "invalidCredentials": "Identifiants de connexion incorrects",
+                    "invalidKey": "Cette clé d'enregistrement est incorrecte ou déjà utilisée."
+                },
+                "success": {
+                    "welcome": "Bienvenue %% !",
+                    "accountCreated": "Compte créé avec succès. Vous pouvez désormais vous connecter."
+                }
+            }
         },
 
         "list": {
@@ -218,8 +260,16 @@
                 "description": "Modification du compte <code>%%</code> : \"%%\"",
                 "newRole": "Nouveau rôle",
                 "newStatus": "Nouveau statut"
+            },
+            "verbose": {
+                "success": {
+                    "userEdited": "Utilisateur modifié avec succès.",
+                    "userDeleted": "Compte supprimé avec succès.",
+                    "keyCreated": "Clé <code>%%</code> créée avec succès."
+                }
             }
         },
+
         "profile": {
             "myAccount" : "Mon compte",
             "myInformations" : "Mes informations",
@@ -239,6 +289,27 @@
             "deleteAccount" : {
                 "title" : "Supprimer mon compte",
                 "description" : "En cliquant sur \"Valider\", votre compte sera supprimé immédiatement.<br />Vos données, votre rôle ainsi que la clé d'enregistrement associée a ce compte seront perdus."
+            },
+            "verbose": {
+                "success": {
+                    "usernameChanged": "Nom d'utilisateur changé avec succès. Déconnexion...",
+                    "passwordChanged": "Mot de passe changé avec succès. Déconnexion...",
+                    "accountDeleted": "Compte supprimé avec succès. Déconnexion..."
+                },
+                "error": {
+                    "invalidPassword": "Mot de passe incorrect."
+                }
+            }
+        }
+    },
+
+    "language": {
+        "verbose": {
+            "success": {
+                "languageChanged": "Langue changée."
+            },
+            "error": {
+                "notSupported": "Langue non supportée."
             }
         }
     },

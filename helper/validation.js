@@ -22,7 +22,7 @@ module.exports = {
         statement : Joi.string().max(16384).required(),
         response : Joi.string().max(16384).required(),
         time : Joi.number().min(1).max(14400).required(),
-        tags : Joi.string().pattern(new RegExp("^[0-9a-zA-Z-_,]{0,128}$")).allow(""),
+        tags : Joi.string().pattern(new RegExp("^[0-9a-zA-Z-_, ]{0,128}$")).allow(""),
         _csrf : Joi.string().required()
     }),
     // Form edit exercise
@@ -32,7 +32,7 @@ module.exports = {
         statement : Joi.string().max(16384).required(),
         response : Joi.string().max(16384).required(),
         time : Joi.number().min(1).max(14400).required(),
-        tags : Joi.string().pattern(new RegExp("^[0-9a-zA-Z-_,]{0,128}$")).allow(""),
+        tags : Joi.string().pattern(new RegExp("^[0-9a-zA-Z-_, ]{0,128}$")).allow(""),
         _csrf : Joi.string().required()
     }),
     // Form create account (key)
