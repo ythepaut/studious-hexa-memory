@@ -12,8 +12,8 @@
 
 
     <div class="buttons level-right is-hidden mt-6" id="divNextButtons">
-        <button class="button is-danger" id="btnExerciseFail"><%= getString(lang.practice.exercise.evaluation.notPassed) %></button>
-        <button class="button is-success" id="btnExerciseSuccess"><%= getString(lang.practice.exercise.evaluation.passed) %></button>
+        <button class="button is-danger" id="btnExerciseFail" data-csrf="<%= csrf() %>"><%= getString(lang.practice.exercise.evaluation.notPassed) %></button>
+        <button class="button is-success" id="btnExerciseSuccess" data-csrf="<%= csrf() %>"><%= getString(lang.practice.exercise.evaluation.passed) %></button>
     </div>
 
     <div class="mt-6 has-text-centered" id="divTimer">

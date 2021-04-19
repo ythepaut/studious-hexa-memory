@@ -27,18 +27,18 @@ btnSeeResponse.addEventListener("click", () => {
 });
 
 // handle next exercise button
-const nextExercise = (success) => {
-    postRequest("/", "success=" + success, () => location.reload());
+const nextExercise = (success, csrf) => {
+    postRequest("/", "success=" + success + "&_csrf=" + csrf, () => location.reload());
 }
 btnExerciseFail.addEventListener("click", () => {
     btnExerciseFail.classList.add("is-loading");
     btnExerciseSuccess.classList.add("is-loading");
-    nextExercise(false);
+    nextExercise(false, btnExerciseFail.getAttribute("data-csrf"));
 });
 btnExerciseSuccess.addEventListener("click", () => {
     btnExerciseFail.classList.add("is-loading");
     btnExerciseSuccess.classList.add("is-loading");
-    nextExercise(true);
+    nextExercise(true, btnExerciseFail.getAttribute("data-csrf"));
 });
 
 // handle timer and progress bar when document loaded
