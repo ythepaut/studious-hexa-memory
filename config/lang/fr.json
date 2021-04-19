@@ -28,7 +28,8 @@
             "exercise": {
                 "exercise": "Exercice",
                 "title": "Titre",
-                "statement": "Énoncé"
+                "statement": "Énoncé",
+                "response": "Réponse"
             },
             "account": {
                 "roles": {
@@ -146,7 +147,7 @@
                 "passRate": "Pourcentage de réussite"
             },
             "actions": {
-                "createExercise": "Ajouter un exercice",
+                "createExercise": "Créer un exercice",
                 "import": "Importer",
                 "export": "Exporter",
                 "searchExercises": "Rechercher parmis les exercices"
@@ -154,6 +155,23 @@
             "deleteExercise": {
                 "title": "Supprimer l'exercice",
                 "description": "Êtes-vous sûr de vouloir supprimer l'exercice<br />\"%%\" ?"
+            }
+        },
+
+        "create": {
+            "title": "Créer un exerice",
+            "fields": {
+                "previewTitle": "Prévisualisation du titre",
+                "previewStatement": "Prévisualisation de l'énoncé",
+                "previewResponse": "Prévisualisation de la réponse",
+                "timeLimit": "Temps imparti (en secondes)",
+                "tags": "Tags (séparé par des virgules)"
+            },
+            "placeholders": {
+                "title": "Résolution d'une équation différentielle linéaire du deuxieme ordre",
+                "statement": "Résoudre sur $\\mathbb{R}$ l'équation différentielle suivante : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
+                "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
+                "tags": "Maths, Derivées Partielles, Facile"
             }
         }
     },

@@ -28,7 +28,8 @@
             "exercise": {
                 "exercise": "Exercise",
                 "title": "Title",
-                "statement": "Statement"
+                "statement": "Statement",
+                "response": "Response"
             },
             "account": {
                 "roles": {
@@ -154,6 +155,23 @@
             "deleteExercise": {
                 "title": "Delete an exercise",
                 "description": "Are you sure you want to delete the exercise <br />\"%%\" ?"
+            }
+        },
+
+        "create": {
+            "title": "Create an exercise",
+            "fields": {
+                "previewTitle": "Title preview",
+                "previewStatement": "Statement preview",
+                "previewResponse": "Response preview",
+                "timeLimit": "Time limit (in seconds)",
+                "tags": "Tags (separated by commas)"
+            },
+            "placeholders": {
+                "title": "Solving a second order linear differential equation",
+                "statement": "Solve on $\\mathbb{R}$ the following differential equation : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
+                "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
+                "tags": "Math, Partial Derivatives, Easy"
             }
         }
     },

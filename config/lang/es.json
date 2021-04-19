@@ -28,7 +28,8 @@
             "exercise": {
                 "exercise": "Ejercicio",
                 "title": "Título",
-                "statement": "Declaración"
+                "statement": "Declaración",
+                "response": "Respuesta"
             },
             "account": {
                 "roles": {
@@ -154,6 +155,23 @@
             "deleteExercise": {
                 "title": "Eliminar ejercicio",
                 "description": "¿Está seguro de que quiere borrar el ejercicio<br />\"%%\"?"
+            }
+        },
+
+        "create": {
+            "title": "Agregar un ejercicio",
+            "fields": {
+                "previewTitle": "Vista previa del título",
+                "previewStatement": "Vista previa de la declaración",
+                "previewResponse": "Vista previa de respuesta",
+                "timeLimit": "Límite de tiempo (en segundos)",
+                "tags": "Categorías (separado por comas)"
+            },
+            "placeholders": {
+                "title": "Resolver una ecuación diferencial lineal de segundo orden",
+                "statement": "Resuelva la siguiente ecuación diferencial : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
+                "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
+                "tags": "Matemáticas, Derivadas parciales, Fácil"
             }
         }
     },
