@@ -158,8 +158,9 @@
             }
         },
 
-        "create": {
-            "title": "Create an exercise",
+        "createEdit": {
+            "createTitle": "Create an exercise",
+            "editTitle": "Edit an exercise",
             "fields": {
                 "previewTitle": "Title preview",
                 "previewStatement": "Statement preview",

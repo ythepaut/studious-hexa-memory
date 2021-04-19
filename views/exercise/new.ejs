@@ -1,7 +1,7 @@
 <%- include('../includes/header') %>
 
 <h1 class="title">
-    <%= getString(lang.exercise.create.title) %>
+    <%= getString(lang.exercise.createEdit.createTitle) %>
 </h1>
 
 <form method="POST" action="/exercise/new" class="ajax">
@@ -16,14 +16,14 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" id="txtTitle" name="title" placeholder="<%= getString(lang.exercise.create.placeholders.title) %>" maxlength="256" required />
+                    <input class="input" type="text" id="txtTitle" name="title" placeholder="<%= getString(lang.exercise.createEdit.placeholders.title) %>" maxlength="256" required />
                 </p>
             </div>
         </div>
     </div>
 
     <!-- Title Preview -->
-    <label class="label"><%= getString(lang.exercise.create.fields.previewTitle) %></label>
+    <label class="label"><%= getString(lang.exercise.createEdit.fields.previewTitle) %></label>
     <div class="box">
         <p style="white-space: pre;" id="pTitle">
 
@@ -40,14 +40,14 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" id="txtStatement" name="statement" placeholder="<%= getString(lang.exercise.create.placeholders.statement) %>" maxlength="16384" required></textarea>
+                    <textarea class="textarea" id="txtStatement" name="statement" placeholder="<%= getString(lang.exercise.createEdit.placeholders.statement) %>" maxlength="16384" required></textarea>
                 </p>
             </div>
         </div>
     </div>
 
     <!-- Statement Preview -->
-    <label class="label"><%= getString(lang.exercise.create.fields.previewStatement) %></label>
+    <label class="label"><%= getString(lang.exercise.createEdit.fields.previewStatement) %></label>
     <div class="box">
         <p id="pStatement">
 
@@ -64,14 +64,14 @@
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <textarea class="textarea" id="txtResponse" name="response" placeholder="<%= getString(lang.exercise.create.placeholders.response) %>" maxlength="16384" required></textarea>
+                    <textarea class="textarea" id="txtResponse" name="response" placeholder="<%= getString(lang.exercise.createEdit.placeholders.response) %>" maxlength="16384" required></textarea>
                 </p>
             </div>
         </div>
     </div>
 
     <!-- Repsonse Preview -->
-    <label class="label"><%= getString(lang.exercise.create.fields.previewResponse) %></label>
+    <label class="label"><%= getString(lang.exercise.createEdit.fields.previewResponse) %></label>
     <div class="box">
         <p id="pResponse">
 
@@ -83,7 +83,7 @@
     <!-- Timer -->
     <div class="field">
         <div class="is-normal">
-            <label class="label"><%= getString(lang.exercise.create.fields.timeLimit) %></label>
+            <label class="label"><%= getString(lang.exercise.createEdit.fields.timeLimit) %></label>
         </div>
         <div class="field-body mt-1">
             <div class="field">
@@ -99,12 +99,12 @@
     <!-- Tags -->
     <div class="field">
         <div class="is-normal">
-            <label class="label"><%= getString(lang.exercise.create.fields.tags) %></label>
+            <label class="label"><%= getString(lang.exercise.createEdit.fields.tags) %></label>
         </div>
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" name="tags" placeholder="<%= getString(lang.exercise.create.placeholders.tags) %>" />
+                    <input class="input" type="text" name="tags" placeholder="<%= getString(lang.exercise.createEdit.placeholders.tags) %>" />
                 </p>
             </div>
         </div>

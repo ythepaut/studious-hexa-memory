@@ -158,8 +158,9 @@
             }
         },
 
-        "create": {
-            "title": "Agregar un ejercicio",
+        "createEdit": {
+            "createTitle": "Agregar un ejercicio",
+            "editTitle": "Editar un ejercicio",
             "fields": {
                 "previewTitle": "Vista previa del título",
                 "previewStatement": "Vista previa de la declaración",

@@ -158,8 +158,9 @@
             }
         },
 
-        "create": {
-            "title": "Créer un exerice",
+        "createEdit": {
+            "createTitle": "Créer un exerice",
+            "editTitle": "Modification d'exercice",
             "fields": {
                 "previewTitle": "Prévisualisation du titre",
                 "previewStatement": "Prévisualisation de l'énoncé",
