@@ -10,7 +10,10 @@
             "submit": "Enviar",
             "edit": "Editar",
             "delete": "Borrar",
-            "create": "Crear"
+            "create": "Crear",
+            "clone": "Duplicar",
+            "import": "Importar",
+            "export": "Exportar"
         },
         "fields": {
             "username": "Nombre del usuario",
@@ -27,7 +30,8 @@
             "exercise": {
                 "exercise": "Ejercicio",
                 "title": "Título",
-                "statement": "Declaración"
+                "statement": "Declaración",
+                "response": "Respuesta"
             },
             "account": {
                 "roles": {
@@ -132,6 +136,51 @@
                 }
             },
             "finish": "Terminar"
+        }
+    },
+
+    "exercise": {
+        "list": {
+            "stats": {
+                "exerciseCount": "Numero de ejercicios",
+                "cumulativeExerciseTime": "Tiempo de ejercicio acumulado",
+                "cumulativeExerciseTimeValue":  "%%h %%m %%s",
+                "exercisesDone": "Ejercicios realizados",
+                "passRate": "Porcentaje de acierto"
+            },
+            "actions": {
+                "createExercise": "Agregar un ejercicio",
+                "searchExercises": "Encuentra un ejercicio"
+            },
+            "deleteExercise": {
+                "title": "Eliminar ejercicio",
+                "description": "¿Está seguro de que quiere borrar el ejercicio<br />\"%%\"?"
+            }
+        },
+
+        "createEdit": {
+            "createTitle": "Agregar un ejercicio",
+            "editTitle": "Editar un ejercicio",
+            "fields": {
+                "previewTitle": "Vista previa del título",
+                "previewStatement": "Vista previa de la declaración",
+                "previewResponse": "Vista previa de respuesta",
+                "timeLimit": "Límite de tiempo (en segundos)",
+                "tags": "Categorías (separado por comas)"
+            },
+            "placeholders": {
+                "title": "Resolver una ecuación diferencial lineal de segundo orden",
+                "statement": "Resuelva la siguiente ecuación diferencial : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
+                "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
+                "tags": "Matemáticas, Derivadas parciales, Fácil"
+            }
+        },
+
+        "import": {
+            "title": "Importar ejercicios",
+            "description": "Solo se admiten archivos <code>.json</code> exportados desde esta aplicación.",
+            "chooseFile": "Escoge un archivo...",
+            "noFileChosen": "Ningún archivo elegido"
         }
     },
 

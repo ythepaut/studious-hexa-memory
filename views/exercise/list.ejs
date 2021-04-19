@@ -4,13 +4,13 @@
 <nav class="level">
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">Nombre d'exercices</p>
+            <p class="heading"><%= getString(lang.exercise.list.stats.exerciseCount) %></p>
             <p class="title"><%= exercises.length %></p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">Temps cumulé des exercices</p>
+            <p class="heading"><%= getString(lang.exercise.list.stats.cumulativeExerciseTime) %></p>
             <p class="title">
                 <%
                     var s = 0;
@@ -22,19 +22,19 @@
                     var m = Math.floor(s / 60);
                     s -= m * 60;
                 %>
-                <%= h %>h <%= m %>m <%= s %>s
+                <%= getString(lang.exercise.list.stats.cumulativeExerciseTimeValue, h, m, s) %>
             </p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">Exercices effectués</p>
+            <p class="heading"><%= getString(lang.exercise.list.stats.exercisesDone) %></p>
             <p class="title"><%= exerciseDone %></p>
         </div>
     </div>
     <div class="level-item has-text-centered">
         <div>
-            <p class="heading">Pourcentage de réussite</p>
+            <p class="heading"><%= getString(lang.exercise.list.stats.passRate) %></p>
             <p class="title"><%= successRate %>%</p>
         </div>
     </div>
@@ -45,15 +45,15 @@
 <div class="columns">
     <div class="column">
         <div class="buttons is-justify-content-center">
-            <a class="button is-primary" href="/exercise/new">Ajouter un exercice</a>
-            <a class="button is-light" href="/exercise/import">Importer</a>
-            <a class="button is-light" href="/exercise/export" target="_blank">Exporter</a>
+            <a class="button is-primary" href="/exercise/new"><%= getString(lang.exercise.list.actions.createExercise) %></a>
+            <a class="button is-light" href="/exercise/import"><%= getString(lang.generic.actions.import) %></a>
+            <a class="button is-light" href="/exercise/export" target="_blank"><%= getString(lang.generic.actions.export) %></a>
         </div>
     </div>
     <div class="column is-two-thirds">
         <div class="field">
             <p class="control has-icons-left">
-                <input class="input search-input" data-target="exerciseTable" type="text" placeholder="Rechercher parmis les exercices" />
+                <input class="input search-input" data-target="exerciseTable" type="text" placeholder="<%= getString(lang.exercise.list.actions.searchExercises) %>" />
                 <span class="icon is-small is-left">
                     <i class="fas fa-search"></i>
                 </span>
@@ -66,10 +66,10 @@
     <table class="table is-striped is-hoverable is-fullwidth" id="exerciseTable">
         <thead>
         <tr>
-            <th style="width: 30%;">Titre</th>
-            <th style="width: 50%;">Consigne</th>
-            <th>Tags</th>
-            <th style="width: 5%; text-align: right;">Actions</th>
+            <th style="width: 30%;"><%= getString(lang.generic.other.exercise.title) %></th>
+            <th style="width: 50%;"><%= getString(lang.generic.other.exercise.statement) %></th>
+            <th><%= getString(lang.generic.other.tags) %></th>
+            <th style="width: 5%; text-align: right;"><%= getString(lang.generic.table.actions) %></th>
         </tr>
         </thead>
         <tbody>
@@ -91,17 +91,17 @@
                     </td>
                     <td style="text-align: right;">
                         <div class="field has-addons">
-                            <a class="button is-small is-primary is-light" title="Modifier" href="/exercise/edit/<%= exercise.id %>">
+                            <a class="button is-small is-primary is-light" title="<%= getString(lang.generic.actions.edit) %>" href="/exercise/edit/<%= exercise.id %>">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                             <form method="POST" action="/exercise/clone" id="clone<%= exercise.id %>">
                                 <input type="hidden" name="_csrf" value="<%= csrf() %>">
                                 <input type="hidden" name="id" value="<%= exercise.id %>" />
                             </form>
-                            <button type="submit" form="clone<%= exercise.id %>" class="button is-small is-link is-light" title="Dupliquer">
+                            <button type="submit" form="clone<%= exercise.id %>" class="button is-small is-link is-light" title="<%= getString(lang.generic.actions.clone) %>">
                                 <i class="fas fa-clone"></i>
                             </button>
-                            <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= exercise.id %>" title="Supprimer">
+                            <button type="button" class="button is-small is-danger is-light" data-toggle="modal" data-target="modalDelete<%= exercise.id %>" title="<%= getString(lang.generic.actions.delete) %>">
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
@@ -119,12 +119,12 @@
         <div class="modal-background" data-target="modalDelete<%= exercise.id %>"></div>
         <div class="modal-content">
             <div class="box has-text-centered">
-                <h1 class="title">Supprimer l'exercice</h1>
-                <p class="is-family-primary">Êtes-vous sûr de vouloir supprimer l'exercice<br />"<%= exercise.title %>" ?</p>
+                <h1 class="title"><%= getString(lang.exercise.list.deleteExercise.title) %></h1>
+                <p class="is-family-primary"><%- getString(lang.exercise.list.deleteExercise.description, exercise.title) %></p>
                 <form method="POST" action="/exercise/delete" class="ajax">
                     <input type="hidden" name="_csrf" value="<%= csrf() %>">
                     <input type="hidden" name="id" value="<%= exercise.id %>" />
-                    <button type="submit" class="button is-danger mt-2">Supprimer</button>
+                    <button type="submit" class="button is-danger mt-2"><%= getString(lang.generic.actions.delete) %></button>
                 </form>
             </div>
         </div>

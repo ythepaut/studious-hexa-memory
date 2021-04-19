@@ -10,7 +10,10 @@
             "submit": "Valider",
             "edit": "Modifier",
             "delete": "Supprimer",
-            "create": "Créer"
+            "create": "Créer",
+            "clone": "Dupliquer",
+            "import": "Importer",
+            "export": "Exporter"
         },
         "fields": {
             "username": "Nom d'utilisateur",
@@ -27,7 +30,8 @@
             "exercise": {
                 "exercise": "Exercice",
                 "title": "Titre",
-                "statement": "Énoncé"
+                "statement": "Énoncé",
+                "response": "Réponse"
             },
             "account": {
                 "roles": {
@@ -132,6 +136,51 @@
                 }
             },
             "finish": "Terminer"
+        }
+    },
+
+    "exercise": {
+        "list": {
+            "stats": {
+                "exerciseCount": "Nombre d'exercices",
+                "cumulativeExerciseTime": "Temps cumulé des exercices",
+                "cumulativeExerciseTimeValue":  "%%h %%m %%s",
+                "exercisesDone": "Exercices effectués",
+                "passRate": "Pourcentage de réussite"
+            },
+            "actions": {
+                "createExercise": "Créer un exercice",
+                "searchExercises": "Rechercher parmis les exercices"
+            },
+            "deleteExercise": {
+                "title": "Supprimer l'exercice",
+                "description": "Êtes-vous sûr de vouloir supprimer l'exercice<br />\"%%\" ?"
+            }
+        },
+
+        "createEdit": {
+            "createTitle": "Créer un exerice",
+            "editTitle": "Modification d'exercice",
+            "fields": {
+                "previewTitle": "Prévisualisation du titre",
+                "previewStatement": "Prévisualisation de l'énoncé",
+                "previewResponse": "Prévisualisation de la réponse",
+                "timeLimit": "Temps imparti (en secondes)",
+                "tags": "Tags (séparé par des virgules)"
+            },
+            "placeholders": {
+                "title": "Résolution d'une équation différentielle linéaire du deuxieme ordre",
+                "statement": "Résoudre sur $\\mathbb{R}$ l'équation différentielle suivante : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
+                "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
+                "tags": "Maths, Derivées Partielles, Facile"
+            }
+        },
+
+        "import": {
+            "title": "Importer des exercices",
+            "description": "Seuls les fichiers au format <code>.json</code> exportés depuis le site sont supportés.",
+            "chooseFile": "Choisir un fichier...",
+            "noFileChosen": "Aucun fichier choisi"
         }
     },
 

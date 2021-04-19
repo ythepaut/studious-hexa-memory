@@ -10,7 +10,10 @@
             "submit": "Submit",
             "edit": "Edit",
             "delete": "Delete",
-            "create": "Create"
+            "create": "Create",
+            "clone": "Duplicate",
+            "import": "Import",
+            "export": "Export"
         },
         "fields": {
             "username": "Username",
@@ -27,7 +30,8 @@
             "exercise": {
                 "exercise": "Exercise",
                 "title": "Title",
-                "statement": "Statement"
+                "statement": "Statement",
+                "response": "Response"
             },
             "account": {
                 "roles": {
@@ -135,6 +139,51 @@
         }
     },
 
+    "exercise": {
+        "list": {
+            "stats": {
+                "exerciseCount": "Exercise count",
+                "cumulativeExerciseTime": "Cumulative exercise time",
+                "cumulativeExerciseTimeValue":  "%%h %%m %%s",
+                "exercisesDone": "Exercises done",
+                "passRate": "Pass rate"
+            },
+            "actions": {
+                "createExercise": "Create an exercise",
+                "searchExercises": "Search exercises"
+            },
+            "deleteExercise": {
+                "title": "Delete an exercise",
+                "description": "Are you sure you want to delete the exercise <br />\"%%\" ?"
+            }
+        },
+
+        "createEdit": {
+            "createTitle": "Create an exercise",
+            "editTitle": "Edit an exercise",
+            "fields": {
+                "previewTitle": "Title preview",
+                "previewStatement": "Statement preview",
+                "previewResponse": "Response preview",
+                "timeLimit": "Time limit (in seconds)",
+                "tags": "Tags (separated by commas)"
+            },
+            "placeholders": {
+                "title": "Solving a second order linear differential equation",
+                "statement": "Solve on $\\mathbb{R}$ the following differential equation : $y^{\\prime}+y = x-e^{x}+\\cos{x}$.",
+                "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
+                "tags": "Math, Partial Derivatives, Easy"
+            }
+        },
+
+        "import": {
+            "title": "Import exercises",
+            "description": "Only <code>.json</code> files exported from this application are supported.",
+            "chooseFile": "Choose a file...",
+            "noFileChosen": "No file chosen"
+        }
+    },
+
     "account": {
         "login": {
             "hello": "Hello&nbsp;\uD83D\uDC4B",
@@ -199,7 +248,7 @@
     },
 
     "about": {
-        "description": "<b>Studious Hexa Memory</b> est un site d’entraînement et de révision sur des exercices proposés par ses utilisateurs.\n<br /><br />\n            Le but n’est pas de répondre aux exercices depuis le site sous la forme d’un QCM, mais plutôt de faire l’énoncé proposé par l’exercice dans un temps imparti.<br />\nUne fois ce temps écoulé ou après avoir fini l’exercice, vous pourrez consulter sa correction et valider ou non votre résultat.\n            <br /><br />\n            Les fonctionnalités de Studious Hexa Memory sont développées par <a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a> et supervisées par <a href=\"https://www.youtube.com/channel/UCtgWzEBDJy_Jj7J7v2Y39UA\" target=\"_blank\">Baptiste BRUGEROLLE</a>.\n            <br /><br />\n            Code source disponible sur <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> sous licence GNU GPL v3."
+        "description": "<b>Studious Hexa Memory</b> is a web application whose purpose is to help practicing exercises.\n            <br /><br />\n            The goal is not to respond to exercises from the site in the form of a MCQ, but rather to make the statement proposed by the exercise within a given time.<br />\nOnce this time has elapsed or after completing the exercise, you will be able to see its correction and validate or not your result.\n            <br /><br />\n            The features of Studious Hexa Memory are developed by <a href=\"https://www.ythepaut.com/\" target=\"_blank\">Yohann THEPAUT</a> and overseen <a href=\"https://www.youtube.com/channel/UCtgWzEBDJy_Jj7J7v2Y39UA\" target=\"_blank\">Baptiste BRUGEROLLE</a>.\n            <br /><br />\n            Source code available <a href=\"https://github.com/ythepaut/studious-hexa-memory\" target=\"_blank\">GitHub</a> under the GNU GPL v3 license."
     },
 
     "legal": {

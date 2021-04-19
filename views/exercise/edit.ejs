@@ -1,7 +1,7 @@
 <%- include('../includes/header') %>
 
 <h1 class="title">
-    Modification d'exercice
+    <%= getString(lang.exercise.createEdit.editTitle) %>
 </h1>
 <h3 class="subtitle">
     <%= exercise.id %>
@@ -14,7 +14,7 @@
     <!-- Title -->
     <div class="field">
         <div class="is-normal">
-            <label class="label">Titre</label>
+            <label class="label"><%= getString(lang.generic.other.exercise.title) %></label>
         </div>
         <div class="field-body mt-1">
             <div class="field">
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Title Preview -->
-    <label class="label">Prévisualisation du titre</label>
+    <label class="label"><%= getString(lang.exercise.createEdit.fields.previewTitle) %></label>
     <div class="box">
         <p style="white-space: pre;" id="pTitle">
 
@@ -38,7 +38,7 @@
     <!-- Statement -->
     <div class="field">
         <div class="is-normal">
-            <label class="label">Énoncé</label>
+            <label class="label"><%= getString(lang.generic.other.exercise.statement) %></label>
         </div>
         <div class="field-body mt-1">
             <div class="field">
@@ -50,7 +50,7 @@
     </div>
 
     <!-- Statement Preview -->
-    <label class="label">Prévisualisation de l'énoncé</label>
+    <label class="label"><%= getString(lang.exercise.createEdit.fields.previewStatement) %></label>
     <div class="box">
         <p style="white-space: pre;" id="pStatement">
 
@@ -62,7 +62,7 @@
     <!-- Response -->
     <div class="field">
         <div class="is-normal">
-            <label class="label">Réponse</label>
+            <label class="label"><%= getString(lang.generic.other.exercise.response) %></label>
         </div>
         <div class="field-body mt-1">
             <div class="field">
@@ -74,7 +74,7 @@
     </div>
 
     <!-- Repsonse Preview -->
-    <label class="label">Prévisualisation de la réponse</label>
+    <label class="label"><%= getString(lang.exercise.createEdit.fields.previewResponse) %></label>
     <div class="box">
         <p style="white-space: pre;" id="pResponse">
 
@@ -86,7 +86,7 @@
     <!-- Timer -->
     <div class="field">
         <div class="is-normal">
-            <label class="label">Temps imparti (en secondes)</label>
+            <label class="label"><%= getString(lang.exercise.createEdit.fields.timeLimit) %></label>
         </div>
         <div class="field-body mt-1">
             <div class="field">
@@ -102,12 +102,12 @@
     <!-- Tags -->
     <div class="field">
         <div class="is-normal">
-            <label class="label">Tags</label>
+            <label class="label"><%= getString(lang.exercise.createEdit.fields.tags) %></label>
         </div>
         <div class="field-body mt-1">
             <div class="field">
                 <p class="control">
-                    <input class="input" type="text" name="tags" value="<%= exercise.tags.join(",") %>" />
+                    <input class="input" type="text" name="tags" value="<%= exercise.tags.join(", ") %>" />
                 </p>
             </div>
         </div>
@@ -115,7 +115,7 @@
 
     <input type="hidden" name="id" value="<%= exercise.id %>">
 
-    <button type="submit" class="button is-primary mt-2">Modifier</button>
+    <button type="submit" class="button is-primary mt-2"><%= getString(lang.generic.actions.edit) %></button>
 </form>
 
 
