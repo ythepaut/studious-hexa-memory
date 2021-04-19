@@ -11,7 +11,9 @@
             "edit": "Editar",
             "delete": "Borrar",
             "create": "Crear",
-            "clone": "Duplicar"
+            "clone": "Duplicar",
+            "import": "Importar",
+            "export": "Exportar"
         },
         "fields": {
             "username": "Nombre del usuario",
@@ -148,8 +150,6 @@
             },
             "actions": {
                 "createExercise": "Agregar un ejercicio",
-                "import": "Importar",
-                "export": "Exportar",
                 "searchExercises": "Encuentra un ejercicio"
             },
             "deleteExercise": {
@@ -174,6 +174,13 @@
                 "response" : "$y(x) = x - 1 - \\frac{1}{2}e^{x} + \\frac{1}{2}\\cos{x} + \\frac{1}{2}\\sin{x} + \\lambda{e^{-x}}$",
                 "tags": "Matemáticas, Derivadas parciales, Fácil"
             }
+        },
+
+        "import": {
+            "title": "Importar ejercicios",
+            "description": "Solo se admiten archivos <code>.json</code> exportados desde esta aplicación.",
+            "chooseFile": "Escoge un archivo...",
+            "noFileChosen": "Ningún archivo elegido"
         }
     },
 
