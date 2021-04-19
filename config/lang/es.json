@@ -10,7 +10,8 @@
             "submit": "Enviar",
             "edit": "Editar",
             "delete": "Borrar",
-            "create": "Crear"
+            "create": "Crear",
+            "clone": "Duplicar"
         },
         "fields": {
             "username": "Nombre del usuario",
@@ -132,6 +133,28 @@
                 }
             },
             "finish": "Terminar"
+        }
+    },
+
+    "exercise": {
+        "list": {
+            "stats": {
+                "exerciseCount": "Numero de ejercicios",
+                "cumulativeExerciseTime": "Tiempo de ejercicio acumulado",
+                "cumulativeExerciseTimeValue":  "%%h %%m %%s",
+                "exercisesDone": "Ejercicios realizados",
+                "passRate": "Porcentaje de acierto"
+            },
+            "actions": {
+                "createExercise": "Agregar un ejercicio",
+                "import": "Importar",
+                "export": "Exportar",
+                "searchExercises": "Encuentra un ejercicio"
+            },
+            "deleteExercise": {
+                "title": "Eliminar ejercicio",
+                "description": "¿Está seguro de que quiere borrar el ejercicio<br />\"%%\"?"
+            }
         }
     },
 
