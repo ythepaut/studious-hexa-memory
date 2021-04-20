@@ -69,7 +69,8 @@
 
     "application": {
         "name": "Studious Hexa Memory",
-        "description": "Aplicación de práctica de ejercicios"
+        "description": "Aplicación de práctica de ejercicios",
+        "url": "https://shm.ythepaut.com/"
     },
 
     "nav": {
@@ -332,7 +333,7 @@
         },
         "host": {
             "description": "Anfitrión :",
-            "value": "Los sitios del dominio \"ythepaut.com\" están alojados por la empresa OVH <a href=\"https://www.ovh.com/\" target=\"_blank\">OVHcloud</a>.<br />OVH<br />2 rue Kellermann<br />59100 Roubaix<br />FRANCIA"
+            "value": "Los sitios del dominio \"ythepaut.com\" están alojados por la empresa <a href=\"https://www.ovh.com/\" target=\"_blank\">OVHcloud</a>.<br />OVH<br />2 rue Kellermann<br />59100 Roubaix<br />FRANCIA"
         }
     }
 }

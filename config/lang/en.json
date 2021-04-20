@@ -69,7 +69,8 @@
 
     "application": {
         "name": "Studious Hexa Memory",
-        "description": "Exercice practice application"
+        "description": "Exercice practice application",
+        "url": "https://shm.ythepaut.com/"
     },
 
     "nav": {

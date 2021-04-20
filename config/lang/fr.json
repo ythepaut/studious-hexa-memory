@@ -69,7 +69,8 @@
 
     "application": {
         "name": "Studious Hexa Memory",
-        "description": "Application de révisions"
+        "description": "Outil d'aide aux revisions et d'auto-évaluation",
+        "url": "https://shm.ythepaut.com/"
     },
 
     "nav": {
