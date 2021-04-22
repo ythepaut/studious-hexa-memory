@@ -25,7 +25,7 @@ module.exports = class User {
             status : user.status,
             key : user.key,
             exercisesDone : user.exercisesDone
-        }
+        };
     }
 
 
@@ -170,13 +170,14 @@ module.exports = class User {
      * @param {Object[]}            exercises       Exercises done to add
      */
     newExercisesDone(db, mongodb, exercises) {
-        exercises = exercises.map(exercise => { return ({
-            id : exercise.id,
-            success : exercise.success,
-            date : new Date()
+        exercises = exercises.map(exercise => {
+            return ({
+                id : exercise.id,
+                success : exercise.success,
+                date : new Date()
+            });
         });
-        });
-        if (this._exercisesDone === undefined || this._exercisesDone === null) {
+        if (typeof this._exercisesDone === "undefined" || this._exercisesDone === null) {
             this._exercisesDone = [];
         }
         if (exercises !== []) {

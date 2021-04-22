@@ -57,8 +57,8 @@ module.exports = class Exercise {
         db.collection("exercises").find().toArray((err, res) => {
             let exercises = [];
             for (const json of res)
-                if ((tagOperation === "INTERSECTION" && tags.every(i => json.tags.includes(i))) ||
-                    (tagOperation === "UNION" && tags.some(i => json.tags.indexOf(i) >= 0)))
+                if ((tagOperation === "INTERSECTION" && tags.every((i) => json.tags.includes(i))) ||
+                    (tagOperation === "UNION" && tags.some((i) => json.tags.indexOf(i) >= 0)))
                     exercises.push(new Exercise(json._id, json.title, json.statement, json.response, json.time, json.tags));
             callback(exercises);
         });
@@ -129,7 +129,7 @@ module.exports = class Exercise {
             response : exercise.response,
             time : exercise.time,
             tags : exercise.tags
-        }
+        };
     }
 
     /**
@@ -138,7 +138,7 @@ module.exports = class Exercise {
      * @return {Array.<Object>}                     Exercises as JSONs
      */
     static toJSONs(exercises) {
-        let jsons = []
+        let jsons = [];
         for (const exercise of exercises)
             jsons.push(Exercise.toJSON(exercise));
         return jsons;

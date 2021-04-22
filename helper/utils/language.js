@@ -27,7 +27,7 @@ module.exports = class {
         let languages = [];
         for (const lang in this._langs)
             if (this._langs.hasOwnProperty(lang))
-                languages.push(this._langs[lang].config)
+                languages.push(this._langs[lang].config);
         return languages;
     }
 
@@ -79,4 +79,4 @@ module.exports = class {
         });
     }
 
-}
+};

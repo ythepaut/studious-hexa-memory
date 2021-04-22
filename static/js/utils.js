@@ -80,13 +80,6 @@ function postRequest(url, body, callback) {
 /**
  * @see https://github.com/ythepaut/info305_ki-oui/blob/a64ead58c43946d208ae52c3d916dd162ce3357b/js/index.js#L280
  */
-function searchEvent() {
-    for (let inse of document.querySelectorAll(".search-input")) {
-        inse.addEventListener("keyup", function() {
-            searchTable(inse.getAttribute("data-target"), inse.value);
-        })
-    }
-}
 function searchTable(tableId, searchQuery) {
     for (let row of document.querySelectorAll("#" + tableId + " tr")) {
         if (row.innerHTML.includes(searchQuery) || row.innerHTML.includes('th style')) {
@@ -94,5 +87,12 @@ function searchTable(tableId, searchQuery) {
         } else {
             row.setAttribute("style", "display: none;");
         }
+    }
+}
+function searchEvent() {
+    for (let inse of document.querySelectorAll(".search-input")) {
+        inse.addEventListener("keyup", function() {
+            searchTable(inse.getAttribute("data-target"), inse.value);
+        })
     }
 }

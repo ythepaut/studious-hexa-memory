@@ -21,7 +21,7 @@ module.exports = class {
             type : "json",
             code : code,
             data : data
-        }
+        };
     }
     /**
      * JSON response constructor
@@ -35,7 +35,7 @@ module.exports = class {
             code : code,
             data : data,
             view : view
-        }
+        };
     }
     /**
      * Redirection response constructor
@@ -45,7 +45,7 @@ module.exports = class {
         return {
             type : "redirection",
             target : target
-        }
+        };
     }
 
 
@@ -59,7 +59,7 @@ module.exports = class {
      */
     handlePractice(req, callback) {
         // set session if not set
-        if (req.session.practice === undefined) {
+        if (typeof req.session.practice === "undefined") {
             req.session.practice = {
                 practiceStatus : "IDLE",    // IDLE / PRACTICING / END
                 exercisesDone : [],         // list of exercise done
@@ -69,7 +69,7 @@ module.exports = class {
                 exerciseTagOperation : "",  // exercise tags operation : INTERSECTION / UNION
                 currentExercise : null,     // current exercise
                 endReason : null            // MANUAL / MAX_REACHED / DEPLETED
-            }
+            };
         }
 
         // if in practice, show exercise, else start page
@@ -99,11 +99,11 @@ module.exports = class {
      * @param {function}            callback        Callback fct : callback(response)
      */
     handlePracticeSubmission(req, callback) {
-        if (req.session.practice !== undefined && !req.body.finish) {
+        if (typeof req.session.practice !== "undefined" && !req.body.finish) {
 
             if (req.session.practice.practiceStatus === "PRACTICING") {
 
-                if (req.body.success !== undefined) {
+                if (typeof req.body.success !== "undefined") {
                     // exercise submission
 
                     // add current exercise to exercise done list
@@ -122,7 +122,7 @@ module.exports = class {
                     if (req.session.practice.exercisesDone.length < req.session.practice.exerciseMax || req.session.practice.exerciseMax === 0) {
 
                         // finds new exercise
-                        this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map(e => e.id), (exercise) => {
+                        this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map((e) => e.id), (exercise) => {
 
                             if (exercise !== null) {
                                 req.session.practice.currentExercise = this._exercise.toJSON(exercise);
@@ -170,8 +170,8 @@ module.exports = class {
                     exerciseSuccessCount : 0,
                     endReason : null
                 }
-                if (!isNaN(req.body.exerciseCount) && !isNaN(parseInt(req.body.exerciseCount))) {
-                    req.session.practice.exerciseMax = Math.max(parseInt(req.body.exerciseCount), 0);
+                if (!isNaN(req.body.exerciseCount) && !isNaN(parseInt(req.body.exerciseCount, 10))) {
+                    req.session.practice.exerciseMax = Math.max(parseInt(req.body.exerciseCount, 10), 0);
                 } else {
                     req.session.practice.exerciseMax = 0;
                 }
@@ -481,12 +481,12 @@ module.exports = class {
      * @param {function}            callback        Callback fct : callback(response)
      */
     handleAccountLoggedInVerification(req, next, callback) {
-        if (req.session.user === undefined) {
+        if (typeof req.session.user === "undefined") {
             this._user.getUsers(this._db, (users) => {
                 // giving owner key for first registration if needed
                 let key = null;
-                if (users.filter(user => user.role === "OWNER" && user.status === "ALIVE").length === 0) {
-                    if (users.filter(user => user.role === "OWNER" && user.status === "PENDING_REGISTRATION").length === 0) {
+                if (users.filter((user) => user.role === "OWNER" && user.status === "ALIVE").length === 0) {
+                    if (users.filter((user) => user.role === "OWNER" && user.status === "PENDING_REGISTRATION").length === 0) {
                         this._user.create(this._db, "OWNER", () => {});
                     } else {
                         for (const user of users) {
@@ -568,7 +568,7 @@ module.exports = class {
                         this.language.getTranslations(req.session.lang).account.login.verbose.success.welcome,
                         user.username
                     ),
-                    redirect : req.body.next !== undefined ? req.body.next : "/"
+                    redirect : typeof req.body.next !== "undefined" ? req.body.next : "/"
                 }));
             } else {
                 callback(this.responseJSON(200, {
@@ -799,7 +799,7 @@ module.exports = class {
      * @param {function}            callback        Callback fct : callback(response)
      */
     handleChangeLanguageSubmission(req, callback) {
-        if (this._language.getSupportedLanguages().map(lang => lang.iso).includes(req.body.lang)) {
+        if (this._language.getSupportedLanguages().map((lang) => lang.iso).includes(req.body.lang)) {
             req.session.lang = req.body.lang;
             callback(this.responseJSON(200, {
                 type : "success",
@@ -821,4 +821,4 @@ module.exports = class {
         return this._language;
     }
 
-}
+};

@@ -21,7 +21,7 @@ const revealResponse = () => {
         clearInterval(timer);
         timer = null;
     }
-}
+};
 btnSeeResponse.addEventListener("click", () => {
     revealResponse();
 });

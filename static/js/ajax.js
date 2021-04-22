@@ -16,8 +16,8 @@ document.querySelectorAll("form.ajax").forEach((form) => {
 
         // sending post request
         xhr.open("POST", url, true);
-        xhr.setRequestHeader('Accept', 'application/json; charset=utf-8');
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.setRequestHeader("Accept", "application/json; charset=utf-8");
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
         xhr.send(JSON.stringify(data));
 
         // button loading animation
@@ -40,7 +40,7 @@ document.querySelectorAll("form.ajax").forEach((form) => {
             const id = url + form.length; // unique id for notification div
             let responseNotification = document.getElementById(id);
             if (responseNotification === null) {
-                responseNotification = document.createElement("div")
+                responseNotification = document.createElement("div");
                 responseNotification.id = id;
                 responseNotification.classList.add("notification", "ajax", "is-light", "mt-2", "pt-2", "pb-2", "pl-1", "pr-1");
                 setTimeout(() => responseNotification.classList.add("active"), 0);
@@ -74,7 +74,7 @@ document.querySelectorAll("form.ajax").forEach((form) => {
                 responseNotification.innerHTML = iconPerType[jsonResponse.type] + "&nbsp;&nbsp;" + jsonResponse.message;
                 form.appendChild(responseNotification);
 
-                if (jsonResponse.redirect !== undefined) {
+                if (typeof jsonResponse.redirect !== "undefined") {
                     setTimeout(() => {
                         window.location.href = jsonResponse.redirect;
                     }, 1000);
