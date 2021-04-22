@@ -170,7 +170,7 @@ module.exports = class User {
      * @param {Object[]}            exercises       Exercises done to add
      */
     newExercisesDone(db, mongodb, exercises) {
-        exercises = exercises.map(exercise => {
+        exercises = exercises.map((exercise) => {
             return ({
                 id : exercise.id,
                 success : exercise.success,

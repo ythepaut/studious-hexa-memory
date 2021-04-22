@@ -29,7 +29,7 @@ btnSeeResponse.addEventListener("click", () => {
 // handle next exercise button
 const nextExercise = (success, csrf) => {
     postRequest("/", "success=" + success + "&_csrf=" + csrf, () => location.reload());
-}
+};
 btnExerciseFail.addEventListener("click", () => {
     btnExerciseFail.classList.add("is-loading");
     btnExerciseSuccess.classList.add("is-loading");

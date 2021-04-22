@@ -169,7 +169,7 @@ module.exports = class {
                     exercisesDone : [],
                     exerciseSuccessCount : 0,
                     endReason : null
-                }
+                };
                 if (!isNaN(req.body.exerciseCount) && !isNaN(parseInt(req.body.exerciseCount, 10))) {
                     req.session.practice.exerciseMax = Math.max(parseInt(req.body.exerciseCount, 10), 0);
                 } else {
@@ -183,7 +183,7 @@ module.exports = class {
                     req.session.practice.exerciseTags = [];
                 }
                 req.session.practice.exerciseTagOperation = req.body.tagOperation;
-                this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map(e => e.id), (exercise) => {
+                this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map((e) => e.id), (exercise) => {
 
                     if (exercise !== null) {
                         req.session.practice.currentExercise = this._exercise.toJSON(exercise);

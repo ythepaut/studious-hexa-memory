@@ -82,7 +82,7 @@ function postRequest(url, body, callback) {
  */
 function searchTable(tableId, searchQuery) {
     for (let row of document.querySelectorAll("#" + tableId + " tr")) {
-        if (row.innerHTML.includes(searchQuery) || row.innerHTML.includes('th style')) {
+        if (row.innerHTML.includes(searchQuery) || row.innerHTML.includes("th style")) {
             row.removeAttribute("style");
         } else {
             row.setAttribute("style", "display: none;");
@@ -93,6 +93,6 @@ function searchEvent() {
     for (let inse of document.querySelectorAll(".search-input")) {
         inse.addEventListener("keyup", function() {
             searchTable(inse.getAttribute("data-target"), inse.value);
-        })
+        });
     }
 }
