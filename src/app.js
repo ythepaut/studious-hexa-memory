@@ -31,9 +31,12 @@ app.use(session({
 }));
 
 // CSRF protection
-app.use(csrf({}));
+if (process.env.STUDIOUSHEXAMEMORY_ENVIRONMENT !== "test") {
+    app.use(csrf({}));
+}
 
 app.set("view engine", "ejs");
+app.set("views", `${__dirname}/views`);
 
 // setting routes
 require("./helper/db")((client) => {
@@ -44,4 +47,8 @@ require("./helper/db")((client) => {
 // starting server
 server.listen(process.env.STUDIOUSHEXAMEMORY_SERVER_PORT, () => {
     console.log(`Server is now listening on port ${process.env.STUDIOUSHEXAMEMORY_SERVER_PORT}...`);
+    // Ensures the server is started before running tests
+    setTimeout(() => server.emit("server_started"), 1000);
 });
+
+module.exports = server;

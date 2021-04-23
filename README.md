@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="static/assets/img/logo.png" />
+    <img src="src/static/assets/img/logo.png" />
 </p>
 
 ![Workflow](https://img.shields.io/github/workflow/status/ythepaut/studious-hexa-memory/Deployment?style=for-the-badge)

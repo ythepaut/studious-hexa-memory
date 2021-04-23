@@ -291,7 +291,7 @@ module.exports = class {
             response.data.supportedLangs = this._logic.language.getSupportedLanguages();
             response.data.getString = this._logic.language.stringFormatter;
             response.data.lang = this._logic.language.getTranslations(req.session.lang);
-            response.data.csrf = req.csrfToken;
+            response.data.csrf = req.csrfToken || (() => { return "disabled" });
             res.status(response.code).render(response.view, response.data);
         } else if (response.type === "redirection") {
             res.redirect(response.target);
