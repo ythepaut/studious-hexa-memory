@@ -2,7 +2,7 @@
     <img src="src/static/assets/img/logo.png" />
 </p>
 
-![Workflow](https://img.shields.io/github/workflow/status/ythepaut/studious-hexa-memory/Deployment?style=for-the-badge)
+![Workflow](https://img.shields.io/github/workflow/status/ythepaut/studious-hexa-memory/Test%20and%20Deployment/master?style=for-the-badge)
 ![Code quality (Codacy)](https://img.shields.io/codacy/grade/fdfcd58cd54447bcbcbba4aea72d9836?style=for-the-badge)
 ![License](https://img.shields.io/github/license/ythepaut/studious-hexa-memory?style=for-the-badge)
 [![Demo website](https://img.shields.io/website?down_color=red&down_message=Offline&label=Demo%20website&style=for-the-badge&up_color=green&up_message=Online&url=https%3A%2F%2Fstudious-hexa-memory.demo.ythepaut.com%2F)](https://studious-hexa-memory.demo.ythepaut.com/)

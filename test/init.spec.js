@@ -15,7 +15,7 @@ before((done) => {
 
         // Test user
         await db.collection("accounts").insertOne({
-            role : "MEMBER",
+            role : "OWNER",
             status : "PENDING_REGISTRATION",
             key : testKey
         });
@@ -32,6 +32,12 @@ after((done) => {
         await db.collection("accounts").deleteMany(
             {key : "TestTestTestTest"}
         );
+
+        // Test exercise
+        await db.collection("exercises").deleteMany(
+            {tags : {$regex : "test-ci"}}
+        );
+
 
         done();
     });

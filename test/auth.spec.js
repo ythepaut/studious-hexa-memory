@@ -10,7 +10,7 @@ const testUser = {
 };
 
 require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => {
-    describe("Auth Routes", () => {
+    describe("Authentication", () => {
 
         describe("GET /account/me", () => {
             it("Should have a status code of 401 when disconnected", (done) => {
@@ -86,7 +86,7 @@ require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => 
                     expect(user._key).eql(testUser.key);
                     expect(user._username).eql(testUser.username);
                     expect(bcrypt.compareSync(testUser.passwd, user.passwd)).eql(true);
-                    expect(user._role).eql("MEMBER");
+                    expect(user._role).eql("OWNER");
                     expect(user._status).eql("ALIVE");
                     expect(user._exercisesDone).eql(null);
                     done();
@@ -162,16 +162,12 @@ require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => 
                                 _csrf: "disabled"
                             })
                             .expect(200)
-                            .end(() => {
-                                request(app)
-                                    .get("/account/me")
-                                    .expect(401)
-                                    .end(() => {
-                                        db.collection("accounts").updateOne(
-                                            {key: testUser.key},
-                                            {$set: {status: "ALIVE"}},
-                                            () => done());
-                                    });
+                            .end((_, res) => {
+                                expect(JSON.parse(res.text).type).eql("error");
+                                db.collection("accounts").updateOne(
+                                    {key: testUser.key},
+                                    {$set: {status: "ALIVE"}},
+                                    () => done());
                             });
                     }
                 );

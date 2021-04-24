@@ -561,15 +561,22 @@ module.exports = class {
     handleAccountLogin(req, callback) {
         this._user.getUserByName(this._db, req.body.username, (user) => {
             if (user !== null && this._bcrypt.compareSync(req.body.passwd, user.passwd)) {
-                req.session.user = this._user.toJSON(user);
-                callback(this.responseJSON(200, {
-                    type : "success",
-                    message : this._language.stringFormatter(
-                        this.language.getTranslations(req.session.lang).account.login.verbose.success.welcome,
-                        user.username
-                    ),
-                    redirect : typeof req.body.next !== "undefined" ? req.body.next : "/"
-                }));
+                if (user.status === "ALIVE") {
+                    req.session.user = this._user.toJSON(user);
+                    callback(this.responseJSON(200, {
+                        type : "success",
+                        message : this._language.stringFormatter(
+                            this.language.getTranslations(req.session.lang).account.login.verbose.success.welcome,
+                            user.username
+                        ),
+                        redirect : typeof req.body.next !== "undefined" ? req.body.next : "/"
+                    }));
+                } else {
+                    callback(this.responseJSON(200, {
+                        type : "error",
+                        message : this.language.getTranslations(req.session.lang).account.login.verbose.error.accountSuspended
+                    }));
+                }
             } else {
                 callback(this.responseJSON(200, {
                     type : "error",
