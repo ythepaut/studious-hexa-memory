@@ -9,7 +9,7 @@ before((done) => {
 
 // Populating database
 before((done) => {
-    require("../src/helper/db")((db) => {
+    require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => {
 
         // Test user
         db.collection("accounts").insertOne({
@@ -24,7 +24,7 @@ before((done) => {
 
 // Cleaning database
 after((done) => {
-    require("../src/helper/db")((db) => {
+    require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => {
 
         // Test user
         db.collection("accounts").deleteOne(

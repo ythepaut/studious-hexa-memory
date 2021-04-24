@@ -1,9 +1,8 @@
-module.exports = (callback) => {
+module.exports = (uri, callback) => {
 
     const MongoClient = require("mongodb").MongoClient;
-
     MongoClient.connect(
-        process.env.STUDIOUSHEXAMEMORY_MONGODB_URI,
+        uri,
         {useUnifiedTopology : true},
         (err, client) => {
             if (err) {

@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({path: `${__dirname}/../.env`});
 let http = require("http"),
     express = require("express"),
     path = require("path"),
@@ -39,7 +39,7 @@ app.set("view engine", "ejs");
 app.set("views", `${__dirname}/views`);
 
 // setting routes
-require("./helper/db")((client) => {
+require("./helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (client) => {
     new (require("./helper/service"))(app, express, path, client, mongodb);
 });
 

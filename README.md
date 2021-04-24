@@ -74,9 +74,16 @@ Serveur de démonstration : https://studious-hexa-memory.demo.ythepaut.com/
    
    Liste des variables :
    ```
+   # Port du serveur (80 par défaut)
    STUDIOUSHEXAMEMORY_SERVER_PORT=80
-   STUDIOUSHEXAMEMORY_MONGODB_USER=<NOM D'UTILISATEUR>
-   STUDIOUSHEXAMEMORY_MONGODB_PASSWORD=<MOT DE PASSE>
+   
+   # Type d'environment (e.g. "production", "dev", "test")
+   STUDIOUSHEXAMEMORY_ENVIRONMENT=production
+   
+   # URI de connexion MongoDB (cf. https://docs.mongodb.com/manual/reference/connection-string/)
+   STUDIOUSHEXAMEMORY_MONGODB_URI=mongodb://<NOM D'UTILISATEUR>:<MOT DE PASSE>@localhost:27017/studious_hexa_memory
+   
+   # Chaîne aléatoire pour le stockage des sessions
    STUDIOUSHEXAMEMORY_SESSION_SECRET=<CHAINE DE CARACTERES SECRETE>
    ```
 
@@ -174,10 +181,17 @@ Demonstration server : https://studious-hexa-memory.demo.ythepaut.com/
 
    Environment variable list :
    ```
+   # Port on which the server runs on (80 by default)
    STUDIOUSHEXAMEMORY_SERVER_PORT=80
-   STUDIOUSHEXAMEMORY_MONGODB_USER=<USERNAME>
-   STUDIOUSHEXAMEMORY_MONGODB_PASSWORD=<PASSWORD>
-   STUDIOUSHEXAMEMORY_SESSION_SECRET=<SECRET_STRING>
+   
+   # Environment type (e.g. "production", "dev", "test")
+   STUDIOUSHEXAMEMORY_ENVIRONMENT=production
+   
+   # Mongo database URI (see https://docs.mongodb.com/manual/reference/connection-string/)
+   STUDIOUSHEXAMEMORY_MONGODB_URI=mongodb://<USERNAME>:<PASSWORD>@localhost:27017/studious_hexa_memory
+   
+   # Random string for session storage
+   STUDIOUSHEXAMEMORY_SESSION_SECRET=<SECRET STRING>
    ```
 
 6. Install Process Manager 2
