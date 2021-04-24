@@ -3,7 +3,7 @@ module.exports = (callback) => {
     const MongoClient = require("mongodb").MongoClient;
 
     MongoClient.connect(
-        `mongodb://${process.env.STUDIOUSHEXAMEMORY_MONGODB_USER}:${process.env.STUDIOUSHEXAMEMORY_MONGODB_PASSWORD}@localhost:27017/studious_hexa_memory`,
+        process.env.STUDIOUSHEXAMEMORY_MONGODB_URI,
         {useUnifiedTopology : true},
         (err, client) => {
             if (err) {
