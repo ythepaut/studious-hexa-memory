@@ -3,7 +3,7 @@ const app = require("../src/app");
 
 describe("Auth Routes", () => {
     describe("GET /account/me", () => {
-        it("Should have a status code of 401 upon disconnected", (done) => {
+        it("Should have a status code of 401 when disconnected", (done) => {
             request(app)
                 .get("/account/me")
                 .expect(401)
