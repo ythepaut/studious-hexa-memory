@@ -240,7 +240,9 @@ module.exports = class {
                         {verbose : this._logic.language.getTranslations(req.session.lang).generic.verbose.error.invalidForm, user : req.session.user}
                     ));
                 }
-                console.error(err.error.toString());
+                if (process.env.STUDIOUSHEXAMEMORY_ENVIRONMENT === "dev") {
+                    console.error(err.error.toString());
+                }
             } else {
                 next(err);
             }

@@ -1,5 +1,7 @@
 const app = require("../src/app");
 
+const testKey = "TestTestTestTest";
+
 // Waiting for server to start
 before((done) => {
     app.on("server_started", () => {
@@ -9,13 +11,13 @@ before((done) => {
 
 // Populating database
 before((done) => {
-    require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => {
+    require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, async (db) => {
 
         // Test user
-        db.collection("accounts").insertOne({
+        await db.collection("accounts").insertOne({
             role : "MEMBER",
             status : "PENDING_REGISTRATION",
-            key : "TestTestTestTest"
+            key : testKey
         });
 
         done();
@@ -24,10 +26,10 @@ before((done) => {
 
 // Cleaning database
 after((done) => {
-    require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => {
+    require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, async (db) => {
 
         // Test user
-        db.collection("accounts").deleteOne(
+        await db.collection("accounts").deleteMany(
             {key : "TestTestTestTest"}
         );
 
