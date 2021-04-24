@@ -109,7 +109,7 @@ require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => 
                         User.getUsers(db, (users) => {
                             expect(users.filter((user) => user._key === testUser.key)).length(1);
                             done();
-                        })
+                        });
                     });
             });
         });
