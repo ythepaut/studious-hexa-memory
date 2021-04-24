@@ -17,6 +17,7 @@
         },
         "verbose": {
             "error": {
+                "unknown": "Un error desconocido a ocurrido.",
                 "accessDenied": "Se requiere permiso para ver esta página.",
                 "permissionDenied": "Se requiere permiso para realizar esta acción.",
                 "invalidSession": "Sesión inválida. Por favor inicie sesión.",

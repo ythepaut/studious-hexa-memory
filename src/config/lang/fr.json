@@ -17,6 +17,7 @@
         },
         "verbose": {
             "error": {
+                "unknown": "Une erreur inconnue est survenue.",
                 "accessDenied": "Permission requise pour afficher cette page.",
                 "permissionDenied": "Permission requise pour effectuer cette action.",
                 "invalidSession": "Session invalide. Veuillez vous reconnecter.",

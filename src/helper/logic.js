@@ -428,13 +428,16 @@ module.exports = class {
                 upload(req, res, (err) => {
 
                     if (err) {
-                        throw err;
+                        console.error(err);
+                        callback(this.responseView(400, "error", {
+                            verbose : this.language.getTranslations(req.session.lang).generic.verbose.error.unknown
+                        }));
                     } else if (!req.files[0]) {
                         callback(this.responseView(400, "error", {
                             verbose : this.language.getTranslations(req.session.lang).exercise.import.verbose.error.noFileSelected
                         }));
                     } else {
-                        let path = this._path.join("uploads/", req.files[0].filename);
+                        let path = this._path.join("src/uploads/", req.files[0].filename);
 
                         // checking if file has json extension
                         if (path.match(/.{0,100}\.json/)) {
