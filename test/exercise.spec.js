@@ -1,4 +1,4 @@
-require("./auth.spec")
+require("./auth.spec");
 
 const request = require("supertest-session"),
     { expect } = require("chai");
@@ -126,7 +126,7 @@ require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => 
                         expect(exercise._tags).to.have.same.members(splittedTags);
                         done();
                     });
-                }, 100);
+                }, 50);
             });
         });
     });

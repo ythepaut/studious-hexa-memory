@@ -122,19 +122,7 @@ module.exports = class {
                     if (req.session.practice.exercisesDone.length < req.session.practice.exerciseMax || req.session.practice.exerciseMax === 0) {
 
                         // finds new exercise
-                        this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map((e) => e.id), (exercise) => {
-
-                            if (exercise !== null) {
-                                req.session.practice.currentExercise = this._exercise.toJSON(exercise);
-                            } else {
-                                // end practice (DEPLETED)
-                                req.session.practice.practiceStatus = "END";
-                                req.session.practice.endReason = "DEPLETED";
-                            }
-
-                            // terminate request
-                            callback(this.responseJSON(200, {}));
-                        });
+                        this._findNextPracticeExercise(req, callback);
 
                     } else {
                         // end practice (MAX_REACHED)
@@ -183,19 +171,7 @@ module.exports = class {
                     req.session.practice.exerciseTags = [];
                 }
                 req.session.practice.exerciseTagOperation = req.body.tagOperation;
-                this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map((e) => e.id), (exercise) => {
-
-                    if (exercise !== null) {
-                        req.session.practice.currentExercise = this._exercise.toJSON(exercise);
-                    } else {
-                        // end practice (DEPLETED)
-                        req.session.practice.practiceStatus = "END";
-                        req.session.practice.endReason = "DEPLETED";
-                    }
-
-                    // refreshing page
-                    callback(this.responseRedirection("/"));
-                });
+                this._findNextPracticeExercise(req, callback);
 
             } else {
                 callback(this.responseView(200, "exercise/end", {
@@ -216,6 +192,28 @@ module.exports = class {
             // session undefined
             callback(this.responseRedirection("/"));
         }
+    }
+
+    /**
+     * Finds the next exercise, updates the practice object and refreshes the client's page
+     * Only used by `handlePracticeSubmission()`
+     * @param {Object}              req             Express request
+     * @param {function}            callback        Callback fct : callback(response)
+     */
+    _findNextPracticeExercise(req, callback) {
+        this._exercise.getNextExercise(this._db, this._mongodb, req.session.practice.exerciseTags, req.session.practice.exerciseTagOperation, req.session.practice.exercisesDone.map((e) => e.id), (exercise) => {
+
+            if (exercise !== null) {
+                req.session.practice.currentExercise = this._exercise.toJSON(exercise);
+            } else {
+                // end practice (DEPLETED)
+                req.session.practice.practiceStatus = "END";
+                req.session.practice.endReason = "DEPLETED";
+            }
+
+            // refreshing page
+            callback(this.responseRedirection("/"));
+        });
     }
 
     /**
@@ -610,7 +608,7 @@ module.exports = class {
                 this._user.getUserByName(this._db, req.body.username, (u) => {
                     if (u === null) {
                         user.username = req.body.username;
-                        user.passwd = this._bcrypt.hashSync(req.body.passwd,12);
+                        user.passwd = this._bcrypt.hashSync(req.body.passwd, 12);
                         user.status = "ALIVE";
                         user.update(this._db, this._mongodb);
                         callback(this.responseJSON(200, {

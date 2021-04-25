@@ -1,4 +1,4 @@
-require("./index.spec")
+require("./index.spec");
 
 const request = require("supertest-session"),
       { expect } = require("chai");
