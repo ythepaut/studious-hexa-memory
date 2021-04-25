@@ -111,20 +111,22 @@ require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => 
 
             it("Should match the exercise created", (done) => {
                 const splittedTags = testExercise.tags.split(/[ ]*,[ ]*/);
-                Exercise.getExercises(db, splittedTags, "INTERSECTION", (exercises) => {
+                setTimeout(() => {
+                    Exercise.getExercises(db, splittedTags, "INTERSECTION", (exercises) => {
 
-                    expect(exercises).length(1);
+                        expect(exercises).length(1);
 
-                    const exercise = exercises[0];
+                        const exercise = exercises[0];
 
-                    expect(exercise).to.have.all.keys("_id", "_title", "_statement", "_response", "_time", "_tags");
-                    expect(exercise._title).eql(testExercise.title);
-                    expect(exercise._statement).eql(testExercise.statement);
-                    expect(exercise._response).eql(testExercise.response);
-                    expect(exercise._time).eql(testExercise.time);
-                    expect(exercise._tags).to.have.same.members(splittedTags);
-                    done();
-                });
+                        expect(exercise).to.have.all.keys("_id", "_title", "_statement", "_response", "_time", "_tags");
+                        expect(exercise._title).eql(testExercise.title);
+                        expect(exercise._statement).eql(testExercise.statement);
+                        expect(exercise._response).eql(testExercise.response);
+                        expect(exercise._time).eql(testExercise.time);
+                        expect(exercise._tags).to.have.same.members(splittedTags);
+                        done();
+                    });
+                }, 100);
             });
         });
     });
