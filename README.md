@@ -1,10 +1,10 @@
 <p align="center">
-    <img src="src/static/assets/img/logo.png" />
+    <img src="src/static/assets/img/logo.png" alt="STUDIOUS HEXA MEMORY"/>
 </p>
 
-![Workflow](https://img.shields.io/github/workflow/status/ythepaut/studious-hexa-memory/Test%20and%20Deployment/master?style=for-the-badge)
-![Code quality (Codacy)](https://img.shields.io/codacy/grade/fdfcd58cd54447bcbcbba4aea72d9836?style=for-the-badge)
-![License](https://img.shields.io/github/license/ythepaut/studious-hexa-memory?style=for-the-badge)
+[![Workflow](https://img.shields.io/github/workflow/status/ythepaut/studious-hexa-memory/Test%20and%20Deployment/master?style=for-the-badge)](#)
+[![Code quality (Codacy)](https://img.shields.io/codacy/grade/fdfcd58cd54447bcbcbba4aea72d9836?style=for-the-badge)](https://app.codacy.com/gh/ythepaut/studious-hexa-memory/dashboard)
+[![License](https://img.shields.io/github/license/ythepaut/studious-hexa-memory?style=for-the-badge)](https://github.com/ythepaut/studious-hexa-memory/blob/master/LICENSE)
 [![Demo website](https://img.shields.io/website?down_color=red&down_message=Offline&label=Demo%20website&style=for-the-badge&up_color=green&up_message=Online&url=https%3A%2F%2Fstudious-hexa-memory.demo.ythepaut.com%2F)](https://studious-hexa-memory.demo.ythepaut.com/)
 
 **:arrow_down: [English version below](#english) :arrow_down:**
@@ -16,7 +16,6 @@ qui permet de s'entraîner sur une banque d'exercices.
 
 Serveur de démonstration : https://studious-hexa-memory.demo.ythepaut.com/
 
-***
 
 ## Déploiement d'une instance
 
@@ -70,8 +69,10 @@ Serveur de démonstration : https://studious-hexa-memory.demo.ythepaut.com/
     
 
 5. Ajouter les variables d'environnement avec la commande `$ setenv CLÉ=VALEUR`
-   ou en créant un fichier `.env` à la racine du projet.
-   
+   ou en créant un fichier `.env` à partir du fichier `.env.sample` à la racine du projet.
+
+      
+
    Liste des variables :
    ```
    # Port du serveur (80 par défaut)
@@ -95,7 +96,6 @@ Serveur de démonstration : https://studious-hexa-memory.demo.ythepaut.com/
 
    ```$ pm2 start app.js --name studious_hexa_memory```
 
-***
 
 ## Mise à jour d'une instance
 
@@ -123,7 +123,6 @@ Its goal is to help people to study exercises and auto-evaluate themselves.
 
 Demonstration server : https://studious-hexa-memory.demo.ythepaut.com/
 
-***
 
 ## Deploy an instance
 
@@ -202,7 +201,6 @@ Demonstration server : https://studious-hexa-memory.demo.ythepaut.com/
 
    ```$ pm2 start app.js --name studious_hexa_memory```
 
-***
 
 ## Update an instance
 

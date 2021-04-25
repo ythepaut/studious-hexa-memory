@@ -1,3 +1,5 @@
+require("./index.spec")
+
 const request = require("supertest-session"),
       { expect } = require("chai");
 const app = require("../src/app");
