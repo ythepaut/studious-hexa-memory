@@ -126,7 +126,7 @@ require("../src/helper/db")(process.env.STUDIOUSHEXAMEMORY_MONGODB_URI, (db) => 
                         expect(exercise._tags).to.have.same.members(splittedTags);
                         done();
                     });
-                }, 50);
+                }, 150);
             });
         });
     });
