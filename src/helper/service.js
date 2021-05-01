@@ -105,6 +105,12 @@ module.exports = class {
         //-------------------------------------------------------------
 
 
+        // logged in
+        this._app.get("/account/login", (req, res) => {
+            this._sendResponse(req, res, this._logic.responseRedirection("/"));
+        });
+
+
         /////////////////////////////////////////
         // Exercise management
 
