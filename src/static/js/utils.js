@@ -82,7 +82,7 @@ function postRequest(url, body, callback) {
  */
 function searchTable(tableId, searchQuery) {
     for (let row of document.querySelectorAll("#" + tableId + " tr")) {
-        if (row.innerHTML.includes(searchQuery) || row.innerHTML.includes("th style")) {
+        if (row.innerHTML.toLowerCase().includes(searchQuery.toLowerCase()) || row.innerHTML.includes("th style")) {
             row.removeAttribute("style");
         } else {
             row.setAttribute("style", "display: none;");
